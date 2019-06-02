@@ -345,33 +345,6 @@ IP               PORT
 	Reported-by: whoever-reported-it
 	Signed-off-by: Your Name <youremail@yourhost.com>
 
-# 开源社区
-
-## 邮件列表
-
-我们为开发者提供了一下邮件列表
-
-- OnchainDNA@googlegroups.com
-
-可以通过两种方式订阅并参与讨论
-
-- 发送任何内容到邮箱地址 OnchainDNA+subscribe@googlegroups.com
-
-- 登录 https://groups.google.com/forum/#!forum/OnchainDNA 
-
-
-## 网站
-
-- https://www.DNAproject.org
-
-## 论坛
-
-- https://forum.DNAproject.org
-
-## Wiki
-
-- https://wiki.DNAproject.org
-
 # 许可证
 
 DNA遵守Apache License, 版本2.0。 详细信息请查看项目根目录下的LICENSE文件。
