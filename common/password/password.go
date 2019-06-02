@@ -1,25 +1,29 @@
-// Copyright 2016 DNA Dev team
+// Copyright (C) 2018 The DNA Authors
+// This file is part of The DNA library.
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
+// The DNA is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
-//      http://www.apache.org/licenses/LICENSE-2.0
+// The DNA is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Lesser General Public License for more details.
 //
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// You should have received a copy of the GNU Lesser General Public License
+// along with The DNA.  If not, see <http://www.gnu.org/licenses/>.
+
+// +build !windows
 
 package password
 
 import (
-	"flag"
+	"bytes"
 	"fmt"
 	"os"
 
-	"github.com/dnaproject/gopass"
+	"github.com/howeyc/gopass"
 )
 
 // GetPassword gets password from user input
@@ -39,42 +43,35 @@ func GetConfirmedPassword() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	if 0 == len(first) {
+		fmt.Println("User have to input password.")
+		os.Exit(1)
+	}
+
 	fmt.Printf("Re-enter Password:")
 	second, err := gopass.GetPasswd()
 	if err != nil {
 		return nil, err
 	}
-	if len(first) != len(second) {
-		fmt.Println("Unmatched Password")
+	if 0 == len(second) {
+		fmt.Println("User have to input password.")
 		os.Exit(1)
 	}
-	for i, v := range first {
-		if v != second[i] {
-			fmt.Println("Unmatched Password")
-			os.Exit(1)
-		}
+
+	if !bytes.Equal(first, second) {
+		fmt.Println("Unmatched Password")
+		os.Exit(1)
 	}
 	return first, nil
 }
 
-// GetPassword gets node's wallet password from command line or user input
+// GetPassword gets node's executor password from command line or user input
 func GetAccountPassword() ([]byte, error) {
 	var passwd []byte
 	var err error
-	if len(os.Args) == 1 {
-		passwd, err = GetPassword()
-		if err != nil {
-			return nil, err
-		}
-	} else {
-		var pstr string
-		flag.StringVar(&pstr, "p", "", "wallet password")
-		flag.Parse()
-		if pstr == "" {
-			fmt.Println("Invaild parameter, use '-p <password>' to specify a not nil wallet password.")
-			os.Exit(1)
-		}
-		passwd = []byte(pstr)
+	passwd, err = GetPassword()
+	if err != nil {
+		return nil, err
 	}
 
 	return passwd, nil

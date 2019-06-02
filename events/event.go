@@ -1,25 +1,27 @@
-// Copyright 2016 DNA Dev team
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+/*
+ * Copyright (C) 2018 The DNA Authors
+ * This file is part of The DNA library.
+ *
+ * The DNA is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * The DNA is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with The DNA.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 package events
 
 import (
-	"sync"
 	"errors"
+	"sync"
 )
-
-
 
 type Event struct {
 	m           sync.RWMutex
@@ -33,14 +35,14 @@ func NewEvent() *Event {
 }
 
 //  adds a new subscriber to Event.
-func (e *Event) Subscribe(eventtype EventType,eventfunc EventFunc) Subscriber {
+func (e *Event) Subscribe(eventtype EventType, eventfunc EventFunc) Subscriber {
 	e.m.Lock()
 	defer e.m.Unlock()
 
 	sub := make(chan interface{})
-	_,ok := e.subscribers[eventtype]
+	_, ok := e.subscribers[eventtype]
 	if !ok {
-		e.subscribers[eventtype] =  make(map[Subscriber]EventFunc)
+		e.subscribers[eventtype] = make(map[Subscriber]EventFunc)
 	}
 	e.subscribers[eventtype][sub] = eventfunc
 
@@ -48,41 +50,43 @@ func (e *Event) Subscribe(eventtype EventType,eventfunc EventFunc) Subscriber {
 }
 
 // UnSubscribe removes the specified subscriber
-func (e *Event) UnSubscribe(eventtype EventType,subscriber Subscriber) (err error){
+func (e *Event) UnSubscribe(eventtype EventType, subscriber Subscriber) (err error) {
 	e.m.Lock()
 	defer e.m.Unlock()
 
-	subEvent,ok := e.subscribers[eventtype]
+	subEvent, ok := e.subscribers[eventtype]
 	if !ok {
 		err = errors.New("No event type.")
 		return
 	}
 
-	delete(subEvent,subscriber)
+	delete(subEvent, subscriber)
 	close(subscriber)
 
 	return
 }
 
 //Notify subscribers that Subscribe specified event
-func (e *Event) Notify(eventtype EventType,value interface{}) (err error){
+func (e *Event) Notify(eventtype EventType, value interface{}) (err error) {
 	e.m.RLock()
 	defer e.m.RUnlock()
 
-	subs,ok := e.subscribers[eventtype]
+	subs, ok := e.subscribers[eventtype]
 	if !ok {
 		err = errors.New("No event type.")
 		return
 	}
 
 	for _, event := range subs {
-		go e.NotifySubscriber(event,value)
+		go e.NotifySubscriber(event, value)
 	}
 	return
 }
 
 func (e *Event) NotifySubscriber(eventfunc EventFunc, value interface{}) {
-	if eventfunc == nil { return }
+	if eventfunc == nil {
+		return
+	}
 
 	//invode subscriber event func
 	eventfunc(value)
@@ -90,12 +94,12 @@ func (e *Event) NotifySubscriber(eventfunc EventFunc, value interface{}) {
 }
 
 //Notify all event subscribers
-func (e *Event) NotifyAll() (errs []error){
+func (e *Event) NotifyAll() (errs []error) {
 	e.m.RLock()
 	defer e.m.RUnlock()
 
-	for eventtype, _ := range e.subscribers{
-		if err := e.Notify(eventtype,nil);err != nil {
+	for eventtype := range e.subscribers {
+		if err := e.Notify(eventtype, nil); err != nil {
 			errs = append(errs, err)
 		}
 	}

@@ -1,16 +1,20 @@
-// Copyright 2016 DNA Dev team
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+/*
+ * Copyright (C) 2018 The DNA Authors
+ * This file is part of The DNA library.
+ *
+ * The DNA is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * The DNA is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with The DNA.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 package serialization
 
@@ -25,25 +29,13 @@ import (
 var ErrRange = errors.New("value out of range")
 var ErrEof = errors.New("got EOF, can not get the next byte")
 
-//SerializableData describe the data need be serialized.
+// SerializableData describe the data need be serialized.
 type SerializableData interface {
-
-	//Write data to writer
+	// Write data to writer
 	Serialize(w io.Writer) error
 
-	//read data to reader
+	// read data to reader
 	Deserialize(r io.Reader) error
-}
-
-func WriteDataList(w io.Writer, list []SerializableData) error {
-	len := uint64(len(list))
-	WriteVarUint(w, len)
-
-	for _, data := range list {
-		data.Serialize(w)
-	}
-
-	return nil
 }
 
 /*
@@ -64,11 +56,11 @@ func WriteDataList(w io.Writer, list []SerializableData) error {
  *      other else,        read this byte as uint8
  * 3. WriteVarBytes func, this func will output two item as serialization.
  *      length of bytes (uint8/uint16/uint32/uint64)  +  bytes
- * 4. WriteVarString func, this func will output two item as serialization.
+ * 4. WriteString func, this func will output two item as serialization.
  *      length of string(uint8/uint16/uint32/uint64)  +  bytes(string)
  * 5. ReadVarBytes func, this func will first read a uint to identify the
  *    length of bytes, and use it to get the next length's bytes to return.
- * 6. ReadVarString func, this func will first read a uint to identify the
+ * 6. ReadString func, this func will first read a uint to identify the
  *    length of string, and use it to get the next bytes as a string.
  * 7. GetVarUintSize func, this func will return the length of a uint when it
  *    serialized by the WriteVarUint func.
@@ -108,25 +100,25 @@ func ReadVarUint(reader io.Reader, maxint uint64) (uint64, error) {
 		maxint = math.MaxUint64
 	}
 	var fb [9]byte
-	_, err := reader.Read(fb[:1])
+	_, err := io.ReadFull(reader, fb[:1])
 	if err != nil {
 		return 0, err
 	}
 
 	if fb[0] == byte(0xfd) {
-		_, err := reader.Read(fb[1:3])
+		_, err := io.ReadFull(reader, fb[1:3])
 		if err != nil {
 			return 0, err
 		}
 		res = uint64(binary.LittleEndian.Uint16(fb[1:3]))
 	} else if fb[0] == byte(0xfe) {
-		_, err := reader.Read(fb[1:5])
+		_, err := io.ReadFull(reader, fb[1:5])
 		if err != nil {
 			return 0, err
 		}
 		res = uint64(binary.LittleEndian.Uint32(fb[1:5]))
 	} else if fb[0] == byte(0xff) {
-		_, err := reader.Read(fb[1:9])
+		_, err := io.ReadFull(reader, fb[1:9])
 		if err != nil {
 			return 0, err
 		}
@@ -149,16 +141,8 @@ func WriteVarBytes(writer io.Writer, value []byte) error {
 	return err
 }
 
-func WriteVarString(writer io.Writer, value string) error {
-	err := WriteVarUint(writer, uint64(len(value)))
-	if err != nil {
-		return err
-	}
-	_, err = writer.Write([]byte(value))
-	if err != nil {
-		return err
-	}
-	return nil
+func WriteString(writer io.Writer, value string) error {
+	return WriteVarBytes(writer, []byte(value))
 }
 
 func ReadVarBytes(reader io.Reader) ([]byte, error) {
@@ -173,7 +157,7 @@ func ReadVarBytes(reader io.Reader) ([]byte, error) {
 	return str, nil
 }
 
-func ReadVarString(reader io.Reader) (string, error) {
+func ReadString(reader io.Reader) (string, error) {
 	val, err := ReadVarBytes(reader)
 	if err != nil {
 		return "", err
@@ -203,8 +187,8 @@ func ReadBytes(reader io.Reader, length uint64) ([]byte, error) {
 
 func ReadUint8(reader io.Reader) (uint8, error) {
 	var p [1]byte
-	n, err := reader.Read(p[:])
-	if n <= 0 || err != nil {
+	_, err := io.ReadFull(reader, p[:])
+	if err != nil {
 		return 0, ErrEof
 	}
 	return uint8(p[0]), nil
@@ -212,8 +196,8 @@ func ReadUint8(reader io.Reader) (uint8, error) {
 
 func ReadUint16(reader io.Reader) (uint16, error) {
 	var p [2]byte
-	n, err := reader.Read(p[:])
-	if n <= 0 || err != nil {
+	_, err := io.ReadFull(reader, p[:])
+	if err != nil {
 		return 0, ErrEof
 	}
 	return binary.LittleEndian.Uint16(p[:]), nil
@@ -221,8 +205,8 @@ func ReadUint16(reader io.Reader) (uint16, error) {
 
 func ReadUint32(reader io.Reader) (uint32, error) {
 	var p [4]byte
-	n, err := reader.Read(p[:])
-	if n <= 0 || err != nil {
+	_, err := io.ReadFull(reader, p[:])
+	if err != nil {
 		return 0, ErrEof
 	}
 	return binary.LittleEndian.Uint32(p[:]), nil
@@ -230,16 +214,11 @@ func ReadUint32(reader io.Reader) (uint32, error) {
 
 func ReadUint64(reader io.Reader) (uint64, error) {
 	var p [8]byte
-	n, err := reader.Read(p[:])
-	if n <= 0 || err != nil {
+	_, err := io.ReadFull(reader, p[:])
+	if err != nil {
 		return 0, ErrEof
 	}
 	return binary.LittleEndian.Uint64(p[:]), nil
-}
-
-func ReadDataList(reader io.Reader) ([]SerializableData, error) {
-
-	return nil, nil
 }
 
 func WriteUint8(writer io.Writer, val uint8) error {
@@ -271,9 +250,9 @@ func WriteUint64(writer io.Writer, val uint64) error {
 }
 
 func ToArray(data SerializableData) []byte {
-	b_buf := new(bytes.Buffer)
-	data.Serialize(b_buf)
-	return b_buf.Bytes()
+	buf := new(bytes.Buffer)
+	data.Serialize(buf)
+	return buf.Bytes()
 }
 
 //**************************************************************************
@@ -284,12 +263,27 @@ func ToArray(data SerializableData) []byte {
 //**************************************************************************
 
 func byteXReader(reader io.Reader, x uint64) ([]byte, error) {
-	p := make([]byte, x)
-	n, err := reader.Read(p)
-	if n > 0 {
-		return p[:], nil
+	if x == 0 {
+		return nil, nil
 	}
-	return p, err
+	//fast path to avoid buffer reallocation
+	if x < 2*1024*1024 {
+		p := make([]byte, x)
+		_, err := io.ReadFull(reader, p)
+		if err != nil {
+			return nil, err
+		}
+		return p, nil
+	}
+
+	// normal path to avoid attack
+	limited := io.LimitReader(reader, int64(x))
+	buf := &bytes.Buffer{}
+	n, _ := buf.ReadFrom(limited)
+	if n == int64(x) {
+		return buf.Bytes(), nil
+	}
+	return nil, ErrEof
 }
 
 func WriteBool(writer io.Writer, val bool) error {
@@ -304,12 +298,17 @@ func ReadBool(reader io.Reader) (bool, error) {
 }
 
 func WriteByte(writer io.Writer, val byte) error {
-	err := binary.Write(writer, binary.LittleEndian, val)
-	return err
+	_, err := writer.Write([]byte{val})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func ReadByte(reader io.Reader) (byte, error) {
-	var x byte
-	err := binary.Read(reader, binary.LittleEndian, &x)
-	return x, err
+	b, err := byteXReader(reader, 1)
+	if err != nil {
+		return 0, err
+	}
+	return b[0], nil
 }

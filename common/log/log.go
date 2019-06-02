@@ -1,21 +1,24 @@
-// Copyright 2016 DNA Dev team
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+/*
+ * Copyright (C) 2018 The DNA Authors
+ * This file is part of The DNA library.
+ *
+ * The DNA is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * The DNA is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with The DNA.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 package log
 
 import (
-	"DNA/common/config"
 	"bytes"
 	"errors"
 	"fmt"
@@ -44,34 +47,33 @@ func Color(code, msg string) string {
 }
 
 const (
-	debugLog = iota
-	infoLog
-	warnLog
-	errorLog
-	fatalLog
-	traceLog
-	maxLevelLog
+	TraceLog = iota
+	DebugLog
+	InfoLog
+	WarnLog
+	ErrorLog
+	FatalLog
+	MaxLevelLog
 )
 
 var (
 	levels = map[int]string{
-		debugLog: Color(Green, "[DEBUG]"),
-		infoLog:  Color(Green, "[INFO ]"),
-		warnLog:  Color(Yellow, "[WARN ]"),
-		errorLog: Color(Red, "[ERROR]"),
-		fatalLog: Color(Red, "[FATAL]"),
-		traceLog: Color(Pink, "[TRACE]"),
+		DebugLog: Color(Green, "[DEBUG]"),
+		InfoLog:  Color(Cyan, "[INFO ]"),
+		WarnLog:  Color(Yellow, "[WARN ]"),
+		ErrorLog: Color(Red, "[ERROR]"),
+		FatalLog: Color(Red, "[FATAL]"),
+		TraceLog: Color(Pink, "[TRACE]"),
 	}
 	Stdout = os.Stdout
 )
 
 const (
-	namePrefix        = "LEVEL"
-	callDepth         = 2
-	defaultMaxLogSize = 20
-	byteToMb          = 1024 * 1024
-	byteToKb          = 1024
-	Path              = "./Log/"
+	NAME_PREFIX          = "LEVEL"
+	CALL_DEPTH           = 2
+	DEFAULT_MAX_LOG_SIZE = 20
+	BYTE_TO_MB           = 1024 * 1024
+	PATH                 = "./Log/"
 )
 
 func GetGID() uint64 {
@@ -85,11 +87,16 @@ func GetGID() uint64 {
 
 var Log *Logger
 
+func init() {
+	//Default print to console
+	InitLog(InfoLog, Stdout)
+}
+
 func LevelName(level int) string {
 	if name, ok := levels[level]; ok {
 		return name
 	}
-	return namePrefix + strconv.Itoa(level)
+	return NAME_PREFIX + strconv.Itoa(level)
 }
 
 func NameLevel(name string) int {
@@ -99,8 +106,8 @@ func NameLevel(name string) int {
 		}
 	}
 	var level int
-	if strings.HasPrefix(name, namePrefix) {
-		level, _ = strconv.Atoi(name[len(namePrefix):])
+	if strings.HasPrefix(name, NAME_PREFIX) {
+		level, _ = strconv.Atoi(name[len(NAME_PREFIX):])
 	}
 	return level
 }
@@ -120,7 +127,7 @@ func New(out io.Writer, prefix string, flag, level int, file *os.File) *Logger {
 }
 
 func (l *Logger) SetDebugLevel(level int) error {
-	if level > maxLevelLog || level < 0 {
+	if level > MaxLevelLog || level < 0 {
 		return errors.New("Invalid Debug Level")
 	}
 
@@ -136,7 +143,7 @@ func (l *Logger) Output(level int, a ...interface{}) error {
 		a = append([]interface{}{LevelName(level), "GID",
 			gidStr + ","}, a...)
 
-		return l.logger.Output(callDepth, fmt.Sprintln(a...))
+		return l.logger.Output(CALL_DEPTH, fmt.Sprintln(a...))
 	}
 	return nil
 }
@@ -147,61 +154,61 @@ func (l *Logger) Outputf(level int, format string, v ...interface{}) error {
 		v = append([]interface{}{LevelName(level), "GID",
 			gid}, v...)
 
-		return l.logger.Output(callDepth, fmt.Sprintf("%s %s %d, "+format+"\n", v...))
+		return l.logger.Output(CALL_DEPTH, fmt.Sprintf("%s %s %d, "+format+"\n", v...))
 	}
 	return nil
 }
 
 func (l *Logger) Trace(a ...interface{}) {
-	l.Output(traceLog, a...)
+	l.Output(TraceLog, a...)
 }
 
 func (l *Logger) Tracef(format string, a ...interface{}) {
-	l.Outputf(traceLog, format, a...)
+	l.Outputf(TraceLog, format, a...)
 }
 
 func (l *Logger) Debug(a ...interface{}) {
-	l.Output(debugLog, a...)
+	l.Output(DebugLog, a...)
 }
 
 func (l *Logger) Debugf(format string, a ...interface{}) {
-	l.Outputf(debugLog, format, a...)
+	l.Outputf(DebugLog, format, a...)
 }
 
 func (l *Logger) Info(a ...interface{}) {
-	l.Output(infoLog, a...)
+	l.Output(InfoLog, a...)
 }
 
 func (l *Logger) Infof(format string, a ...interface{}) {
-	l.Outputf(infoLog, format, a...)
+	l.Outputf(InfoLog, format, a...)
 }
 
 func (l *Logger) Warn(a ...interface{}) {
-	l.Output(warnLog, a...)
+	l.Output(WarnLog, a...)
 }
 
 func (l *Logger) Warnf(format string, a ...interface{}) {
-	l.Outputf(warnLog, format, a...)
+	l.Outputf(WarnLog, format, a...)
 }
 
 func (l *Logger) Error(a ...interface{}) {
-	l.Output(errorLog, a...)
+	l.Output(ErrorLog, a...)
 }
 
 func (l *Logger) Errorf(format string, a ...interface{}) {
-	l.Outputf(errorLog, format, a...)
+	l.Outputf(ErrorLog, format, a...)
 }
 
 func (l *Logger) Fatal(a ...interface{}) {
-	l.Output(fatalLog, a...)
+	l.Output(FatalLog, a...)
 }
 
 func (l *Logger) Fatalf(format string, a ...interface{}) {
-	l.Outputf(fatalLog, format, a...)
+	l.Outputf(FatalLog, format, a...)
 }
 
 func Trace(a ...interface{}) {
-	if traceLog < Log.level {
+	if TraceLog < Log.level {
 		return
 	}
 
@@ -221,7 +228,7 @@ func Trace(a ...interface{}) {
 }
 
 func Tracef(format string, a ...interface{}) {
-	if traceLog < Log.level {
+	if TraceLog < Log.level {
 		return
 	}
 
@@ -241,7 +248,7 @@ func Tracef(format string, a ...interface{}) {
 }
 
 func Debug(a ...interface{}) {
-	if debugLog < Log.level {
+	if DebugLog < Log.level {
 		return
 	}
 
@@ -257,7 +264,7 @@ func Debug(a ...interface{}) {
 }
 
 func Debugf(format string, a ...interface{}) {
-	if debugLog < Log.level {
+	if DebugLog < Log.level {
 		return
 	}
 
@@ -317,7 +324,7 @@ func FileOpen(path string) (*os.File, error) {
 		return nil, err
 	}
 
-	var currenttime string = time.Now().Format("2006-01-02_15.04.05")
+	var currenttime = time.Now().Format("2006-01-02_15.04.05")
 
 	logfile, err := os.OpenFile(path+currenttime+"_LOG.log", os.O_RDWR|os.O_CREATE, 0666)
 	if err != nil {
@@ -326,7 +333,13 @@ func FileOpen(path string) (*os.File, error) {
 	return logfile, nil
 }
 
+//Init deprecated, use InitLog instead
 func Init(a ...interface{}) {
+	os.Stderr.WriteString("warning: use of deprecated Init. Use InitLog instead\n")
+	InitLog(InfoLog, a...)
+}
+
+func InitLog(logLevel int, a ...interface{}) {
 	writers := []io.Writer{}
 	var logFile *os.File
 	var err error
@@ -351,8 +364,7 @@ func Init(a ...interface{}) {
 		}
 	}
 	fileAndStdoutWrite := io.MultiWriter(writers...)
-	var printlevel int = config.Parameters.PrintLevel
-	Log = New(fileAndStdoutWrite, "", log.Ldate|log.Lmicroseconds, printlevel, logFile)
+	Log = New(fileAndStdoutWrite, "", log.Ldate|log.Lmicroseconds, logLevel, logFile)
 }
 
 func GetLogFileSize() (int64, error) {
@@ -363,17 +375,17 @@ func GetLogFileSize() (int64, error) {
 	return f.Size(), nil
 }
 
-func GetMaxLogChangeInterval() int64 {
-	if config.Parameters.MaxLogSize != 0 {
-		return (config.Parameters.MaxLogSize * byteToMb)
+func GetMaxLogChangeInterval(maxLogSize int64) int64 {
+	if maxLogSize != 0 {
+		return (maxLogSize * BYTE_TO_MB)
 	} else {
-		return (defaultMaxLogSize * byteToMb)
+		return (DEFAULT_MAX_LOG_SIZE * BYTE_TO_MB)
 	}
 }
 
 func CheckIfNeedNewFile() bool {
 	logFileSize, err := GetLogFileSize()
-	maxLogFileSize := GetMaxLogChangeInterval()
+	maxLogFileSize := GetMaxLogChangeInterval(0)
 	if err != nil {
 		return false
 	}

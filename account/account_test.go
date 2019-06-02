@@ -1,40 +1,58 @@
-// Copyright 2016 DNA Dev team
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
+/*
+ * Copyright (C) 2018 The DNA Authors
+ * This file is part of The DNA library.
+ *
+ * The DNA is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * The DNA is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with The DNA.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package account
 
 import (
-	"DNA/crypto"
-	"fmt"
+	"github.com/dnaproject2/DNA/core/types"
+	"github.com/stretchr/testify/assert"
 	"os"
-	"path"
 	"testing"
 )
 
-func TestClient(t *testing.T) {
-	t.Log("created client start!")
-	crypto.SetAlg(crypto.P256R1)
-	dir := "./data/"
-	err := os.MkdirAll(dir, 0777)
-	if err != nil {
-		t.Log("create dir ", dir, " error: ", err)
-	} else {
-		t.Log("create dir ", dir, " success!")
+func TestNewAccount(t *testing.T) {
+	defer func() {
+		os.RemoveAll("Log/")
+	}()
+
+	names := []string{
+		"",
+		"SHA224withECDSA",
+		"SHA256withECDSA",
+		"SHA384withECDSA",
+		"SHA512withECDSA",
+		"SHA3-224withECDSA",
+		"SHA3-256withECDSA",
+		"SHA3-384withECDSA",
+		"SHA3-512withECDSA",
+		"RIPEMD160withECDSA",
+		"SM3withSM2",
+		"SHA512withEdDSA",
 	}
-	for i := 0; i < 10000; i++ {
-		p := path.Join(dir, fmt.Sprintf("wallet%d.txt", i))
-		fmt.Println("client path", p)
-		CreateClient(p, []byte(DefaultPin))
+	accounts := make([]*Account, len(names))
+	for k, v := range names {
+		accounts[k] = NewAccount(v)
+		assert.NotNil(t, accounts[k])
+		assert.NotNil(t, accounts[k].PrivateKey)
+		assert.NotNil(t, accounts[k].PublicKey)
+		assert.NotNil(t, accounts[k].Address)
+		assert.NotNil(t, accounts[k].PrivKey())
+		assert.NotNil(t, accounts[k].PubKey())
+		assert.NotNil(t, accounts[k].Scheme())
+		assert.Equal(t, accounts[k].Address, types.AddressFromPubKey(accounts[k].PublicKey))
 	}
 }

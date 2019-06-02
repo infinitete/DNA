@@ -1,73 +1,84 @@
-// Copyright 2016 DNA Dev team
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+/*
+ * Copyright (C) 2018 The DNA Authors
+ * This file is part of The DNA library.
+ *
+ * The DNA is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * The DNA is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with The DNA.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 package signature
 
 import (
-	"DNA/common"
-	"DNA/common/log"
-	"DNA/core/contract/program"
-	"DNA/crypto"
-	. "DNA/errors"
-	"DNA/vm/avm/interfaces"
-	"bytes"
-	"crypto/sha256"
-	"io"
+	"errors"
+	"github.com/ontio/ontology-crypto/keypair"
+	s "github.com/ontio/ontology-crypto/signature"
 )
 
-//SignableData describe the data need be signed.
-type SignableData interface {
-	interfaces.ICodeContainer
-
-	//Get the the SignableData's program hashes
-	GetProgramHashes() ([]common.Uint160, error)
-
-	SetPrograms([]*program.Program)
-
-	GetPrograms() []*program.Program
-
-	//TODO: add SerializeUnsigned
-	SerializeUnsigned(io.Writer) error
-}
-
-func SignBySigner(data SignableData, signer Signer) ([]byte, error) {
-	log.Debug()
-	//fmt.Println("data",data)
-	rtx, err := Sign(data, signer.PrivKey())
+// Sign returns the signature of data using privKey
+func Sign(signer Signer, data []byte) ([]byte, error) {
+	signature, err := s.Sign(signer.Scheme(), signer.PrivKey(), data, nil)
 	if err != nil {
-		return nil, NewDetailErr(err, ErrNoCode, "[Signature],SignBySigner failed.")
+		return nil, err
 	}
-	return rtx, nil
+
+	return s.Serialize(signature)
 }
 
-func GetHashData(data SignableData) []byte {
-	b_buf := new(bytes.Buffer)
-	data.SerializeUnsigned(b_buf)
-	return b_buf.Bytes()
-}
-
-func GetHashForSigning(data SignableData) []byte {
-	//TODO: GetHashForSigning
-	temp := sha256.Sum256(GetHashData(data))
-	return temp[:]
-}
-
-func Sign(data SignableData, prikey []byte) ([]byte, error) {
-	// FIXME ignore the return error value
-	signature, err := crypto.Sign(prikey, GetHashData(data))
+// Verify check the signature of data using pubKey
+func Verify(pubKey keypair.PublicKey, data, signature []byte) error {
+	sigObj, err := s.Deserialize(signature)
 	if err != nil {
-		return nil, NewDetailErr(err, ErrNoCode, "[Signature],Sign failed.")
+		return errors.New("invalid signature data: " + err.Error())
 	}
-	return signature, nil
+
+	if !s.Verify(pubKey, data, sigObj) {
+		return errors.New("signature verification failed")
+	}
+
+	return nil
+}
+
+// VerifyMultiSignature check whether more than m sigs are signed by the keys
+func VerifyMultiSignature(data []byte, keys []keypair.PublicKey, m int, sigs [][]byte) error {
+	n := len(keys)
+
+	if len(sigs) < m {
+		return errors.New("not enough signatures in multi-signature")
+	}
+
+	mask := make([]bool, n)
+	for i := 0; i < m; i++ {
+		valid := false
+
+		sig, err := s.Deserialize(sigs[i])
+		if err != nil {
+			return errors.New("invalid signature data")
+		}
+		for j := 0; j < n; j++ {
+			if mask[j] {
+				continue
+			}
+			if s.Verify(keys[j], data, sig) {
+				mask[j] = true
+				valid = true
+				break
+			}
+		}
+
+		if valid == false {
+			return errors.New("multi-signature verification failed")
+		}
+	}
+
+	return nil
 }

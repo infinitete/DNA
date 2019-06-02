@@ -1,128 +1,192 @@
-// Copyright 2016 DNA Dev team
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+/*
+ * Copyright (C) 2018 The DNA Authors
+ * This file is part of The DNA library.
+ *
+ * The DNA is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * The DNA is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with The DNA.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 package ledger
 
 import (
-	"DNA/common"
-	. "DNA/common"
-	"DNA/core/asset"
-	"DNA/core/contract"
-	tx "DNA/core/transaction"
-	"DNA/crypto"
-	. "DNA/errors"
-	"errors"
+	"fmt"
+	"github.com/dnaproject2/DNA/common"
+	"github.com/dnaproject2/DNA/common/log"
+	"github.com/dnaproject2/DNA/core/payload"
+	"github.com/dnaproject2/DNA/core/states"
+	"github.com/dnaproject2/DNA/core/store"
+	"github.com/dnaproject2/DNA/core/store/ledgerstore"
+	"github.com/dnaproject2/DNA/core/types"
+	"github.com/dnaproject2/DNA/smartcontract/event"
+	cstate "github.com/dnaproject2/DNA/smartcontract/states"
+	"github.com/ontio/ontology-crypto/keypair"
 )
 
-var DefaultLedger *Ledger
-var StandbyBookKeepers []*crypto.PubKey
+var DefLedger *Ledger
 
-// Ledger - the struct for onchainDNA ledger
 type Ledger struct {
-	Blockchain *Blockchain
-	State      *State
-	Store      ILedgerStore
+	ldgStore store.LedgerStore
 }
 
-//check weather the transaction contains the doubleSpend.
-func (l *Ledger) IsDoubleSpend(Tx *tx.Transaction) bool {
-	return DefaultLedger.Store.IsDoubleSpend(Tx)
-}
-
-//Get the DefaultLedger.
-//Note: the later version will support the mutiLedger.So this func mybe expired later.
-func GetDefaultLedger() (*Ledger, error) {
-	if DefaultLedger == nil {
-		return nil, NewDetailErr(errors.New("[Ledger], GetDefaultLedger failed, DefaultLedger not Exist."), ErrNoCode, "")
-	}
-	return DefaultLedger, nil
-}
-
-//Calc the BookKeepers address by bookKeepers pubkey.
-func GetBookKeeperAddress(bookKeepers []*crypto.PubKey) (Uint160, error) {
-	//TODO: GetBookKeeperAddress()
-	//return Uint160{}
-	//CreateSignatureRedeemScript
-	if len(bookKeepers) < 1 {
-		return Uint160{}, NewDetailErr(errors.New("[Ledger] , GetBookKeeperAddress with no bookKeeper"), ErrNoCode, "")
-	}
-	var temp []byte
-	var err error
-	if len(bookKeepers) > 1 {
-		temp, err = contract.CreateMultiSigRedeemScript(len(bookKeepers)-(len(bookKeepers)-1)/3, bookKeepers)
-		if err != nil {
-			return Uint160{}, NewDetailErr(err, ErrNoCode, "[Ledger],GetBookKeeperAddress failed with CreateMultiSigRedeemScript.")
-		}
-	} else {
-		temp, err = contract.CreateSignatureRedeemScript(bookKeepers[0])
-		if err != nil {
-			return Uint160{}, NewDetailErr(err, ErrNoCode, "[Ledger],GetBookKeeperAddress failed with CreateMultiSigRedeemScript.")
-		}
-	}
-	codehash, err := common.ToCodeHash(temp)
+func NewLedger(dataDir string, stateHashHeight uint32) (*Ledger, error) {
+	ldgStore, err := ledgerstore.NewLedgerStore(dataDir, stateHashHeight)
 	if err != nil {
-		return Uint160{}, NewDetailErr(err, ErrNoCode, "[Ledger],GetBookKeeperAddress failed with ToCodeHash.")
+		return nil, fmt.Errorf("NewLedgerStore error %s", err)
 	}
-	return codehash, nil
+	return &Ledger{
+		ldgStore: ldgStore,
+	}, nil
 }
 
-//Get the Asset from store.
-func (l *Ledger) GetAsset(assetId Uint256) (*asset.Asset, error) {
-	asset, err := l.Store.GetAsset(assetId)
+func (self *Ledger) GetStore() store.LedgerStore {
+	return self.ldgStore
+}
+
+func (self *Ledger) Init(defaultBookkeeper []keypair.PublicKey, genesisBlock *types.Block) error {
+	err := self.ldgStore.InitLedgerStoreWithGenesisBlock(genesisBlock, defaultBookkeeper)
 	if err != nil {
-		return nil, NewDetailErr(err, ErrNoCode, "[Ledger],GetAsset failed with assetId ="+assetId.ToString())
+		return fmt.Errorf("InitLedgerStoreWithGenesisBlock error %s", err)
 	}
-	return asset, nil
+	return nil
 }
 
-//Get Block With Height.
-func (l *Ledger) GetBlockWithHeight(height uint32) (*Block, error) {
-	temp, err := l.Store.GetBlockHash(height)
+func (self *Ledger) AddHeaders(headers []*types.Header) error {
+	return self.ldgStore.AddHeaders(headers)
+}
+
+func (self *Ledger) AddBlock(block *types.Block, stateMerkleRoot common.Uint256) error {
+	err := self.ldgStore.AddBlock(block, stateMerkleRoot)
 	if err != nil {
-		return nil, NewDetailErr(err, ErrNoCode, "[Ledger],GetBlockWithHeight failed with height="+string(height))
+		log.Errorf("Ledger AddBlock BlockHeight:%d BlockHash:%x error:%s", block.Header.Height, block.Hash(), err)
 	}
-	bk, err := DefaultLedger.Store.GetBlock(temp)
+	return err
+}
+
+func (self *Ledger) ExecuteBlock(b *types.Block) (store.ExecuteResult, error) {
+	return self.ldgStore.ExecuteBlock(b)
+}
+
+func (self *Ledger) SubmitBlock(b *types.Block, exec store.ExecuteResult) error {
+	return self.ldgStore.SubmitBlock(b, exec)
+}
+
+func (self *Ledger) GetStateMerkleRoot(height uint32) (result common.Uint256, err error) {
+	return self.ldgStore.GetStateMerkleRoot(height)
+}
+
+func (self *Ledger) GetBlockRootWithNewTxRoots(startHeight uint32, txRoots []common.Uint256) common.Uint256 {
+	return self.ldgStore.GetBlockRootWithNewTxRoots(startHeight, txRoots)
+}
+
+func (self *Ledger) GetBlockByHeight(height uint32) (*types.Block, error) {
+	return self.ldgStore.GetBlockByHeight(height)
+}
+
+func (self *Ledger) GetBlockByHash(blockHash common.Uint256) (*types.Block, error) {
+	return self.ldgStore.GetBlockByHash(blockHash)
+}
+
+func (self *Ledger) GetHeaderByHeight(height uint32) (*types.Header, error) {
+	return self.ldgStore.GetHeaderByHeight(height)
+}
+
+func (self *Ledger) GetHeaderByHash(blockHash common.Uint256) (*types.Header, error) {
+	return self.ldgStore.GetHeaderByHash(blockHash)
+}
+func (self *Ledger) GetRawHeaderByHash(blockHash common.Uint256) (*types.RawHeader, error) {
+	return self.ldgStore.GetRawHeaderByHash(blockHash)
+}
+
+func (self *Ledger) GetBlockHash(height uint32) common.Uint256 {
+	return self.ldgStore.GetBlockHash(height)
+}
+
+func (self *Ledger) GetTransaction(txHash common.Uint256) (*types.Transaction, error) {
+	tx, _, err := self.ldgStore.GetTransaction(txHash)
+	return tx, err
+}
+
+func (self *Ledger) GetTransactionWithHeight(txHash common.Uint256) (*types.Transaction, uint32, error) {
+	return self.ldgStore.GetTransaction(txHash)
+}
+
+func (self *Ledger) GetCurrentBlockHeight() uint32 {
+	return self.ldgStore.GetCurrentBlockHeight()
+}
+
+func (self *Ledger) GetCurrentBlockHash() common.Uint256 {
+	return self.ldgStore.GetCurrentBlockHash()
+}
+
+func (self *Ledger) GetCurrentHeaderHeight() uint32 {
+	return self.ldgStore.GetCurrentHeaderHeight()
+}
+
+func (self *Ledger) GetCurrentHeaderHash() common.Uint256 {
+	return self.ldgStore.GetCurrentHeaderHash()
+}
+
+func (self *Ledger) IsContainTransaction(txHash common.Uint256) (bool, error) {
+	return self.ldgStore.IsContainTransaction(txHash)
+}
+
+func (self *Ledger) IsContainBlock(blockHash common.Uint256) (bool, error) {
+	return self.ldgStore.IsContainBlock(blockHash)
+}
+
+func (self *Ledger) GetCurrentStateRoot() (common.Uint256, error) {
+	return common.Uint256{}, nil
+}
+
+func (self *Ledger) GetBookkeeperState() (*states.BookkeeperState, error) {
+	return self.ldgStore.GetBookkeeperState()
+}
+
+func (self *Ledger) GetStorageItem(codeHash common.Address, key []byte) ([]byte, error) {
+	storageKey := &states.StorageKey{
+		ContractAddress: codeHash,
+		Key:             key,
+	}
+	storageItem, err := self.ldgStore.GetStorageItem(storageKey)
 	if err != nil {
-		return nil, NewDetailErr(err, ErrNoCode, "[Ledger],GetBlockWithHeight failed with hash="+temp.ToString())
+		return nil, err
 	}
-	return bk, nil
-}
-
-//Get block with block hash.
-func (l *Ledger) GetBlockWithHash(hash Uint256) (*Block, error) {
-	bk, err := l.Store.GetBlock(hash)
-	if err != nil {
-		return nil, NewDetailErr(err, ErrNoCode, "[Ledger],GetBlockWithHeight failed with hash="+hash.ToString())
+	if storageItem == nil {
+		return nil, nil
 	}
-	return bk, nil
+	return storageItem.Value, nil
 }
 
-//BlockInLedger checks if the block existed in ledger
-func (l *Ledger) BlockInLedger(hash Uint256) bool {
-	return l.Store.IsBlockInStore(hash)
+func (self *Ledger) GetContractState(contractHash common.Address) (*payload.DeployCode, error) {
+	return self.ldgStore.GetContractState(contractHash)
 }
 
-//Get transaction with hash.
-func (l *Ledger) GetTransactionWithHash(hash Uint256) (*tx.Transaction, error) {
-	tx, err := l.Store.GetTransaction(hash)
-	if err != nil {
-		return nil, NewDetailErr(err, ErrNoCode, "[Ledger],GetTransactionWithHash failed with hash="+hash.ToString())
-	}
-	return tx, nil
+func (self *Ledger) GetMerkleProof(proofHeight, rootHeight uint32) ([]common.Uint256, error) {
+	return self.ldgStore.GetMerkleProof(proofHeight, rootHeight)
 }
 
-//Get local block chain height.
-func (l *Ledger) GetLocalBlockChainHeight() uint32 {
-	return l.Blockchain.BlockHeight
+func (self *Ledger) PreExecuteContract(tx *types.Transaction) (*cstate.PreExecResult, error) {
+	return self.ldgStore.PreExecuteContract(tx)
+}
+
+func (self *Ledger) GetEventNotifyByTx(tx common.Uint256) (*event.ExecuteNotify, error) {
+	return self.ldgStore.GetEventNotifyByTx(tx)
+}
+
+func (self *Ledger) GetEventNotifyByBlock(height uint32) ([]*event.ExecuteNotify, error) {
+	return self.ldgStore.GetEventNotifyByBlock(height)
+}
+
+func (self *Ledger) Close() error {
+	return self.ldgStore.Close()
 }

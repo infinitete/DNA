@@ -1,574 +1,569 @@
-// Copyright 2016 DNA Dev team
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+/*
+ * Copyright (C) 2018 The DNA Authors
+ * This file is part of The DNA library.
+ *
+ * The DNA is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * The DNA is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with The DNA.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 package account
 
 import (
 	"bytes"
-	"crypto/sha256"
 	"encoding/hex"
-	"errors"
 	"fmt"
-	"math/rand"
-	"os"
-	"sort"
 	"strings"
 	"sync"
 	"time"
 
-	. "DNA/common"
-	"DNA/common/config"
-	"DNA/common/log"
-	"DNA/common/password"
-	"DNA/core/contract"
-	ct "DNA/core/contract"
-	"DNA/core/ledger"
-	sig "DNA/core/signature"
-	"DNA/crypto"
-	. "DNA/errors"
-	"DNA/net/protocol"
+	"github.com/dnaproject2/DNA/common"
+	"github.com/dnaproject2/DNA/core/types"
+	"github.com/ontio/ontology-crypto/keypair"
+	s "github.com/ontio/ontology-crypto/signature"
 )
 
-const (
-	DefaultBookKeeperCount = 4
-	WalletFileName         = "wallet.dat"
-)
-
+//Client of executor
 type Client interface {
-	Sign(context *ct.ContractContext) bool
-	ContainsAccount(pubKey *crypto.PubKey) bool
-	GetAccount(pubKey *crypto.PubKey) (*Account, error)
-	GetDefaultAccount() (*Account, error)
+	//NewAccount create a new account.
+	NewAccount(label string, typeCode keypair.KeyType, curveCode byte, sigScheme s.SignatureScheme, passwd []byte) (*Account, error)
+	//ImportAccount import a already exist account to executor
+	ImportAccount(accMeta *AccountMetadata) error
+	//GetAccountByAddress return account object by address
+	GetAccountByAddress(address string, passwd []byte) (*Account, error)
+	//GetAccountByLabel return account object by label
+	GetAccountByLabel(label string, passwd []byte) (*Account, error)
+	//GetAccountByIndex return account object by index. Index start from 1
+	GetAccountByIndex(index int, passwd []byte) (*Account, error)
+	//GetDefaultAccount return default account
+	GetDefaultAccount(passwd []byte) (*Account, error)
+	//GetAccountMetadataByIndex return account Metadata info by address
+	GetAccountMetadataByAddress(address string) *AccountMetadata
+	//GetAccountMetadataByLabel return account Metadata info by label
+	GetAccountMetadataByLabel(label string) *AccountMetadata
+	//GetAccountMetadataByIndex return account Metadata info by index. Index start from 1
+	GetAccountMetadataByIndex(index int) *AccountMetadata
+	//GetDefaultAccountMetadata return default account Metadata info
+	GetDefaultAccountMetadata() *AccountMetadata
+	//GetAccountNum return total account number
+	GetAccountNum() int
+	//DeleteAccount delete account
+	DeleteAccount(address string, passwd []byte) (*Account, error)
+	//UnLockAccount can get account without password in expire time
+	UnLockAccount(address string, expiredAt int, passwd []byte) error
+	//LockAccount lock unlock account
+	LockAccount(address string)
+	//GetUnlockAccount return account which was unlock and in expired time
+	GetUnlockAccount(address string) *Account
+	//Set a new account to default account
+	SetDefaultAccount(address string) error
+	//Set a new label to accont
+	SetLabel(address, label string) error
+	//Change pasword to account
+	ChangePassword(address string, oldPasswd, newPasswd []byte) error
+	//Change sig scheme to account
+	ChangeSigScheme(address string, sigScheme s.SignatureScheme) error
+	//Get the underlying executor data
+	GetExecutorData() *ExecutorData
+}
+
+func Open(path string) (Client, error) {
+	return NewClientImpl(path)
+}
+
+type unlockAccountInfo struct {
+	acc        *Account
+	unlockTime time.Time
+	expiredAt  int //s
+}
+
+func (this *unlockAccountInfo) isAvail() bool {
+	return int(time.Now().Sub(this.unlockTime).Seconds()) < this.expiredAt
 }
 
 type ClientImpl struct {
-	mu sync.Mutex
-
-	path      string
-	iv        []byte
-	masterKey []byte
-
-	accounts  map[Uint160]*Account
-	contracts map[Uint160]*ct.Contract
-
-	watchOnly     []Uint160
-	currentHeight uint32
-
-	FileStore
-	isrunning bool
+	path         string
+	accAddrs     map[string]*AccountData //Map Address(base58) => Account
+	accLabels    map[string]*AccountData //Map Label => Account
+	defaultAcc   *AccountData
+	executorData *ExecutorData
+	unlockAccs   map[string]*unlockAccountInfo //Map Address(base58) => unlockAccountInfo
+	lock         sync.RWMutex
 }
 
-//TODO: adjust contract folder structure
-func Create(path string, passwordKey []byte) *ClientImpl {
-	cl := NewClient(path, passwordKey, true)
-
-	_, err := cl.CreateAccount()
-	if err != nil {
-		fmt.Println(err)
+func NewClientImpl(path string) (*ClientImpl, error) {
+	cli := &ClientImpl{
+		path:         path,
+		accAddrs:     make(map[string]*AccountData),
+		accLabels:    make(map[string]*AccountData),
+		unlockAccs:   make(map[string]*unlockAccountInfo),
+		executorData: NewExecutorData(),
 	}
-
-	return cl
+	if common.FileExisted(path) {
+		err := cli.load()
+		if err != nil {
+			return nil, err
+		}
+	}
+	return cli, nil
 }
 
-func Open(path string, passwordKey []byte) *ClientImpl {
-	cl := NewClient(path, passwordKey, false)
-	if cl == nil {
-		log.Error("Alloc new client failure")
+func (this *ClientImpl) load() error {
+	err := this.executorData.Load(this.path)
+	if err != nil {
+		return fmt.Errorf("load executor:%s error:%s", this.path, err)
+	}
+	for _, accData := range this.executorData.Accounts {
+		this.accAddrs[accData.Address] = accData
+		if accData.Label != "" {
+			this.accLabels[accData.Label] = accData
+		}
+		if accData.IsDefault {
+			this.defaultAcc = accData
+		}
+	}
+	return nil
+}
+
+func (this *ClientImpl) save() error {
+	return this.executorData.Save(this.path)
+}
+
+func (this *ClientImpl) NewAccount(label string, typeCode keypair.KeyType, curveCode byte, sigScheme s.SignatureScheme, passwd []byte) (*Account, error) {
+	if len(passwd) == 0 {
+		return nil, fmt.Errorf("password cannot empty")
+	}
+	prvkey, pubkey, err := keypair.GenerateKeyPair(typeCode, curveCode)
+	if err != nil {
+		return nil, fmt.Errorf("generateKeyPair error:%s", err)
+	}
+	address := types.AddressFromPubKey(pubkey)
+	addressBase58 := address.ToBase58()
+	prvSecret, err := keypair.EncryptPrivateKey(prvkey, addressBase58, passwd)
+	if err != nil {
+		return nil, fmt.Errorf("encryptPrivateKey error:%s", err)
+	}
+	accData := &AccountData{}
+	accData.Label = label
+	accData.SetKeyPair(prvSecret)
+	accData.SigSch = sigScheme.Name()
+	accData.PubKey = hex.EncodeToString(keypair.SerializePublicKey(pubkey))
+
+	err = this.addAccountData(accData)
+	if err != nil {
+		return nil, err
+	}
+	return &Account{
+		PrivateKey: prvkey,
+		PublicKey:  pubkey,
+		Address:    address,
+		SigScheme:  sigScheme,
+	}, nil
+}
+
+func (this *ClientImpl) addAccountData(accData *AccountData) error {
+	if !this.checkSigScheme(accData.Alg, accData.SigSch) {
+		return fmt.Errorf("sigScheme:%s does not match KeyType:%s", accData.SigSch, accData.Alg)
+	}
+	this.lock.Lock()
+	defer this.lock.Unlock()
+	label := accData.Label
+	if label != "" {
+		_, ok := this.accLabels[label]
+		if ok {
+			return fmt.Errorf("duplicate label")
+		}
+	}
+	if len(this.executorData.Accounts) == 0 {
+		accData.IsDefault = true
+	}
+	this.executorData.AddAccount(accData)
+	err := this.save()
+	if err != nil {
+		this.executorData.DelAccount(accData.Address)
+		return fmt.Errorf("save error:%s", err)
+	}
+	this.accAddrs[accData.Address] = accData
+	if accData.IsDefault {
+		this.defaultAcc = accData
+	}
+	if label != "" {
+		this.accLabels[label] = accData
+	}
+	return nil
+}
+
+func (this *ClientImpl) ImportAccount(accMeta *AccountMetadata) error {
+	accData := &AccountData{}
+	accData.Label = accMeta.Label
+	accData.PubKey = accMeta.PubKey
+	accData.SigSch = accMeta.SigSch
+	accData.Key = accMeta.Key
+	accData.Alg = accMeta.KeyType
+	accData.Address = accMeta.Address
+	accData.EncAlg = accMeta.EncAlg
+	accData.Hash = accMeta.Hash
+	accData.Salt = accMeta.Salt
+	accData.Param = map[string]string{"curve": accMeta.Curve}
+
+	oldAccMeta := this.GetAccountMetadataByLabel(accData.Label)
+	if oldAccMeta != nil {
+		//rename
+		accData.Label = fmt.Sprintf("%s_1", accData.Label)
+	}
+	return this.addAccountData(accData)
+}
+
+func (this *ClientImpl) GetAccountByAddress(address string, passwd []byte) (*Account, error) {
+	this.lock.RLock()
+	defer this.lock.RUnlock()
+	accData, ok := this.accAddrs[address]
+	if !ok {
+		return nil, nil
+	}
+	return this.getAccount(accData, passwd)
+}
+
+func (this *ClientImpl) GetAccountByLabel(label string, passwd []byte) (*Account, error) {
+	if len(label) == 0 {
+		return nil, nil
+	}
+	this.lock.RLock()
+	defer this.lock.RUnlock()
+	accData, ok := this.accLabels[label]
+	if !ok {
+		return nil, nil
+	}
+	return this.getAccount(accData, passwd)
+}
+
+//Index start from 1
+func (this *ClientImpl) GetAccountByIndex(index int, passwd []byte) (*Account, error) {
+	this.lock.RLock()
+	defer this.lock.RUnlock()
+	accData := this.executorData.GetAccountByIndex(index - 1)
+	if accData == nil {
+		return nil, nil
+	}
+	return this.getAccount(accData, passwd)
+}
+
+func (this *ClientImpl) GetDefaultAccount(passwd []byte) (*Account, error) {
+	this.lock.RLock()
+	defer this.lock.RUnlock()
+	if this.defaultAcc == nil {
+		return nil, fmt.Errorf("cannot found default account")
+	}
+	return this.getAccount(this.defaultAcc, passwd)
+}
+
+func (this *ClientImpl) GetAccountMetadataByAddress(address string) *AccountMetadata {
+	this.lock.RLock()
+	defer this.lock.RUnlock()
+	accData, ok := this.accAddrs[address]
+	if !ok {
 		return nil
 	}
-
-	cl.accounts = cl.LoadAccount()
-	if cl.accounts == nil {
-		log.Error("Load accounts failure")
-	}
-	cl.contracts = cl.LoadContracts()
-	if cl.contracts == nil {
-		log.Error("Load contracts failure")
-	}
-	return cl
+	return this.getAccountMetadata(accData)
 }
 
-func NewClient(path string, password []byte, create bool) *ClientImpl {
-	newClient := &ClientImpl{
-		path:      path,
-		accounts:  map[Uint160]*Account{},
-		contracts: map[Uint160]*ct.Contract{},
-		FileStore: FileStore{path: path},
-		isrunning: true,
+func (this *ClientImpl) GetAccountMetadataByLabel(label string) *AccountMetadata {
+	if label == "" {
+		return nil
 	}
-
-	passwordKey := crypto.ToAesKey(password)
-	if create {
-		//create new client
-		newClient.iv = make([]byte, 16)
-		newClient.masterKey = make([]byte, 32)
-		newClient.watchOnly = []Uint160{}
-		newClient.currentHeight = 0
-
-		//generate random number for iv/masterkey
-		r := rand.New(rand.NewSource(time.Now().UnixNano()))
-		for i := 0; i < 16; i++ {
-			newClient.iv[i] = byte(r.Intn(256))
-		}
-		for i := 0; i < 32; i++ {
-			newClient.masterKey[i] = byte(r.Intn(256))
-		}
-
-		//new client store (build DB)
-		newClient.BuildDatabase(path)
-
-		// SaveStoredData
-		pwdhash := sha256.Sum256(passwordKey)
-		err := newClient.SaveStoredData("PasswordHash", pwdhash[:])
-		if err != nil {
-			log.Error(err)
-			return nil
-		}
-		err = newClient.SaveStoredData("IV", newClient.iv[:])
-		if err != nil {
-			log.Error(err)
-			return nil
-		}
-
-		aesmk, err := crypto.AesEncrypt(newClient.masterKey[:], passwordKey, newClient.iv)
-		if err == nil {
-			err = newClient.SaveStoredData("MasterKey", aesmk)
-			if err != nil {
-				log.Error(err)
-				return nil
-			}
-		} else {
-			log.Error(err)
-			return nil
-		}
-	} else {
-		if b := newClient.verifyPasswordKey(passwordKey); b == false {
-			return nil
-		}
-		if err := newClient.loadClient(passwordKey); err != nil {
-			return nil
-		}
+	this.lock.RLock()
+	defer this.lock.RUnlock()
+	accData, ok := this.accLabels[label]
+	if !ok {
+		return nil
 	}
-	ClearBytes(passwordKey, len(passwordKey))
-	return newClient
+	return this.getAccountMetadata(accData)
 }
 
-func (cl *ClientImpl) loadClient(passwordKey []byte) error {
-	var err error
-	cl.iv, err = cl.LoadStoredData("IV")
-	if err != nil {
-		fmt.Println("error: failed to load iv")
-		return err
+//Index start from 1
+func (this *ClientImpl) GetAccountMetadataByIndex(index int) *AccountMetadata {
+	this.lock.RLock()
+	defer this.lock.RUnlock()
+	accData := this.executorData.GetAccountByIndex(index - 1)
+	if accData == nil {
+		return nil
 	}
-	encryptedMasterKey, err := cl.LoadStoredData("MasterKey")
-	if err != nil {
-		fmt.Println("error: failed to load master key")
-		return err
-	}
-	cl.masterKey, err = crypto.AesDecrypt(encryptedMasterKey, passwordKey, cl.iv)
-	if err != nil {
-		fmt.Println("error: failed to decrypt master key")
-		return err
+	return this.getAccountMetadata(accData)
+}
+
+func (this *ClientImpl) GetDefaultAccountMetadata() *AccountMetadata {
+	this.lock.RLock()
+	defer this.lock.RUnlock()
+	if this.defaultAcc != nil {
+		return this.getAccountMetadata(this.defaultAcc)
 	}
 	return nil
 }
 
-func (cl *ClientImpl) GetDefaultAccount() (*Account, error) {
-	for programHash, _ := range cl.accounts {
-		return cl.GetAccountByProgramHash(programHash), nil
+func (this *ClientImpl) getAccount(accData *AccountData, passwd []byte) (*Account, error) {
+	privateKey, err := keypair.DecryptWithCustomScrypt(&accData.ProtectedKey, passwd, this.executorData.Scrypt)
+	if err != nil {
+		return nil, err
 	}
-
-	return nil, NewDetailErr(errors.New("Can't load default account."), ErrNoCode, "")
+	publicKey := privateKey.Public()
+	addr := types.AddressFromPubKey(publicKey)
+	scheme, err := s.GetScheme(accData.SigSch)
+	if err != nil {
+		return nil, fmt.Errorf("signature scheme error:%s", err)
+	}
+	return &Account{
+		PrivateKey: privateKey,
+		PublicKey:  publicKey,
+		Address:    addr,
+		SigScheme:  scheme,
+	}, nil
 }
 
-func (cl *ClientImpl) GetAccount(pubKey *crypto.PubKey) (*Account, error) {
-	signatureRedeemScript, err := contract.CreateSignatureRedeemScript(pubKey)
-	if err != nil {
-		return nil, NewDetailErr(err, ErrNoCode, "CreateSignatureRedeemScript failed")
-	}
-	programHash, err := ToCodeHash(signatureRedeemScript)
-	if err != nil {
-		return nil, NewDetailErr(err, ErrNoCode, "ToCodeHash failed")
-	}
-	return cl.GetAccountByProgramHash(programHash), nil
+func (this *ClientImpl) getAccountMetadata(accData *AccountData) *AccountMetadata {
+	accMeta := &AccountMetadata{}
+	accMeta.Label = accData.Label
+	accMeta.KeyType = accData.Alg
+	accMeta.SigSch = accData.SigSch
+	accMeta.Key = accData.Key
+	accMeta.Address = accData.Address
+	accMeta.IsDefault = accData.IsDefault
+	accMeta.PubKey = accData.PubKey
+	accMeta.EncAlg = accData.EncAlg
+	accMeta.Hash = accData.Hash
+	accMeta.Curve = accData.Param["curve"]
+	accMeta.Salt = accData.Salt
+	return accMeta
 }
 
-func (cl *ClientImpl) GetAccountByProgramHash(programHash Uint160) *Account {
-	cl.mu.Lock()
-	defer cl.mu.Unlock()
+func (this *ClientImpl) GetAccountNum() int {
+	this.lock.RLock()
+	defer this.lock.RUnlock()
+	return len(this.accAddrs)
+}
 
-	if account, ok := cl.accounts[programHash]; ok {
-		return account
+func (this *ClientImpl) DeleteAccount(address string, passwd []byte) (*Account, error) {
+	this.lock.Lock()
+	defer this.lock.Unlock()
+	accData, ok := this.accAddrs[address]
+	if !ok {
+		return nil, nil
+	}
+	if accData.IsDefault {
+		return nil, fmt.Errorf("cannot delete default account")
+	}
+	acc, err := this.getAccount(accData, passwd)
+	if err != nil {
+		return nil, err
+	}
+
+	bkAccList := append([]*AccountData{}, this.executorData.Accounts...)
+	this.executorData.DelAccount(address)
+	err = this.save()
+	if err != nil {
+		this.executorData.Accounts = bkAccList
+		return nil, err
+	}
+	delete(this.accAddrs, address)
+	if accData.Label != "" {
+		delete(this.accLabels, accData.Label)
+	}
+	delete(this.unlockAccs, address)
+	return acc, nil
+}
+
+func (this *ClientImpl) UnLockAccount(address string, expiredAt int, passwd []byte) error {
+	this.lock.Lock()
+	defer this.lock.Unlock()
+	accData, ok := this.accAddrs[address]
+	if !ok {
+		return fmt.Errorf("cannot find account by address:%s", address)
+	}
+	if expiredAt < 0 {
+		return fmt.Errorf("invalid expired time")
+	}
+	acc, err := this.getAccount(accData, passwd)
+	if err != nil {
+		return err
+	}
+	this.unlockAccs[address] = &unlockAccountInfo{
+		acc:        acc,
+		expiredAt:  expiredAt,
+		unlockTime: time.Now(),
 	}
 	return nil
 }
 
-func (cl *ClientImpl) GetContract(programHash Uint160) *ct.Contract {
-	log.Debug()
-	cl.mu.Lock()
-	defer cl.mu.Unlock()
+func (this *ClientImpl) LockAccount(address string) {
+	this.lock.Lock()
+	defer this.lock.Unlock()
+	delete(this.unlockAccs, address)
+}
 
-	if contract, ok := cl.contracts[programHash]; ok {
-		return contract
+func (this *ClientImpl) GetUnlockAccount(address string) *Account {
+	this.lock.Lock()
+	defer this.lock.Unlock()
+	accInfo, ok := this.unlockAccs[address]
+	if !ok {
+		return nil
+	}
+	if !accInfo.isAvail() {
+		delete(this.unlockAccs, address)
+		return nil
+	}
+	return accInfo.acc
+}
+
+func (this *ClientImpl) SetDefaultAccount(address string) error {
+	this.lock.Lock()
+	defer this.lock.Unlock()
+	if this.defaultAcc != nil && this.defaultAcc.Address == address {
+		return nil
+	}
+	accData, ok := this.accAddrs[address]
+	if !ok {
+		return fmt.Errorf("cannot find account by address:%s", address)
+	}
+	old := this.defaultAcc
+	if old != nil {
+		old.IsDefault = false
+	}
+	this.defaultAcc = accData
+	accData.IsDefault = true
+	err := this.save()
+	if err != nil {
+		this.defaultAcc = old
+		if old != nil {
+			old.IsDefault = true
+		}
+		accData.IsDefault = false
+		return fmt.Errorf("save error:%s", err)
 	}
 	return nil
 }
 
-func (cl *ClientImpl) ChangePassword(oldPassword []byte, newPassword []byte) bool {
-	// check password
-	oldPasswordKey := crypto.ToAesKey(oldPassword)
-	if !cl.verifyPasswordKey(oldPasswordKey) {
-		fmt.Println("error: password verification failed")
-		return false
+func (this *ClientImpl) SetLabel(address, label string) error {
+	this.lock.Lock()
+	defer this.lock.Unlock()
+	_, ok := this.accLabels[label]
+	if ok {
+		return fmt.Errorf("duplicate label")
 	}
-	if err := cl.loadClient(oldPasswordKey); err != nil {
-		fmt.Println("error: load wallet info failed")
-		return false
+	accData, ok := this.accAddrs[address]
+	if !ok {
+		return fmt.Errorf("cannot find account by address:%s", address)
 	}
-
-	// encrypt master key with new password
-	newPasswordKey := crypto.ToAesKey(newPassword)
-	newMasterKey, err := crypto.AesEncrypt(cl.masterKey, newPasswordKey, cl.iv)
+	if accData.Label == label {
+		return nil
+	}
+	oldLabel := accData.Label
+	accData.Label = label
+	err := this.save()
 	if err != nil {
-		fmt.Println("error: set new password failed")
-		return false
+		accData.Label = oldLabel
+		return fmt.Errorf("save error:%s", err)
+	}
+	delete(this.accLabels, oldLabel)
+	this.accLabels[label] = accData
+	return nil
+}
+
+func (this *ClientImpl) ChangePassword(address string, oldPasswd, newPasswd []byte) error {
+	if bytes.Equal(oldPasswd, newPasswd) {
+		return nil
+	}
+	this.lock.Lock()
+	defer this.lock.Unlock()
+	accData, ok := this.accAddrs[address]
+	if !ok {
+		return fmt.Errorf("cannot find account by address:%s", address)
+	}
+	oldPrvSecret := accData.GetKeyPair()
+	prv, err := keypair.DecryptWithCustomScrypt(accData.GetKeyPair(), oldPasswd, this.executorData.Scrypt)
+	if err != nil {
+		return fmt.Errorf("keypair.DecryptWithCustomScrypt error:%s", err)
+	}
+	newPrvSecret, err := keypair.EncryptWithCustomScrypt(prv, address, newPasswd, this.executorData.Scrypt)
+	if err != nil {
+		return fmt.Errorf("keypair.EncryptWithCustomScrypt error:%s", err)
 	}
 
-	// update wallet file
-	newPasswordHash := sha256.Sum256(newPasswordKey)
-	if err := cl.SaveStoredData("PasswordHash", newPasswordHash[:]); err != nil {
-		fmt.Println("error: wallet update failed(password hash)")
-		return false
+	accData.SetKeyPair(newPrvSecret)
+	err = this.save()
+	if err != nil {
+		accData.SetKeyPair(oldPrvSecret)
+		return fmt.Errorf("save error:%s", err)
 	}
-	if err := cl.SaveStoredData("MasterKey", newMasterKey); err != nil {
-		fmt.Println("error: wallet update failed (encrypted master key)")
-		return false
-	}
-	ClearBytes(newPasswordKey, len(newPasswordKey))
-	ClearBytes(cl.masterKey, len(cl.masterKey))
+	return nil
+}
 
+func (this *ClientImpl) ChangeSigScheme(address string, sigScheme s.SignatureScheme) error {
+	this.lock.Lock()
+	defer this.lock.Unlock()
+	accData, ok := this.accAddrs[address]
+	if !ok {
+		return fmt.Errorf("cannot find account by address:%s", address)
+	}
+	if !this.checkSigScheme(accData.Alg, sigScheme.Name()) {
+		return fmt.Errorf("sigScheme:%s does not match KeyType:%s", sigScheme.Name(), accData.Alg)
+	}
+
+	oldSigScheme := accData.SigSch
+	accData.SigSch = sigScheme.Name()
+	err := this.save()
+	if err != nil {
+		accData.SigSch = oldSigScheme
+		return fmt.Errorf("save error:%s", err)
+	}
+	accInfo, ok := this.unlockAccs[address]
+	if ok {
+		accInfo.acc.SigScheme = sigScheme
+	}
+	return nil
+}
+
+func (this *ClientImpl) checkSigScheme(keyType, sigScheme string) bool {
+	switch strings.ToUpper(keyType) {
+	case "ECDSA":
+		switch strings.ToUpper(sigScheme) {
+		case "SHA224WITHECDSA":
+		case "SHA256WITHECDSA":
+		case "SHA384WITHECDSA":
+		case "SHA512WITHECDSA":
+		case "SHA3-224WITHECDSA":
+		case "SHA3-256WITHECDSA":
+		case "SHA3-384WITHECDSA":
+		case "SHA3-512WITHECDSA":
+		case "RIPEMD160WITHECDSA":
+		default:
+			return false
+		}
+	case "SM2":
+		switch strings.ToUpper(sigScheme) {
+		case "SM3WITHSM2":
+		default:
+			return false
+		}
+	case "ED25519":
+		switch strings.ToUpper(sigScheme) {
+		case "SHA512WITHEDDSA":
+		default:
+			return false
+		}
+	default:
+		return false
+	}
 	return true
 }
 
-func (cl *ClientImpl) ContainsAccount(pubKey *crypto.PubKey) bool {
-	signatureRedeemScript, err := contract.CreateSignatureRedeemScript(pubKey)
-	if err != nil {
-		return false
-	}
-	programHash, err := ToCodeHash(signatureRedeemScript)
-	if err != nil {
-		return false
-	}
-	if cl.GetAccountByProgramHash(programHash) != nil {
-		return true
-	} else {
-		return false
-	}
-}
-
-func (cl *ClientImpl) CreateAccount() (*Account, error) {
-	ac, err := NewAccount()
-	if err != nil {
-		return nil, err
-	}
-
-	cl.mu.Lock()
-	cl.accounts[ac.ProgramHash] = ac
-	cl.mu.Unlock()
-
-	err = cl.SaveAccount(ac)
-	if err != nil {
-		return nil, err
-	}
-
-	ct, err := contract.CreateSignatureContract(ac.PublicKey)
-	if err == nil {
-		cl.AddContract(ct)
-		address, _ := ct.ProgramHash.ToAddress()
-		log.Info("[CreateContract] Address: ", address)
-	}
-
-	log.Info("Create account Success")
-	return ac, nil
-}
-
-func (cl *ClientImpl) CreateAccountByPrivateKey(privateKey []byte) (*Account, error) {
-	ac, err := NewAccountWithPrivatekey(privateKey)
-	cl.mu.Lock()
-	defer cl.mu.Unlock()
-
-	if err != nil {
-		return nil, err
-	}
-
-	cl.accounts[ac.ProgramHash] = ac
-	err = cl.SaveAccount(ac)
-	if err != nil {
-		return nil, err
-	}
-	return ac, nil
-}
-
-func (cl *ClientImpl) ProcessBlocks() {
-	for {
-		if !cl.isrunning {
-			break
-		}
-
-		for {
-			if ledger.DefaultLedger.Blockchain == nil {
-				break
-			}
-			if cl.currentHeight > ledger.DefaultLedger.Blockchain.BlockHeight {
-				break
-			}
-
-			cl.mu.Lock()
-
-			block, _ := ledger.DefaultLedger.GetBlockWithHeight(cl.currentHeight)
-			if block != nil {
-				cl.ProcessNewBlock(block)
-			}
-
-			cl.mu.Unlock()
-		}
-
-		for i := 0; i < 20; i++ {
-			time.Sleep(time.Millisecond * 100)
-		}
-	}
-}
-
-func (cl *ClientImpl) ProcessNewBlock(block *ledger.Block) {
-	//TODO: ProcessNewBlock
-
-}
-
-func (cl *ClientImpl) Sign(context *ct.ContractContext) bool {
-	log.Debug()
-	fSuccess := false
-	for i, hash := range context.ProgramHashes {
-		contract := cl.GetContract(hash)
-		if contract == nil {
-			continue
-		}
-		account := cl.GetAccountByProgramHash(hash)
-		if account == nil {
-			continue
-		}
-
-		signature, err := sig.SignBySigner(context.Data, account)
-		if err != nil {
-			return fSuccess
-		}
-		err = context.AddContract(contract, account.PublicKey, signature)
-
-		if err != nil {
-			fSuccess = false
-		} else {
-			if i == 0 {
-				fSuccess = true
-			}
-		}
-	}
-	return fSuccess
-}
-
-func (cl *ClientImpl) verifyPasswordKey(passwordKey []byte) bool {
-	savedPasswordHash, err := cl.LoadStoredData("PasswordHash")
-	if err != nil {
-		fmt.Println("error: failed to load password hash")
-		return false
-	}
-	if savedPasswordHash == nil {
-		fmt.Println("error: saved password hash is nil")
-		return false
-	}
-	passwordHash := sha256.Sum256(passwordKey)
-	///ClearBytes(passwordKey, len(passwordKey))
-	if !IsEqualBytes(savedPasswordHash, passwordHash[:]) {
-		fmt.Println("error: password wrong")
-		return false
-	}
-	return true
-}
-
-func (cl *ClientImpl) EncryptPrivateKey(prikey []byte) ([]byte, error) {
-	enc, err := crypto.AesEncrypt(prikey, cl.masterKey, cl.iv)
-	if err != nil {
-		return nil, err
-	}
-
-	return enc, nil
-}
-
-func (cl *ClientImpl) DecryptPrivateKey(prikey []byte) ([]byte, error) {
-	if prikey == nil {
-		return nil, NewDetailErr(errors.New("The PriKey is nil"), ErrNoCode, "")
-	}
-	if len(prikey) != 96 {
-		return nil, NewDetailErr(errors.New("The len of PriKeyEnc is not 96bytes"), ErrNoCode, "")
-	}
-
-	dec, err := crypto.AesDecrypt(prikey, cl.masterKey, cl.iv)
-	if err != nil {
-		return nil, err
-	}
-
-	return dec, nil
-}
-
-func (cl *ClientImpl) SaveAccount(ac *Account) error {
-	decryptedPrivateKey := make([]byte, 96)
-	temp, err := ac.PublicKey.EncodePoint(false)
-	if err != nil {
-		return err
-	}
-	for i := 1; i <= 64; i++ {
-		decryptedPrivateKey[i-1] = temp[i]
-	}
-
-	for i := len(ac.PrivateKey) - 1; i >= 0; i-- {
-		decryptedPrivateKey[96+i-len(ac.PrivateKey)] = ac.PrivateKey[i]
-	}
-
-	encryptedPrivateKey, err := cl.EncryptPrivateKey(decryptedPrivateKey)
-	if err != nil {
-		return err
-	}
-
-	ClearBytes(decryptedPrivateKey, 96)
-
-	err = cl.SaveAccountData(ac.ProgramHash.ToArray(), encryptedPrivateKey)
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (cl *ClientImpl) LoadAccount() map[Uint160]*Account {
-	i := 0
-	accounts := map[Uint160]*Account{}
-	for true {
-		_, prikeyenc, err := cl.LoadAccountData(i)
-		if err != nil {
-			// TODO: report the error
-		}
-
-		decryptedPrivateKey, err := cl.DecryptPrivateKey(prikeyenc)
-		if err != nil {
-			log.Error(err)
-		}
-
-		prikey := decryptedPrivateKey[64:96]
-		ac, err := NewAccountWithPrivatekey(prikey)
-		accounts[ac.ProgramHash] = ac
-		i++
-		break
-	}
-
-	return accounts
-}
-
-func (cl *ClientImpl) LoadContracts() map[Uint160]*ct.Contract {
-	i := 0
-	contracts := map[Uint160]*ct.Contract{}
-
-	for true {
-		ph, _, rd, err := cl.LoadContractData(i)
-		if err != nil {
-			fmt.Println(err)
-			break
-		}
-
-		rdreader := bytes.NewReader(rd)
-		ct := new(ct.Contract)
-		ct.Deserialize(rdreader)
-
-		programhash, err := Uint160ParseFromBytes(ph)
-		ct.ProgramHash = programhash
-		contracts[ct.ProgramHash] = ct
-		i++
-		break
-	}
-
-	return contracts
-}
-
-func (cl *ClientImpl) AddContract(ct *contract.Contract) error {
-	cl.mu.Lock()
-	defer cl.mu.Unlock()
-
-	if cl.accounts[ct.ProgramHash] == nil {
-		return NewDetailErr(errors.New("AddContract(): contract.OwnerPubkeyHash not in []accounts"), ErrNoCode, "")
-	}
-
-	cl.contracts[ct.ProgramHash] = ct
-
-	err := cl.SaveContractData(ct)
-	return err
-}
-
-func clientIsDefaultBookKeeper(publicKey string) bool {
-	for _, bookKeeper := range config.Parameters.BookKeepers {
-		if strings.Compare(bookKeeper, publicKey) == 0 {
-			return true
-		}
-	}
-	return false
-}
-
-func nodeType(typeName string) int {
-	if "service" == config.Parameters.NodeType {
-		return protocol.SERVICENODE
-	} else {
-		return protocol.VERIFYNODE
-	}
-}
-
-func GetClient() Client {
-	if !FileExisted(WalletFileName) {
-		log.Fatal(fmt.Sprintf("No %s detected, please create a wallet by using command line.", WalletFileName))
-		os.Exit(1)
-	}
-	passwd, err := password.GetAccountPassword()
-	if err != nil {
-		log.Fatal("Get password error.")
-		os.Exit(1)
-	}
-	c := Open(WalletFileName, passwd)
-	if c == nil {
-		return nil
-	}
-	return c
-}
-
-func GetBookKeepers() []*crypto.PubKey {
-	var pubKeys = []*crypto.PubKey{}
-	sort.Strings(config.Parameters.BookKeepers)
-	for _, key := range config.Parameters.BookKeepers {
-		pubKey := []byte(key)
-		pubKey, err := hex.DecodeString(key)
-		// TODO Convert the key string to byte
-		k, err := crypto.DecodePoint(pubKey)
-		if err != nil {
-			log.Error("Incorrectly book keepers key")
-			return nil
-		}
-		pubKeys = append(pubKeys, k)
-	}
-
-	return pubKeys
+func (this *ClientImpl) GetExecutorData() *ExecutorData {
+	return this.executorData
 }

@@ -1,16 +1,20 @@
-// Copyright 2016 DNA Dev team
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+/*
+ * Copyright (C) 2018 The DNA Authors
+ * This file is part of The DNA library.
+ *
+ * The DNA is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * The DNA is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with The DNA.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 package serialization
 
@@ -20,6 +24,9 @@ import (
 	"io/ioutil"
 	"math"
 	"testing"
+
+	"crypto/rand"
+	"github.com/stretchr/testify/assert"
 )
 
 func BenchmarkWriteVarUint(b *testing.B) {
@@ -41,7 +48,7 @@ func BenchmarkWriteVarString(b *testing.B) {
 	s := "jim"
 	buf := new(bytes.Buffer)
 	for i := 0; i < b.N; i++ {
-		WriteVarString(buf, s)
+		WriteString(buf, s)
 	}
 }
 
@@ -65,7 +72,7 @@ func BenchmarkReadVarString(b *testing.B) {
 	data := []byte{10, 11, 12}
 	for i := 0; i < b.N; i++ {
 		r := bytes.NewReader(data)
-		ReadVarString(r)
+		ReadString(r)
 	}
 }
 
@@ -86,7 +93,7 @@ func BenchmarkSerialize(ben *testing.B) {
 		WriteVarUint(b, uint64(a6))
 		WriteVarUint(b, uint64(a7))
 		WriteVarBytes(b, a8)
-		WriteVarString(b, a9)
+		WriteString(b, a9)
 
 		ReadVarUint(b, math.MaxUint64)
 		ReadVarUint(b, math.MaxUint64)
@@ -94,7 +101,7 @@ func BenchmarkSerialize(ben *testing.B) {
 		ReadVarUint(b, math.MaxUint64)
 		ReadVarUint(b, math.MaxUint32)
 		ReadVarBytes(b)
-		ReadVarString(b)
+		ReadString(b)
 
 		GetVarUintSize(uint64(100))
 		GetVarUintSize(uint64(65535))
@@ -125,7 +132,7 @@ func TestSerialize(t *testing.T) {
 	WriteVarUint(b, uint64(a6))
 	WriteVarUint(b, uint64(a7))
 	WriteVarBytes(b, a8)
-	WriteVarString(b, a9)
+	WriteString(b, a9)
 
 	fmt.Println(ReadVarUint(b, math.MaxUint64))
 	fmt.Println(ReadVarUint(b, math.MaxUint64))
@@ -133,7 +140,7 @@ func TestSerialize(t *testing.T) {
 	fmt.Println(ReadVarUint(b, math.MaxUint64))
 	fmt.Println(ReadVarUint(b, math.MaxUint32))
 	fmt.Println(ReadVarBytes(b))
-	fmt.Println(ReadVarString(b))
+	fmt.Println(ReadString(b))
 
 	fmt.Printf("100 size is %d byte.\t\n", GetVarUintSize(uint64(100)))
 	fmt.Printf("65535 size is %d byte.\t\n", GetVarUintSize(uint64(65535)))
@@ -173,4 +180,33 @@ func TestReadWriteInt(t *testing.T) {
 	fmt.Println(ReadUint32(b5))
 	fmt.Println(ReadUint64(b6))
 
+}
+
+func TestReadVarBytesMemAllocAttack(t *testing.T) {
+	buff := bytes.NewBuffer([]byte{1, 2, 3})
+	length := math.MaxInt64
+	_, err := byteXReader(buff, uint64(length))
+	assert.NotNil(t, err)
+}
+
+func TestReadVarBytesRead(t *testing.T) {
+	bs := make([]byte, 2048+1)
+	for i := 0; i < len(bs); i++ {
+		bs[i] = byte(i)
+	}
+	buff := bytes.NewBuffer(bs)
+	read, err := byteXReader(buff, uint64(len(bs)))
+	assert.Nil(t, err)
+	assert.Equal(t, bs, read)
+}
+
+const N = 24829*1 + 1
+
+func BenchmarkBytesXReader(b *testing.B) {
+	bs := make([]byte, N)
+	rand.Read(bs)
+	for i := 0; i < b.N; i++ {
+		buff := bytes.NewBuffer(bs)
+		byteXReader(buff, uint64(len(bs)))
+	}
 }

@@ -1,44 +1,85 @@
-// Copyright 2016 DNA Dev team
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
+/*
+ * Copyright (C) 2018 The DNA Authors
+ * This file is part of The DNA library.
+ *
+ * The DNA is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * The DNA is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with The DNA.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package log
 
 import (
+	"fmt"
+	"github.com/stretchr/testify/assert"
+	"io/ioutil"
+	"os"
 	"testing"
+	"time"
 )
 
-func TestDebugPrint(t *testing.T) {
-	CreatePrintLog("./")
-	Debug("debug testing")
+func logPrint() {
+	Debug("debug")
+	Info("info")
+	Warn("warn")
+	Error("error")
+	Fatal("fatal")
+	Trace("trace")
+
+	testValue := 1
+	Debugf("debug %v", testValue)
+	Infof("info %v", testValue)
+	Warnf("warn %v", testValue)
+	Errorf("error %v", testValue)
+	Fatalf("fatal %v", testValue)
+	Tracef("trace %v", testValue)
 }
 
-func TestInfoPrint(t *testing.T) {
-	CreatePrintLog("./")
-	Info("Info testing")
+func TestLog(t *testing.T) {
+	defer func() {
+		os.RemoveAll("Log/")
+	}()
+
+	InitLog(InfoLog, PATH, Stdout)
+	Log.SetDebugLevel(DebugLog)
+	logPrint()
+
+	Log.SetDebugLevel(WarnLog)
+
+	logPrint()
+
+	err := ClosePrintLog()
+	assert.Nil(t, err)
 }
 
-func TestWarningPrint(t *testing.T) {
-	CreatePrintLog("./")
-	Warn("Warning testing")
-}
-
-func TestErrorPrint(t *testing.T) {
-	CreatePrintLog("./")
-	Error("Error testing")
-}
-
-func TestFatalPrint(t *testing.T) {
-	CreatePrintLog("./")
-	Fatal("Fatal testing")
+func TestNewLogFile(t *testing.T) {
+	defer func() {
+		os.RemoveAll("Log/")
+	}()
+	InitLog(InfoLog, PATH, Stdout)
+	logfileNum1, err1 := ioutil.ReadDir("Log/")
+	if err1 != nil {
+		fmt.Println(err1)
+		return
+	}
+	logPrint()
+	isNeedNewFile := CheckIfNeedNewFile()
+	assert.NotEqual(t, isNeedNewFile, true)
+	ClosePrintLog()
+	time.Sleep(time.Second * 2)
+	InitLog(InfoLog, PATH, Stdout)
+	logfileNum2, err2 := ioutil.ReadDir("Log/")
+	if err2 != nil {
+		fmt.Println(err2)
+		return
+	}
+	assert.Equal(t, len(logfileNum1), (len(logfileNum2) - 1))
 }
