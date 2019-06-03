@@ -22,12 +22,13 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"github.com/dnaproject2/DNA/cmd/utils"
-	"github.com/urfave/cli"
 	"io"
 	"sort"
 	"strings"
 	"text/template"
+
+	"github.com/dnaproject2/DNA/cmd/utils"
+	"github.com/urfave/cli"
 )
 
 // AppHelpTemplate is the test template for the default, global app help topic.
@@ -120,6 +121,7 @@ var AppHelpFlagGroups = []flagGroup{
 			utils.AccountChangePasswdFlag,
 			utils.AccountSourceFileFlag,
 			utils.AccountWIFFlag,
+			utils.AccountPEMFlag,
 			utils.AccountLowSecurityFlag,
 			utils.AccountMultiMFlag,
 			utils.AccountMultiPubKeyFlag,
