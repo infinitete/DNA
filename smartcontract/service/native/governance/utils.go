@@ -349,9 +349,6 @@ func CheckVBFTConfig(configuration *config.VBFTConfig) error {
 	if configuration.PeerHandshakeTimeout < 10 {
 		return fmt.Errorf("initConfig. PeerHandshakeTimeout must >= 10")
 	}
-	if configuration.MinInitStake < 10000 {
-		return fmt.Errorf("initConfig. MinInitStake must >= 10000")
-	}
 	if len(configuration.VrfProof) < 128 {
 		return fmt.Errorf("initConfig. VrfProof must >= 128")
 	}

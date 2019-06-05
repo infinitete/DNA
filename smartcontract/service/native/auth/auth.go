@@ -226,7 +226,7 @@ func assignToRole(native *native.NativeService, param *OntIDsToRoleParam) (bool,
 		return false, fmt.Errorf("verify admin's signature failed: %v", err)
 	}
 	if !valid {
-		log.Debugf("[assignOntIDsToRole] verifySig return false: adminOntID=%s, keyNo=%d",
+		log.Debugf("[assignDnaIDsToRole] verifySig return false: adminOntID=%s, keyNo=%d",
 			string(admin), param.KeyNo)
 		return false, nil
 	}
@@ -269,32 +269,32 @@ func assignToRole(native *native.NativeService, param *OntIDsToRoleParam) (bool,
 	return true, nil
 }
 
-func AssignOntIDsToRole(native *native.NativeService) ([]byte, error) {
+func AssignDnaIDsToRole(native *native.NativeService) ([]byte, error) {
 	//deserialize param
 	param := new(OntIDsToRoleParam)
 	rd := bytes.NewReader(native.Input)
 	if err := param.Deserialize(rd); err != nil {
-		return nil, fmt.Errorf("[assignOntIDsToRole] deserialize param failed: %v", err)
+		return nil, fmt.Errorf("[assignDnaIDsToRole] deserialize param failed: %v", err)
 	}
 
 	if param.Role == nil {
-		return nil, fmt.Errorf("[assignOntIDsToRole] invalid param: role is nil")
+		return nil, fmt.Errorf("[assignDnaIDsToRole] invalid param: role is nil")
 	}
 	for i, ontID := range param.Persons {
 		if !account.VerifyID(string(ontID)) {
-			return nil, fmt.Errorf("[assignOntIDsToRole] invalid param: param.Persons[%d]=%s",
+			return nil, fmt.Errorf("[assignDnaIDsToRole] invalid param: param.Persons[%d]=%s",
 				i, string(ontID))
 		}
 	}
 
 	ret, err := assignToRole(native, param)
 	if err != nil {
-		return nil, fmt.Errorf("[assignOntIDsToRole] failed: %v", err)
+		return nil, fmt.Errorf("[assignDnaIDsToRole] failed: %v", err)
 	}
 
 	contract := param.ContractAddr.ToHexString()
-	failState := []interface{}{"assignOntIDsToRole", contract, false}
-	sucState := []interface{}{"assignOntIDsToRole", contract, true}
+	failState := []interface{}{"assignDnaIDsToRole", contract, false}
+	sucState := []interface{}{"assignDnaIDsToRole", contract, true}
 	if ret {
 		pushEvent(native, sucState)
 		return utils.BYTE_TRUE, nil
@@ -674,7 +674,7 @@ func RegisterAuthContract(native *native.NativeService) {
 	native.Register("assignFuncsToRole", AssignFuncsToRole)
 	native.Register("delegate", Delegate)
 	native.Register("withdraw", Withdraw)
-	native.Register("assignOntIDsToRole", AssignOntIDsToRole)
+	native.Register("assignDnaIDsToRole", AssignDnaIDsToRole)
 	native.Register("verifyToken", VerifyToken)
 	native.Register("transfer", Transfer)
 }

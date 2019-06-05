@@ -1088,9 +1088,6 @@ func UpdateConfig(native *native.NativeService) ([]byte, error) {
 	if configuration.PeerHandshakeTimeout < 10 {
 		return utils.BYTE_FALSE, fmt.Errorf("updateConfig. PeerHandshakeTimeout must >= 10")
 	}
-	if configuration.MaxBlockChangeView < 10000 {
-		return utils.BYTE_FALSE, fmt.Errorf("updateConfig. MaxBlockChangeView must >= 10000")
-	}
 
 	preConfig := &PreConfig{
 		Configuration: configuration,
@@ -1149,9 +1146,6 @@ func UpdateGlobalParam(native *native.NativeService) ([]byte, error) {
 	}
 	if globalParam.CandidateFee != 0 && globalParam.CandidateFee < MIN_CANDIDATE_FEE {
 		return utils.BYTE_FALSE, fmt.Errorf("updateGlobalParam. CandidateFee must >= %d", MIN_CANDIDATE_FEE)
-	}
-	if globalParam.MinInitStake < 1 {
-		return utils.BYTE_FALSE, fmt.Errorf("updateGlobalParam. MinInitStake must >= 1")
 	}
 	err = putGlobalParam(native, contract, globalParam)
 	if err != nil {
