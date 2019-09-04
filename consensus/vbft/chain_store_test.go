@@ -37,7 +37,7 @@ func newTestChainStore(t *testing.T) *ChainStore {
 	if acct == nil {
 		t.Fatalf("GetDefaultAccount error: acc is nil")
 	}
-
+	os.RemoveAll(config.DEFAULT_DATA_DIR)
 	db, err := ledger.NewLedger(config.DEFAULT_DATA_DIR, 0)
 	if err != nil {
 		t.Fatalf("NewLedger error %s", err)

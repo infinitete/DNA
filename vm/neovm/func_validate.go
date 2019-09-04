@@ -467,7 +467,12 @@ func validatePickItem(e *ExecutionEngine) error {
 		if v := item.(*types.Map).TryGetValue(key); v == nil {
 			return errors.ERR_MAP_NOT_EXIST
 		}
-	case *types.ByteArray:
+	default:
+		OpCodeUpdateHeight := e.BlockHtLevel0
+		if e.BlockHeight <= OpCodeUpdateHeight {
+			return errors.ERR_NOT_SUPPORT_OPCODE
+		}
+
 		index, err := PeekBigInteger(e)
 		if err != nil {
 			return err
@@ -482,8 +487,6 @@ func validatePickItem(e *ExecutionEngine) error {
 		if index.Cmp(big.NewInt(int64(len(barr)))) >= 0 {
 			return errors.ERR_OVER_MAX_ARRAY_SIZE
 		}
-	default:
-		return fmt.Errorf("validatePickItem error: %s", errors.ERR_NOT_SUPPORT_TYPE)
 	}
 	return nil
 }
@@ -538,6 +541,7 @@ func validateNewArray(e *ExecutionEngine) error {
 	}
 
 	count, err := PeekBigInteger(e)
+
 	if err != nil {
 		return err
 	}
@@ -578,6 +582,13 @@ func validateAppend(e *ExecutionEngine) error {
 	if !ok1 && !ok2 {
 		return fmt.Errorf("validateAppend error: %s", errors.ERR_NOT_SUPPORT_TYPE)
 	}
+
+	arr, _ := arrItem.GetArray()
+	count := big.NewInt(int64(len(arr) + 1))
+	if count.Cmp(big.NewInt(int64(MAX_ARRAY_SIZE))) > 0 {
+		return errors.ERR_OVER_MAX_ARRAY_SIZE
+	}
+
 	return nil
 }
 
@@ -649,6 +660,11 @@ func LogStackTrace(e *ExecutionEngine, needStackCount int, desc string) error {
 }
 
 func validatorHasKey(e *ExecutionEngine) error {
+	OpCodeUpdateHeight := e.BlockHtLevel0
+	if e.BlockHeight <= OpCodeUpdateHeight {
+		return errors.ERR_NOT_SUPPORT_OPCODE
+	}
+
 	if err := LogStackTrace(e, 2, "[validatorHasKey]"); err != nil {
 		return err
 	}
@@ -661,6 +677,11 @@ func validatorHasKey(e *ExecutionEngine) error {
 }
 
 func validatorKeys(e *ExecutionEngine) error {
+	OpCodeUpdateHeight := e.BlockHtLevel0
+	if e.BlockHeight <= OpCodeUpdateHeight {
+		return errors.ERR_NOT_SUPPORT_OPCODE
+	}
+
 	if err := LogStackTrace(e, 1, "[validatorKeys]"); err != nil {
 		return err
 	}
@@ -669,6 +690,11 @@ func validatorKeys(e *ExecutionEngine) error {
 }
 
 func validatorValues(e *ExecutionEngine) error {
+	OpCodeUpdateHeight := e.BlockHtLevel0
+	if e.BlockHeight <= OpCodeUpdateHeight {
+		return errors.ERR_NOT_SUPPORT_OPCODE
+	}
+
 	if err := LogStackTrace(e, 1, "[validatorValues]"); err != nil {
 		return err
 	}
@@ -677,6 +703,11 @@ func validatorValues(e *ExecutionEngine) error {
 }
 
 func validateDCALL(e *ExecutionEngine) error {
+	OpCodeUpdateHeight := e.BlockHtLevel0
+	if e.BlockHeight <= OpCodeUpdateHeight {
+		return errors.ERR_NOT_SUPPORT_OPCODE
+	}
+
 	if err := LogStackTrace(e, 1, "[validatorValues]"); err != nil {
 		return err
 	}

@@ -205,88 +205,86 @@ func (self *Server) buildParticipantConfig(blkNum uint32, block *Block, chainCfg
 	cfg := &BlockParticipantConfig{
 		BlockNum:    blkNum,
 		Vrf:         vrfValue,
-		ChainConfig: chainCfg, // TODO: copy chain config
+		ChainConfig: chainCfg,
 	}
 
-	s := 0
-
-	Proposers := calcParticipantPeers(cfg, chainCfg, s, s+vconfig.MAX_PROPOSER_COUNT)
-	if uint32(len(Proposers)) < chainCfg.C+1 {
-		return nil, fmt.Errorf("cfg Proposers length less than chainCfg.C:%d,%d", uint32(len(cfg.Proposers)), chainCfg.C)
-	}
-	cfg.Proposers = Proposers[:chainCfg.C+1]
-	s += vconfig.MAX_PROPOSER_COUNT
-	cfg.Endorsers = calcParticipantPeers(cfg, chainCfg, s, s+vconfig.MAX_ENDORSER_COUNT)
-	if uint32(len(cfg.Endorsers)) < 2*chainCfg.C {
-		return nil, fmt.Errorf("cfg.Endorsers length less than double chainCfg.C:%d,%d", uint32(len(cfg.Endorsers)), chainCfg.C)
-	}
-	s += vconfig.MAX_ENDORSER_COUNT
-	cfg.Committers = calcParticipantPeers(cfg, chainCfg, s, s+vconfig.MAX_COMMITTER_COUNT)
-	if uint32(len(cfg.Committers)) < 2*chainCfg.C {
-		return nil, fmt.Errorf("cfg.Committers length less than double chainCfg.C:%d,%d", uint32(len(cfg.Committers)), chainCfg.C)
-	}
+	cfg.Proposers, cfg.Endorsers, cfg.Committers = calcParticipantPeers(cfg, chainCfg)
 	log.Infof("server %d, blkNum: %d, state: %d, participants config: %v, %v, %v", self.Index, blkNum,
 		self.getState(), cfg.Proposers, cfg.Endorsers, cfg.Committers)
 
 	return cfg, nil
 }
 
-func calcParticipantPeers(cfg *BlockParticipantConfig, chain *vconfig.ChainConfig, start, end int) []uint32 {
+func calcParticipantPeers(cfg *BlockParticipantConfig, chain *vconfig.ChainConfig) ([]uint32, []uint32, []uint32) {
 
 	peers := make([]uint32, 0)
 	peerMap := make(map[uint32]bool)
-	proposerMap := make(map[uint32]bool)
-	var cnt uint32
 
-	if checkCalcEndorserOrCommitter(end) {
-		if len(cfg.Proposers) != 0 {
-			for _, p := range cfg.Proposers {
-				proposerMap[p] = true
-				if uint32(len(proposerMap)) >= chain.C {
-					break
-				}
-			}
-		}
-	}
-	for i := start; ; i++ {
+	// 1. select peers as many as possible
+	c := int(chain.C)
+	for i := 0; i < len(chain.PosTable); i++ {
 		peerId := calcParticipant(cfg.Vrf, chain.PosTable, uint32(i))
 		if peerId == math.MaxUint32 {
-			return []uint32{}
-		}
-		if checkCalcEndorserOrCommitter(end) {
-			if _, present := proposerMap[peerId]; present {
-				continue
-			}
+			break
 		}
 		if _, present := peerMap[peerId]; !present {
-			// got new peer
 			peers = append(peers, peerId)
 			peerMap[peerId] = true
-			cnt++
-			if cnt >= chain.N {
-				return peers
-			}
-		}
-		if end == vconfig.MAX_PROPOSER_COUNT {
-			if i >= end && uint32(len(peers)) > chain.C {
-				return peers
-			}
-		}
-		if checkCalcEndorserOrCommitter(end) {
-			if uint32(len(peers)) > chain.C*2 {
-				return peers
+			if len(peerMap) > (c+1)+((2*c+1)*2) || len(peerMap) == int(chain.N) {
+				break
 			}
 		}
 	}
-	return peers
-}
 
-func checkCalcEndorserOrCommitter(end int) bool {
-	if end == vconfig.MAX_ENDORSER_COUNT+vconfig.MAX_PROPOSER_COUNT ||
-		end == vconfig.MAX_PROPOSER_COUNT+vconfig.MAX_ENDORSER_COUNT+vconfig.MAX_COMMITTER_COUNT {
-		return true
+	if len(peerMap) <= c*3 {
+		for _, peer := range chain.Peers {
+			if _, present := peerMap[peer.Index]; !present {
+				peers = append(peers, peer.Index)
+				peerMap[peer.Index] = true
+			}
+			if len(peerMap) > c*3 {
+				break
+			}
+		}
 	}
-	return false
+
+	// [p0, p1, p2, .... p_c+1, ...    .. p_m, ....      pn]
+	//  <-- proposer  --><--- endorser --><-- committer -->
+	nCommitter := 2*c + 1
+	propsers := peers[0 : c+1]
+	n1 := (len(peers) - len(propsers)) / 2
+	endorsers0 := peers[c+1 : c+1+n1]
+	committers := peers[c+1+n1:]
+
+	// copy endorser0 to endorser
+	endorsers := make([]uint32, 0)
+	endorsers = append(endorsers, endorsers0...)
+	if len(endorsers) < nCommitter {
+		// not enough endorser, get more from committer/proposer
+		// 1. add last empty proposer
+		endorsers = append(endorsers, propsers[c])
+		// 2. add committers if not enough
+		for i := len(committers) - 1; i >= 0 && len(endorsers) < nCommitter; i-- {
+			endorsers = append(endorsers, committers[i])
+		}
+		// 3. add proposers if not enough
+		for i := c - 1; i > 0 && len(endorsers) < nCommitter; i-- {
+			endorsers = append(endorsers, propsers[i])
+		}
+	}
+	if len(committers) < nCommitter {
+		// not enough committer, get more from endorser/proposer
+		// 1. add proposers if not enough
+		for i := 1; i < len(propsers) && len(committers) < nCommitter; i++ {
+			committers = append(committers, propsers[i])
+		}
+		// 2. add init-endorsers if not enough
+		for i := len(endorsers0) - 1; i >= 0 && len(committers) < nCommitter; i-- {
+			committers = append(committers, endorsers0[i])
+		}
+	}
+
+	return propsers, endorsers, committers
 }
 
 func calcParticipant(vrf vconfig.VRFValue, dposTable []uint32, k uint32) uint32 {
@@ -297,8 +295,7 @@ func calcParticipant(vrf vconfig.VRFValue, dposTable []uint32, k uint32) uint32 
 	if k >= 512 {
 		return math.MaxUint32
 	}
-	// FIXME:
-	// take 16bits random variable from vrf, if len(dposTable) is not power of 2,
+	// Note: take 16bits random variable from vrf, if len(dposTable) is not power of 2,
 	// this algorithm will break the fairness of vrf. to be fixed
 	v1 = uint32(vrf[bIdx]) >> bits1
 	if bIdx+1 < uint32(len(vrf)) {
