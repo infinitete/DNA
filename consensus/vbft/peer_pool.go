@@ -51,12 +51,12 @@ type PeerPool struct {
 
 func NewPeerPool(maxSize int, server *Server) *PeerPool {
 	return &PeerPool{
-		maxSize: maxSize,
-		server:  server,
-		configs: make(map[uint32]*vconfig.PeerConfig),
-		IDMap:   make(map[string]uint32),
-		P2pMap:  make(map[uint32]uint64),
-		peers:   make(map[uint32]*Peer),
+		maxSize:                maxSize,
+		server:                 server,
+		configs:                make(map[uint32]*vconfig.PeerConfig),
+		IDMap:                  make(map[string]uint32),
+		P2pMap:                 make(map[uint32]uint64),
+		peers:                  make(map[uint32]*Peer),
 		peerConnectionWaitings: make(map[uint32]chan struct{}),
 	}
 }
@@ -232,6 +232,17 @@ func (pool *PeerPool) GetPeerPubKey(peerIdx uint32) keypair.PublicKey {
 	}
 
 	return nil
+}
+
+func (pool *PeerPool) GetAllPubKeys() map[uint32]keypair.PublicKey {
+	pool.lock.RLock()
+	defer pool.lock.RUnlock()
+
+	keys := make(map[uint32]keypair.PublicKey)
+	for idx, peer := range pool.peers {
+		keys[idx] = peer.PubKey
+	}
+	return keys
 }
 
 func (pool *PeerPool) isPeerAlive(peerIdx uint32) bool {

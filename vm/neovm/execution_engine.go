@@ -19,15 +19,18 @@
 package neovm
 
 import (
+ 	"github.com/dnaproject2/DNA/common/config"
 	"github.com/dnaproject2/DNA/vm/neovm/errors"
 )
 
-func NewExecutionEngine() *ExecutionEngine {
+func NewExecutionEngine(BlockHeight uint32) *ExecutionEngine {
 	var engine ExecutionEngine
 	engine.EvaluationStack = NewRandAccessStack()
 	engine.AltStack = NewRandAccessStack()
 	engine.State = BREAK
 	engine.OpCode = 0
+	engine.BlockHeight = BlockHeight
+	engine.BlockHtLevel0 = config.GetOpcodeUpdateCheckHeight(config.DefConfig.P2PNode.NetworkId)
 	return &engine
 }
 
@@ -37,6 +40,8 @@ type ExecutionEngine struct {
 	State           VMState
 	Contexts        []*ExecutionContext
 	Context         *ExecutionContext
+	BlockHeight     uint32
+	BlockHtLevel0   uint32
 	OpCode          OpCode
 	OpExec          OpExec
 }

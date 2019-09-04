@@ -74,7 +74,6 @@ type BftAction struct {
 
 type BlockParticipantConfig struct {
 	BlockNum    uint32
-	L           uint32
 	Vrf         vconfig.VRFValue
 	ChainConfig *vconfig.ChainConfig
 	Proposers   []uint32
@@ -276,12 +275,12 @@ func (self *Server) NewConsensusPayload(payload *p2pmsg.ConsensusPayload) {
 	}
 }
 
-func (self *Server) LoadChainConfig(chainStore *ChainStore) error {
+func (self *Server) LoadChainConfig(blkNum uint32) error {
 	//get chainconfig from genesis block
 
-	block, err := chainStore.GetBlock(chainStore.GetChainedBlockNum())
-	if err != nil {
-		return err
+	block, _ := self.blockPool.getSealedBlock(blkNum)
+	if block == nil {
+		return fmt.Errorf("getSealedBlock err height:%d", blkNum)
 	}
 	var cfg vconfig.ChainConfig
 	if block.getNewChainConfig() != nil {
@@ -290,9 +289,9 @@ func (self *Server) LoadChainConfig(chainStore *ChainStore) error {
 	} else {
 		cfgBlock := block
 		if block.getLastConfigBlockNum() != math.MaxUint32 {
-			cfgBlock, err = chainStore.GetBlock(block.getLastConfigBlockNum())
-			if err != nil {
-				return fmt.Errorf("failed to get cfg block: %s", err)
+			cfgBlock, _ = self.blockPool.getSealedBlock(block.getLastConfigBlockNum())
+			if cfgBlock == nil {
+				return fmt.Errorf("failed to get cfg block height:%d", block.getLastConfigBlockNum())
 			}
 		}
 		if cfgBlock.getNewChainConfig() == nil {
@@ -330,11 +329,11 @@ func (self *Server) LoadChainConfig(chainStore *ChainStore) error {
 	if block == nil {
 		return fmt.Errorf("failed to get sealed block (%d)", self.GetCommittedBlockNo())
 	}
-
-	self.currentParticipantConfig, err = self.buildParticipantConfig(self.GetCurrentBlockNo(), block, self.config)
+	currentParticipantConfig, err := self.buildParticipantConfig(self.GetCurrentBlockNo(), block, self.config)
 	if err != nil {
 		return fmt.Errorf("failed to build participant config: %s", err)
 	}
+	self.currentParticipantConfig = currentParticipantConfig
 
 	return nil
 }
@@ -404,7 +403,7 @@ func (self *Server) updateChainConfig() error {
 			log.Infof("updateChainConfig add peer index:%v,id:%v", p.ID, p.Index)
 		}
 	}
-	for index, peer := range self.peerPool.peers {
+	for index, peerPubKey := range self.peerPool.GetAllPubKeys() {
 		_, present := peermap[index]
 		if !present {
 			if index == self.Index {
@@ -412,7 +411,7 @@ func (self *Server) updateChainConfig() error {
 				log.Infof("updateChainConfig remove index :%d", index)
 			} else {
 				if C, present := self.msgRecvC[index]; present {
-					pubkey := vconfig.PubkeyID(peer.PubKey)
+					pubkey := vconfig.PubkeyID(peerPubKey)
 					self.peerPool.RemovePeerIndex(pubkey)
 					log.Infof("updateChainConfig remove consensus:index:%d,id:%v", index, pubkey)
 					C <- nil
@@ -454,7 +453,7 @@ func (self *Server) initialize() error {
 	self.msgSendC = make(chan *SendMsgEvent, CAP_MSG_SEND_CHANNEL)
 
 	self.quitC = make(chan struct{})
-	if err := self.LoadChainConfig(store); err != nil {
+	if err := self.LoadChainConfig(store.GetChainedBlockNum()); err != nil {
 		log.Errorf("failed to load config: %s", err)
 		return fmt.Errorf("failed to load config: %s", err)
 	}
@@ -1097,7 +1096,7 @@ func (self *Server) processProposalMsg(msg *blockProposalMsg) {
 		log.Errorf("BlockPrposalMessage  check LastConfigBlockNum blocknum:%d,prvLastConfigBlockNum:%d,self LastConfigBlockNum:%d", msg.GetBlockNum(), blk.Info.LastConfigBlockNum, self.LastConfigBlockNum)
 		return
 	}
-	merkleRoot, err := self.chainStore.GetExecMerkleRoot(msgBlkNum - 1)
+	merkleRoot, err := self.blockPool.getExecMerkleRoot(msgBlkNum - 1)
 	if err != nil {
 		log.Errorf("failed to GetExecMerkleRoot: %s,blkNum:%d", err, (msgBlkNum - 1))
 		return
@@ -1602,13 +1601,13 @@ func (self *Server) actionLoop() {
 				if action.BlockNum > blkNum {
 					continue
 				}
-				stateRoot, err := self.chainStore.GetExecMerkleRoot(action.BlockNum)
+				stateRoot, err := self.blockPool.getExecMerkleRoot(action.BlockNum)
 				if err != nil {
 					log.Infof("handleBlockSubmit failed:%s", err)
 					continue
 				}
 				if self.CheckSubmitBlock(action.BlockNum, stateRoot) {
-					if err := self.chainStore.SubmitBlock(action.BlockNum); err != nil {
+					if err := self.blockPool.submitBlock(action.BlockNum); err != nil {
 						log.Errorf("SubmitBlock err:%s", err)
 					}
 				}
@@ -2144,7 +2143,7 @@ func (self *Server) checkNeedUpdateChainConfig(blockNum uint32) bool {
 
 //checkUpdateChainConfig query leveldb check is force update
 func (self *Server) checkUpdateChainConfig(blkNum uint32) bool {
-	force, err := isUpdate(self.chainStore.GetExecWriteSet(blkNum-1), self.config.View)
+	force, err := isUpdate(self.blockPool.getExecWriteSet(blkNum-1), self.config.View)
 	if err != nil {
 		log.Errorf("checkUpdateChainConfig err:%s", err)
 		return false
@@ -2193,7 +2192,7 @@ func (self *Server) makeProposal(blkNum uint32, forEmpty bool) error {
 	cfg := &vconfig.ChainConfig{}
 	cfg = nil
 	if self.checkNeedUpdateChainConfig(blkNum) || self.checkUpdateChainConfig(blkNum) {
-		chainconfig, err := getChainConfig(self.chainStore.GetExecWriteSet(blkNum-1), blkNum)
+		chainconfig, err := getChainConfig(self.blockPool.getExecWriteSet(blkNum-1), blkNum)
 		if err != nil {
 			return fmt.Errorf("getChainConfig failed:%s", err)
 		}

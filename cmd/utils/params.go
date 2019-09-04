@@ -24,6 +24,8 @@ import (
 	"reflect"
 	"strconv"
 	"strings"
+
+	"github.com/dnaproject2/DNA/common"
 )
 
 const (
@@ -34,6 +36,7 @@ const (
 	PARAM_TYPE_STRING     = "string"
 	PARAM_TYPE_INTEGER    = "int"
 	PARAM_TYPE_BOOLEAN    = "bool"
+	PARAM_TYPE_ADDRESS    = "address"
 	PARAM_LEFT_BRACKET    = "["
 	PARAM_RIGHT_BRACKET   = "]"
 	PARAM_ESC_CHAR        = `/`
@@ -194,6 +197,12 @@ func parseRawParamValue(pType string, pValue string) (interface{}, error) {
 		default:
 			return nil, fmt.Errorf("parse boolean param:%s failed", pValue)
 		}
+	case PARAM_TYPE_ADDRESS:
+		address, err := common.AddressFromBase58(pValue)
+		if err != nil {
+			return nil, fmt.Errorf("parse address param:%s failed", pValue)
+		}
+		return address[:], nil
 	default:
 		return nil, fmt.Errorf("unspport param type:%s", pType)
 	}

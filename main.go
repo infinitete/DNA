@@ -84,6 +84,7 @@ func setupAPP() *cli.App {
 		//common setting
 		utils.ConfigFlag,
 		utils.LogLevelFlag,
+		utils.DisableLogFileFlag,
 		utils.DisableEventLogFlag,
 		utils.DataDirFlag,
 		//account setting
@@ -161,7 +162,6 @@ func startDNA(ctx *cli.Context) {
 		log.Errorf("%s", err)
 		return
 	}
-	defer ldg.Close()
 	txpool, err := initTxPool(ctx)
 	if err != nil {
 		log.Errorf("initTxPool error:%s", err)
@@ -192,14 +192,20 @@ func startDNA(ctx *cli.Context) {
 	initNodeInfo(ctx, p2pSvr)
 
 	go logCurrBlockHeight()
-	waitToExit()
+	waitToExit(ldg)
 }
 
 func initLog(ctx *cli.Context) {
 	//init log module
 	logLevel := ctx.GlobalInt(utils.GetFlagName(utils.LogLevelFlag))
-	alog.InitLog(log.PATH)
-	log.InitLog(logLevel, log.PATH, log.Stdout)
+	//if true, the log will not be output to the file
+	disableLogFile := ctx.GlobalBool(utils.GetFlagName(utils.DisableLogFileFlag))
+	if disableLogFile {
+		log.InitLog(logLevel, log.Stdout)
+	} else {
+		alog.InitLog(log.PATH)
+		log.InitLog(logLevel, log.PATH, log.Stdout)
+	}
 }
 
 func initConfig(ctx *cli.Context) (*config.DNAConfig, error) {
@@ -439,13 +445,15 @@ func setMaxOpenFiles() {
 	}
 }
 
-func waitToExit() {
+func waitToExit(db *ledger.Ledger) {
 	exit := make(chan bool, 0)
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, syscall.SIGHUP)
 	go func() {
 		for sig := range sc {
 			log.Infof("DNA received exit signal:%v.", sig.String())
+ 			log.Infof("closing ledger...")
+ 			db.Close()
 			close(exit)
 			break
 		}
