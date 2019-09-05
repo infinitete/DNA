@@ -100,10 +100,10 @@ var (
 	RUNTIME_GETTRIGGER_NAME          = "System.Runtime.GetTrigger"
 	RUNTIME_SERIALIZE_NAME           = "System.Runtime.Serialize"
 	RUNTIME_DESERIALIZE_NAME         = "System.Runtime.Deserialize"
-	RUNTIME_BASE58TOADDRESS_NAME     = "Ontology.Runtime.Base58ToAddress"
-	RUNTIME_ADDRESSTOBASE58_NAME     = "Ontology.Runtime.AddressToBase58"
-	RUNTIME_GETCURRENTBLOCKHASH_NAME = "Ontology.Runtime.GetCurrentBlockHash"
-	RUNTIME_VERIFYMUTISIG_NAME       = "Ontology.Runtime.VerifyMutiSig"
+	RUNTIME_BASE58TOADDRESS_NAME     = "DNA.Runtime.Base58ToAddress"
+	RUNTIME_ADDRESSTOBASE58_NAME     = "DNA.Runtime.AddressToBase58"
+	RUNTIME_GETCURRENTBLOCKHASH_NAME = "DNA.Runtime.GetCurrentBlockHash"
+	RUNTIME_VERIFYMUTISIG_NAME       = "DNA.Runtime.VerifyMutiSig"
 
 	NATIVE_INVOKE_NAME = "DNA.Native.Invoke"
 
