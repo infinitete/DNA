@@ -23,6 +23,7 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/ontio/ontology-crypto/keypair"
 	"github.com/dnaproject2/DNA/account"
 	"github.com/dnaproject2/DNA/common/log"
 	"github.com/dnaproject2/DNA/common/serialization"
@@ -30,7 +31,6 @@ import (
 	"github.com/dnaproject2/DNA/core/types"
 	"github.com/dnaproject2/DNA/smartcontract/service/native"
 	"github.com/dnaproject2/DNA/smartcontract/service/native/utils"
-	"github.com/ontio/ontology-crypto/keypair"
 )
 
 func regIdWithPublicKey(srvc *native.NativeService) ([]byte, error) {
@@ -41,50 +41,50 @@ func regIdWithPublicKey(srvc *native.NativeService) ([]byte, error) {
 	// arg0: ID
 	arg0, err := serialization.ReadVarBytes(args)
 	if err != nil {
-		return utils.BYTE_FALSE, errors.New("register DNA ID error: parsing argument 0 failed")
+		return utils.BYTE_FALSE, errors.New("register ONT ID error: parsing argument 0 failed")
 	} else if len(arg0) == 0 {
-		return utils.BYTE_FALSE, errors.New("register DNA ID error: invalid length of argument 0")
+		return utils.BYTE_FALSE, errors.New("register ONT ID error: invalid length of argument 0")
 	}
+	log.Debug("arg 0:", hex.EncodeToString(arg0), string(arg0))
 	// arg1: public key
 	arg1, err := serialization.ReadVarBytes(args)
 	if err != nil {
-		return utils.BYTE_FALSE, errors.New("register DNA ID error: parsing argument 1 failed")
+		return utils.BYTE_FALSE, errors.New("register ONT ID error: parsing argument 1 failed")
 	}
 
-	log.Debug("arg 0:", hex.EncodeToString(arg0), string(arg0))
 	log.Debug("arg 1:", hex.EncodeToString(arg1))
 
 	if len(arg0) == 0 || len(arg1) == 0 {
-		return utils.BYTE_FALSE, errors.New("register DNA ID error: invalid argument")
+		return utils.BYTE_FALSE, errors.New("register ONT ID error: invalid argument")
 	}
 
 	if !account.VerifyID(string(arg0)) {
-		return utils.BYTE_FALSE, errors.New("register DNA ID error: invalid ID")
+		return utils.BYTE_FALSE, errors.New("register ONT ID error: invalid ID")
 	}
 
 	key, err := encodeID(arg0)
 	if err != nil {
-		return utils.BYTE_FALSE, errors.New("register DNA ID error: " + err.Error())
+		return utils.BYTE_FALSE, errors.New("register ONT ID error: " + err.Error())
 	}
 
 	if checkIDExistence(srvc, key) {
-		return utils.BYTE_FALSE, errors.New("register DNA ID error: already registered")
+		return utils.BYTE_FALSE, errors.New("register ONT ID error: already registered")
 	}
 
 	public, err := keypair.DeserializePublicKey(arg1)
 	if err != nil {
 		log.Error(err)
-		return utils.BYTE_FALSE, errors.New("register DNA ID error: invalid public key")
+		return utils.BYTE_FALSE, errors.New("register ONT ID error: invalid public key")
 	}
 	addr := types.AddressFromPubKey(public)
 	if !srvc.ContextRef.CheckWitness(addr) {
-		return utils.BYTE_FALSE, errors.New("register DNA ID error: checking witness failed")
+		return utils.BYTE_FALSE, errors.New("register ONT ID error: checking witness failed")
 	}
 
 	// insert public key
 	_, err = insertPk(srvc, key, arg1)
 	if err != nil {
-		return utils.BYTE_FALSE, errors.New("register DNA ID error: store public key error, " + err.Error())
+		return utils.BYTE_FALSE, errors.New("register ONT ID error: store public key error, " + err.Error())
 	}
 	// set flags
 	srvc.CacheDB.Put(key, states.GenRawStorageItem([]byte{flag_exist}))
@@ -105,7 +105,7 @@ func regIdWithAttributes(srvc *native.NativeService) ([]byte, error) {
 		return utils.BYTE_FALSE, errors.New("register ID with attributes error: argument 0 error, invalid length")
 	}
 	if !account.VerifyID(string(arg0)) {
-		return utils.BYTE_FALSE, errors.New("register DNA ID error: invalid ID")
+		return utils.BYTE_FALSE, errors.New("register ONT ID error: invalid ID")
 	}
 
 	// arg1: public key
@@ -179,7 +179,7 @@ func addKey(srvc *native.NativeService) ([]byte, error) {
 	}
 	log.Debug("arg 1:", hex.EncodeToString(arg1))
 
-	// arg2: operator's public key / address
+	// arg2: operator's public key
 	arg2, err := serialization.ReadVarBytes(args)
 	if err != nil {
 		return utils.BYTE_FALSE, errors.New("add key failed: argument 2 error, " + err.Error())
@@ -194,18 +194,8 @@ func addKey(srvc *native.NativeService) ([]byte, error) {
 	if err != nil {
 		return utils.BYTE_FALSE, errors.New("add key failed: " + err.Error())
 	}
-	if !checkIDExistence(srvc, key) {
-		return utils.BYTE_FALSE, errors.New("add key failed: ID not registered")
-	}
-	var auth bool = false
-	rec, _ := getRecovery(srvc, key)
-	if len(rec) > 0 {
-		auth = bytes.Equal(rec, arg2)
-	}
-	if !auth {
-		if !isOwner(srvc, key, arg2) {
-			return utils.BYTE_FALSE, errors.New("add key failed: operator has no authorization")
-		}
+	if !isOwner(srvc, key, arg2) {
+		return utils.BYTE_FALSE, errors.New("add key failed: operator has no authorization")
 	}
 
 	item, _, err := findPk(srvc, key, arg1)
@@ -253,15 +243,8 @@ func removeKey(srvc *native.NativeService) ([]byte, error) {
 	if !checkIDExistence(srvc, key) {
 		return utils.BYTE_FALSE, errors.New("remove key failed: ID not registered")
 	}
-	var auth = false
-	rec, err := getRecovery(srvc, key)
-	if len(rec) > 0 {
-		auth = bytes.Equal(rec, arg2)
-	}
-	if !auth {
-		if !isOwner(srvc, key, arg2) {
-			return utils.BYTE_FALSE, errors.New("remove key failed: operator has no authorization")
-		}
+	if !isOwner(srvc, key, arg2) {
+		return utils.BYTE_FALSE, errors.New("remove key failed: operator has no authorization")
 	}
 
 	keyID, err := revokePk(srvc, key, arg1)
@@ -271,100 +254,6 @@ func removeKey(srvc *native.NativeService) ([]byte, error) {
 
 	triggerPublicEvent(srvc, "remove", arg0, arg1, keyID)
 
-	return utils.BYTE_TRUE, nil
-}
-
-func addRecovery(srvc *native.NativeService) ([]byte, error) {
-	args := bytes.NewBuffer(srvc.Input)
-	// arg0: ID
-	arg0, err := serialization.ReadVarBytes(args)
-	if err != nil {
-		return utils.BYTE_FALSE, errors.New("add recovery failed: argument 0 error")
-	}
-	// arg1: recovery address
-	arg1, err := utils.ReadAddress(args)
-	if err != nil {
-		return utils.BYTE_FALSE, errors.New("add recovery failed: argument 1 error")
-	}
-	// arg2: operator's public key
-	arg2, err := serialization.ReadVarBytes(args)
-	if err != nil {
-		return utils.BYTE_FALSE, errors.New("add recovery failed: argument 2 error")
-	}
-
-	err = checkWitness(srvc, arg2)
-	if err != nil {
-		return utils.BYTE_FALSE, errors.New("add recovery failed: " + err.Error())
-	}
-
-	key, err := encodeID(arg0)
-	if err != nil {
-		return utils.BYTE_FALSE, errors.New("add recovery failed: " + err.Error())
-	}
-	if !checkIDExistence(srvc, key) {
-		return utils.BYTE_FALSE, errors.New("add recovery failed: ID not registered")
-	}
-	if !isOwner(srvc, key, arg2) {
-		return utils.BYTE_FALSE, errors.New("add recovery failed: not authorized")
-	}
-
-	re, err := getRecovery(srvc, key)
-	if err == nil && len(re) > 0 {
-		return utils.BYTE_FALSE, errors.New("add recovery failed: already set recovery")
-	}
-
-	err = setRecovery(srvc, key, arg1)
-	if err != nil {
-		return utils.BYTE_FALSE, errors.New("add recovery failed: " + err.Error())
-	}
-
-	triggerRecoveryEvent(srvc, "add", arg0, arg1)
-
-	return utils.BYTE_TRUE, nil
-}
-
-func changeRecovery(srvc *native.NativeService) ([]byte, error) {
-	args := bytes.NewBuffer(srvc.Input)
-	// arg0: ID
-	arg0, err := serialization.ReadVarBytes(args)
-	if err != nil {
-		return utils.BYTE_FALSE, errors.New("change recovery failed: argument 0 error")
-	}
-	// arg1: new recovery address
-	arg1, err := utils.ReadAddress(args)
-	if err != nil {
-		return utils.BYTE_FALSE, errors.New("change recovery failed: argument 1 error")
-	}
-	// arg2: operator's address, who should be the old recovery
-	arg2, err := utils.ReadAddress(args)
-	if err != nil {
-		return utils.BYTE_FALSE, errors.New("change recovery failed: argument 2 error")
-	}
-
-	key, err := encodeID(arg0)
-	if err != nil {
-		return utils.BYTE_FALSE, errors.New("change recovery failed: " + err.Error())
-	}
-	re, err := getRecovery(srvc, key)
-	if err != nil {
-		return utils.BYTE_FALSE, errors.New("change recovery failed: recovery not set")
-	}
-	if !bytes.Equal(re, arg2[:]) {
-		return utils.BYTE_FALSE, errors.New("change recovery failed: operator is not the recovery")
-	}
-	err = checkWitness(srvc, arg2[:])
-	if err != nil {
-		return utils.BYTE_FALSE, errors.New("change recovery failed: " + err.Error())
-	}
-	if !checkIDExistence(srvc, key) {
-		return utils.BYTE_FALSE, errors.New("change recovery failed: ID not registered")
-	}
-	err = setRecovery(srvc, key, arg1)
-	if err != nil {
-		return utils.BYTE_FALSE, errors.New("change recovery failed: " + err.Error())
-	}
-
-	triggerRecoveryEvent(srvc, "change", arg0, arg1)
 	return utils.BYTE_TRUE, nil
 }
 
@@ -417,10 +306,7 @@ func addAttributes(srvc *native.NativeService) ([]byte, error) {
 		return utils.BYTE_FALSE, fmt.Errorf("add attributes failed, %s", err)
 	}
 
-	var paths = make([][]byte, 0)
-	for _, v := range arg1 {
-		paths = append(paths, v.key)
-	}
+	paths := getAttrKeys(arg1)
 	triggerAttributeEvent(srvc, "add", arg0, paths)
 	return utils.BYTE_TRUE, nil
 }
@@ -458,12 +344,9 @@ func removeAttribute(srvc *native.NativeService) ([]byte, error) {
 		return utils.BYTE_FALSE, errors.New("remove attribute failed: no authorization")
 	}
 
-	key1 := append(key, FIELD_ATTR)
-	ok, err := utils.LinkedlistDelete(srvc, key1, arg1)
+	err = deleteAttr(srvc, key, arg1)
 	if err != nil {
-		return utils.BYTE_FALSE, errors.New("remove attribute failed: delete error, " + err.Error())
-	} else if !ok {
-		return utils.BYTE_FALSE, errors.New("remove attribute failed: attribute not exist")
+		return utils.BYTE_FALSE, errors.New("remove attribute failed: " + err.Error())
 	}
 
 	triggerAttributeEvent(srvc, "remove", arg0, [][]byte{arg1})
@@ -499,5 +382,41 @@ func verifySignature(srvc *native.NativeService) ([]byte, error) {
 		return utils.BYTE_FALSE, errors.New("verify signature failed: " + err.Error())
 	}
 
+	return utils.BYTE_TRUE, nil
+}
+
+func revokeID(srvc *native.NativeService) ([]byte, error) {
+	args := bytes.NewBuffer(srvc.Input)
+	// arg0: id
+	arg0, err := serialization.ReadVarBytes(args)
+	if err != nil {
+		return utils.BYTE_FALSE, fmt.Errorf("argument 0 error")
+	}
+	// arg1: index of public key
+	arg1, err := utils.ReadVarUint(args)
+	if err != nil {
+		return utils.BYTE_FALSE, fmt.Errorf("argument 1 error")
+	}
+
+	encID, err := encodeID(arg0)
+	if err != nil {
+		return utils.BYTE_FALSE, err
+	}
+
+	if !checkIDExistence(srvc, encID) {
+		return utils.BYTE_FALSE, fmt.Errorf("%s is not registered or already revoked", string(arg0))
+	}
+
+	pk, err := getPk(srvc, encID, uint32(arg1))
+	if err != nil {
+		return utils.BYTE_FALSE, fmt.Errorf("get public key error: %s", err)
+	}
+
+	if checkWitness(srvc, pk.key) != nil {
+		return utils.BYTE_FALSE, fmt.Errorf("authorization failed")
+	}
+
+	deleteID(srvc, encID)
+	newEvent(srvc, []interface{}{"Revoke", string(arg0)})
 	return utils.BYTE_TRUE, nil
 }

@@ -19,9 +19,9 @@
 package test
 
 import (
-	"github.com/ontio/ontology/smartcontract"
-	"github.com/ontio/ontology/vm/neovm"
-	"github.com/ontio/ontology/vm/neovm/errors"
+	"github.com/dnaproject2/DNA/smartcontract"
+	"github.com/dnaproject2/DNA/vm/neovm"
+	"github.com/dnaproject2/DNA/vm/neovm/errors"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )

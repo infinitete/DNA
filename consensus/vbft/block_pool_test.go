@@ -22,9 +22,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ontio/ontology/common"
-	"github.com/ontio/ontology/core/ledger"
-	"github.com/ontio/ontology/core/types"
+	"github.com/dnaproject2/DNA/common"
+	"github.com/dnaproject2/DNA/core/ledger"
+	"github.com/dnaproject2/DNA/core/types"
 )
 
 func buildTestBlockPool(t *testing.T) (*BlockPool, error) {

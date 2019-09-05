@@ -21,6 +21,7 @@ import (
 	"bytes"
 
 	"fmt"
+
 	"github.com/dnaproject2/DNA/common/serialization"
 	cstates "github.com/dnaproject2/DNA/core/states"
 	"github.com/dnaproject2/DNA/errors"
@@ -287,4 +288,22 @@ func LinkedlistGetNumOfItems(native *native.NativeService, index []byte) (int, e
 		q = qnode.next
 	}
 	return n, nil
+}
+
+func LinkedlistDeleteAll(native *native.NativeService, index []byte) error {
+	head, err := getListHead(native, index)
+	if err != nil {
+		return err
+	}
+	q := head
+	for q != nil {
+		qnode, err := getListNode(native, index, q)
+		if err != nil {
+			return err
+		}
+		native.CacheDB.Delete(append(index, q...))
+		q = qnode.next
+	}
+	native.CacheDB.Delete(index)
+	return nil
 }

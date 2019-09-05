@@ -21,12 +21,12 @@ import (
 	"encoding/hex"
 	"errors"
 
+	"github.com/ontio/ontology-crypto/keypair"
 	com "github.com/dnaproject2/DNA/common"
 	"github.com/dnaproject2/DNA/core/states"
 	"github.com/dnaproject2/DNA/core/types"
 	"github.com/dnaproject2/DNA/smartcontract/service/native"
 	"github.com/dnaproject2/DNA/smartcontract/service/native/utils"
-	"github.com/ontio/ontology-crypto/keypair"
 )
 
 func checkIDExistence(srvc *native.NativeService, encID []byte) bool {
@@ -43,20 +43,22 @@ func checkIDExistence(srvc *native.NativeService, encID []byte) bool {
 }
 
 const (
-	flag_exist = 0x01
+	flag_exist  byte = 0x01
+	flag_revoke byte = 0x02
 
 	FIELD_VERSION byte = 0
 	FLAG_VERSION  byte = 0x01
 
-	FIELD_PK       byte = 1
-	FIELD_ATTR     byte = 2
-	FIELD_RECOVERY byte = 3
+	FIELD_PK         byte = 1
+	FIELD_ATTR       byte = 2
+	FIELD_RECOVERY   byte = 3
+	FIELD_CONTROLLER byte = 4
 )
 
 func encodeID(id []byte) ([]byte, error) {
 	length := len(id)
 	if length == 0 || length > 255 {
-		return nil, errors.New("encode ID error: invalid ID length")
+		return nil, errors.New("encode ONT ID error: invalid ID length")
 	}
 	//enc := []byte{byte(length)}
 	enc := append(utils.OntIDContractAddress[:], byte(length))
@@ -68,27 +70,9 @@ func decodeID(data []byte) ([]byte, error) {
 	prefix := len(utils.OntIDContractAddress)
 	size := len(data)
 	if size < prefix || size != int(data[prefix])+1+prefix {
-		return nil, errors.New("decode ID error: invalid data length")
+		return nil, errors.New("decode ONT ID error: invalid data length")
 	}
 	return data[prefix+1:], nil
-}
-
-func setRecovery(srvc *native.NativeService, encID []byte, recovery com.Address) error {
-	key := append(encID, FIELD_RECOVERY)
-	val := states.StorageItem{Value: recovery[:]}
-	srvc.CacheDB.Put(key, val.ToArray())
-	return nil
-}
-
-func getRecovery(srvc *native.NativeService, encID []byte) ([]byte, error) {
-	key := append(encID, FIELD_RECOVERY)
-	item, err := utils.GetStorageItem(srvc, key)
-	if err != nil {
-		return nil, errors.New("get recovery error: " + err.Error())
-	} else if item == nil {
-		return nil, nil
-	}
-	return item.Value, nil
 }
 
 func checkWitness(srvc *native.NativeService, key []byte) error {
@@ -108,4 +92,20 @@ func checkWitness(srvc *native.NativeService, key []byte) error {
 	}
 
 	return errors.New("check witness failed, " + hex.EncodeToString(key))
+}
+
+func deleteID(srvc *native.NativeService, encID []byte) {
+	key := append(encID, FIELD_PK)
+	srvc.CacheDB.Delete(key)
+
+	key = append(encID, FIELD_CONTROLLER)
+	srvc.CacheDB.Delete(key)
+
+	key = append(encID, FIELD_RECOVERY)
+	srvc.CacheDB.Delete(key)
+
+	deleteAllAttr(srvc, encID)
+
+	//set flag to revoke
+	utils.PutBytes(srvc, encID, []byte{flag_revoke})
 }
