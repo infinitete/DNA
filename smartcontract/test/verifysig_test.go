@@ -21,13 +21,13 @@ package test
 import (
 	"fmt"
 	"github.com/ontio/ontology-crypto/keypair"
-	"github.com/ontio/ontology/account"
-	"github.com/ontio/ontology/common"
-	"github.com/ontio/ontology/core/signature"
-	"github.com/ontio/ontology/smartcontract"
-	svm "github.com/ontio/ontology/smartcontract/service/neovm"
-	"github.com/ontio/ontology/vm/neovm"
-	vtypes "github.com/ontio/ontology/vm/neovm/types"
+	"github.com/dnaproject2/DNA/account"
+	"github.com/dnaproject2/DNA/common"
+	"github.com/dnaproject2/DNA/core/signature"
+	"github.com/dnaproject2/DNA/smartcontract"
+	svm "github.com/dnaproject2/DNA/smartcontract/service/neovm"
+	"github.com/dnaproject2/DNA/vm/neovm"
+	vtypes "github.com/dnaproject2/DNA/vm/neovm/types"
 	"testing"
 )
 
