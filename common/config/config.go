@@ -133,7 +133,7 @@ func GetNetworkName(id uint32) string {
 }
 
 var PolarisConfig = &GenesisConfig{
-	SeedList: []string{},
+	SeedList:      []string{},
 	ConsensusType: CONSENSUS_TYPE_VBFT,
 	VBFT: &VBFTConfig{
 		N:                    7,
