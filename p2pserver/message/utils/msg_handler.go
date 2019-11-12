@@ -27,8 +27,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/dnaproject2/DNA/core/states"
-
 	"github.com/dnaproject2/DNA/smartcontract/service/native/governance"
 	"github.com/dnaproject2/DNA/smartcontract/service/native/utils"
 
