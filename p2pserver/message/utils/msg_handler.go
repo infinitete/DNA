@@ -36,7 +36,6 @@ import (
 	"github.com/dnaproject2/DNA/common/config"
 	"github.com/dnaproject2/DNA/common/log"
 	"github.com/dnaproject2/DNA/core/ledger"
-	scom "github.com/dnaproject2/DNA/core/store/common"
 	"github.com/dnaproject2/DNA/core/types"
 	actor "github.com/dnaproject2/DNA/p2pserver/actor/req"
 	msgCommon "github.com/dnaproject2/DNA/p2pserver/common"
@@ -393,18 +392,12 @@ func checkWhiteList(addr string) error {
 
 	// check governance storage
 	contract := utils.GovernanceContractAddress
-	key := utils.ConcatKey(contract, []byte(governance.GOVERNANCE_VIEW))
-	key = append([]byte{byte(scom.ST_STORAGE)}, key...)
-	item, err := ledger.DefLedger.GetStorageItem(contract, key)
+	key := []byte(governance.GOVERNANCE_VIEW)
+	val, err := ledger.DefLedger.GetStorageItem(contract, key)
 	if err != nil {
 		return fmt.Errorf("get governance view error, %s", err)
-	} else if item == nil {
+	} else if val == nil {
 		return fmt.Errorf("governance view storage item is nil")
-	}
-
-	val, err := states.GetValueFromRawStorageItem(item)
-	if err != nil {
-		return fmt.Errorf("get item value error, %s", err)
 	}
 
 	view := governance.GovernanceView{}
@@ -417,18 +410,13 @@ func checkWhiteList(addr string) error {
 	if err != nil {
 		return err
 	}
-	key = utils.ConcatKey(contract, []byte(governance.PEER_POOL), viewBytes)
-	key = append([]byte{byte(scom.ST_STORAGE)}, key...)
-	item, err = ledger.DefLedger.GetStorageItem(contract, key)
+
+	key = append([]byte(governance.PEER_POOL), viewBytes...)
+	val, err = ledger.DefLedger.GetStorageItem(contract, key)
 	if err != nil {
 		return fmt.Errorf("get peer pool error, %s", err)
-	} else if item == nil {
+	} else if val == nil {
 		return fmt.Errorf("peer pool storage item is nil")
-	}
-
-	val, err = states.GetValueFromRawStorageItem(item)
-	if err != nil {
-		return fmt.Errorf("peer pool item value error, %s", err)
 	}
 
 	peerPoolMap := &governance.PeerPoolMap{
