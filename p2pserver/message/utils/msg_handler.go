@@ -408,7 +408,7 @@ func checkWhiteList(addr string) error {
 	if err != nil {
 		return err
 	}
-	log.Errorf("### view: %d", view.View)
+
 	key = append([]byte(governance.PEER_POOL), viewBytes...)
 	val, err = ledger.DefLedger.GetStorageItem(contract, key)
 	if err != nil {
@@ -416,7 +416,7 @@ func checkWhiteList(addr string) error {
 	} else if val == nil {
 		return fmt.Errorf("peer pool storage item is nil")
 	}
-	log.Errorf("### val: %x", val)
+
 	peerPoolMap := &governance.PeerPoolMap{
 		make(map[string]*governance.PeerPoolItem),
 	}
@@ -426,16 +426,17 @@ func checkWhiteList(addr string) error {
 
 	for _, v := range peerPoolMap.PeerPoolMap {
 		log.Warn("peer pool:", v.Address.ToBase58())
-		log.Errorf("### peer: %s, peer pool: %s", addr, v.Address.ToBase58())
-		if v.Status != 1 || v.Status != 2 {
+		log.Errorf("### status: %v", v.Status)
+		if v.Status != governance.ConsensusStatus || v.Status != governance.CandidateStatus {
 			continue
 		}
+		log.Errorf("### peer: %s, peer pool: %s", addr, v.Address.ToBase58())
 		if v.Address.ToBase58() == addr {
 			return nil
 		}
 	}
 
-	return fmt.Errorf("not in the whitelist")
+	return fmt.Errorf("%s not in the whitelist", addr)
 }
 
 // VerAckHandle handles the version ack from peer
