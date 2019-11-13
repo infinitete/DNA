@@ -20,7 +20,6 @@ package types
 
 import (
 	"crypto/sha256"
-	"github.com/dnaproject2/DNA/common/log"
 	"io"
 
 	"github.com/dnaproject2/DNA/common"
@@ -97,7 +96,6 @@ func HeaderFromRawBytes(raw []byte) (*Header, error) {
 
 }
 func (bd *Header) Deserialization(source *common.ZeroCopySource) error {
-	log.Errorf("###positon: %d", source.Pos())
 	err := bd.deserializationUnsigned(source)
 	if err != nil {
 		return err
