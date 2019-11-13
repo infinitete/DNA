@@ -426,11 +426,9 @@ func checkWhiteList(addr string) error {
 
 	for _, v := range peerPoolMap.PeerPoolMap {
 		log.Warn("peer pool:", v.Address.ToBase58())
-		log.Errorf("### status: %v", v.Status)
 		if v.Status != governance.ConsensusStatus && v.Status != governance.CandidateStatus {
 			continue
 		}
-		log.Errorf("### peer: %s, peer pool: %s", addr, v.Address.ToBase58())
 		if v.Address.ToBase58() == addr {
 			return nil
 		}

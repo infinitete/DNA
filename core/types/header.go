@@ -20,6 +20,8 @@ package types
 
 import (
 	"crypto/sha256"
+	"encoding/hex"
+	"fmt"
 	"io"
 
 	"github.com/dnaproject2/DNA/common"
@@ -119,7 +121,7 @@ func (bd *Header) Deserialization(source *common.ZeroCopySource) error {
 		}
 		pubkey, err := keypair.DeserializePublicKey(buf)
 		if err != nil {
-			return err
+			return fmt.Errorf("###: %s %d/%d %s", err, i, n, hex.EncodeToString(buf))
 		}
 		bd.Bookkeepers = append(bd.Bookkeepers, pubkey)
 	}
