@@ -22,6 +22,7 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
+	"github.com/dnaproject2/DNA/common/log"
 	"io"
 
 	comm "github.com/dnaproject2/DNA/common"
@@ -137,6 +138,7 @@ func ReadMessage(reader io.Reader) (Message, uint32, error) {
 
 	// the buf is referenced by msg to avoid reallocation, so can not reused
 	source := comm.NewZeroCopySource(buf)
+	log.Errorf("###buf: %x", buf)
 	err = msg.Deserialization(source)
 	if err != nil {
 		return nil, 0, err

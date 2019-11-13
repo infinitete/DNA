@@ -20,8 +20,7 @@ package types
 
 import (
 	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
+	"github.com/dnaproject2/DNA/common/log"
 	"io"
 
 	"github.com/dnaproject2/DNA/common"
@@ -98,6 +97,7 @@ func HeaderFromRawBytes(raw []byte) (*Header, error) {
 
 }
 func (bd *Header) Deserialization(source *common.ZeroCopySource) error {
+	log.Errorf("###positon: %d", source.Pos())
 	err := bd.deserializationUnsigned(source)
 	if err != nil {
 		return err
@@ -121,7 +121,7 @@ func (bd *Header) Deserialization(source *common.ZeroCopySource) error {
 		}
 		pubkey, err := keypair.DeserializePublicKey(buf)
 		if err != nil {
-			return fmt.Errorf("###: %s %d/%d %s", err, i, n, hex.EncodeToString(buf))
+			return err
 		}
 		bd.Bookkeepers = append(bd.Bookkeepers, pubkey)
 	}
