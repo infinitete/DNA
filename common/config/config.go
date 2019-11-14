@@ -70,6 +70,7 @@ const (
 	DEFUALT_CLI_RPC_ADDRESS                 = "127.0.0.1"
 	DEFAULT_GAS_LIMIT                       = 20000
 	DEFAULT_GAS_PRICE                       = 500
+	DEFAULT_CERT_PATH                       = "./cert.pem"
 
 	DEFAULT_DATA_DIR      = "./Chain"
 	DEFAULT_RESERVED_FILE = "./peers.rsv"
@@ -578,7 +579,7 @@ func NewDNAConfig() *DNAConfig {
 			NetworkMagic:              GetNetworkMagic(NETWORK_ID_MAIN_NET),
 			NodePort:                  DEFAULT_NODE_PORT,
 			IsTLS:                     false,
-			CertPath:                  "./cert.pem",
+			CertPath:                  DEFAULT_CERT_PATH,
 			KeyPath:                   "",
 			CAPath:                    "",
 			HttpInfoPort:              DEFAULT_HTTP_INFO_PORT,

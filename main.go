@@ -109,6 +109,7 @@ func setupAPP() *cli.App {
 		utils.MaxConnInBoundFlag,
 		utils.MaxConnOutBoundFlag,
 		utils.MaxConnInBoundForSingleIPFlag,
+		utils.CertPathFlag,
 		//test mode setting
 		utils.EnableTestModeFlag,
 		utils.TestModeGenBlockTimeFlag,
