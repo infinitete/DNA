@@ -72,7 +72,7 @@ func VerifyID(id string) bool {
 	if id[0:10] != "did:idfor:" {
 		return false
 	}
-	buf, err := base58.BitcoinEncoding.Decode([]byte(id[8:]))
+	buf, err := base58.BitcoinEncoding.Decode([]byte(id[10:]))
 	if err != nil {
 		return false
 	}
