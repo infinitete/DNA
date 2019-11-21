@@ -57,7 +57,7 @@ func regIdWithController(srvc *native.NativeService) ([]byte, error) {
 		return utils.BYTE_FALSE, fmt.Errorf("argument 1 error")
 	}
 
-	if bytes.Equal(arg1[:8], []byte("did:dna:")) {
+	if bytes.Equal(arg1[:10], []byte("did:idfor:")) {
 		err = verifySingleController(srvc, arg1, args)
 		if err != nil {
 			return utils.BYTE_FALSE, err
@@ -315,7 +315,7 @@ func getController(srvc *native.NativeService, encId []byte) (interface{}, error
 		return nil, errors.New("empty controller storage")
 	}
 
-	if bytes.Equal(item.Value[:8], []byte("did:dna:")) {
+	if bytes.Equal(item.Value[:10], []byte("did:idfor:")) {
 		return item.Value, nil
 	} else {
 		return deserializeGroup(item.Value)

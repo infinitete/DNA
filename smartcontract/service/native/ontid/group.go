@@ -53,7 +53,7 @@ func deserializeGroup(data []byte) (*Group, error) {
 		if err != nil {
 			return nil, fmt.Errorf("error parsing group members: %s", err)
 		}
-		if bytes.Equal(m[:8], []byte("did:dna:")) {
+		if bytes.Equal(m[:10], []byte("did:idfor:")) {
 			g.Members = append(g.Members, string(m))
 		} else {
 			// parse recursively
