@@ -198,7 +198,7 @@ func accountCreate(ctx *cli.Context) error {
 		if err != nil {
 			return fmt.Errorf("save to %s error: %s", optionFile, err)
 		}
-		PrintInfoMsg("DNA ID created:%s", id.ID)
+		PrintInfoMsg("IDFOR ID created:%s", id.ID)
 		PrintInfoMsg("Bind public key:%s", id.Control[0].Public)
 		return nil
 	}
