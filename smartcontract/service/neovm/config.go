@@ -22,30 +22,30 @@ import "sync"
 
 var (
 	//Gas Limit
-	MIN_TRANSACTION_GAS           uint64 = 20000 // Per transaction base cost.
-	BLOCKCHAIN_GETHEADER_GAS      uint64 = 100
-	BLOCKCHAIN_GETBLOCK_GAS       uint64 = 200
-	BLOCKCHAIN_GETTRANSACTION_GAS uint64 = 100
-	BLOCKCHAIN_GETCONTRACT_GAS    uint64 = 100
-	CONTRACT_CREATE_GAS           uint64 = 20000000
-	CONTRACT_MIGRATE_GAS          uint64 = 20000000
-	UINT_DEPLOY_CODE_LEN_GAS      uint64 = 200000
-	UINT_INVOKE_CODE_LEN_GAS      uint64 = 20000
-	NATIVE_INVOKE_GAS             uint64 = 1000
-	STORAGE_GET_GAS               uint64 = 200
-	STORAGE_PUT_GAS               uint64 = 4000
-	STORAGE_DELETE_GAS            uint64 = 100
-	RUNTIME_CHECKWITNESS_GAS      uint64 = 200
-	RUNTIME_VERIFYMUTISIG_GAS     uint64 = 400
-	RUNTIME_ADDRESSTOBASE58_GAS   uint64 = 40
-	RUNTIME_BASE58TOADDRESS_GAS   uint64 = 30
-	APPCALL_GAS                   uint64 = 10
-	TAILCALL_GAS                  uint64 = 10
-	SHA1_GAS                      uint64 = 10
-	SHA256_GAS                    uint64 = 10
-	HASH160_GAS                   uint64 = 20
-	HASH256_GAS                   uint64 = 20
-	OPCODE_GAS                    uint64 = 1
+	MIN_TRANSACTION_GAS           uint64 = 0 // Per transaction base cost.
+	BLOCKCHAIN_GETHEADER_GAS      uint64 = 0
+	BLOCKCHAIN_GETBLOCK_GAS       uint64 = 0
+	BLOCKCHAIN_GETTRANSACTION_GAS uint64 = 0
+	BLOCKCHAIN_GETCONTRACT_GAS    uint64 = 0
+	CONTRACT_CREATE_GAS           uint64 = 0
+	CONTRACT_MIGRATE_GAS          uint64 = 0
+	UINT_DEPLOY_CODE_LEN_GAS      uint64 = 0
+	UINT_INVOKE_CODE_LEN_GAS      uint64 = 0
+	NATIVE_INVOKE_GAS             uint64 = 0
+	STORAGE_GET_GAS               uint64 = 0
+	STORAGE_PUT_GAS               uint64 = 0
+	STORAGE_DELETE_GAS            uint64 = 0
+	RUNTIME_CHECKWITNESS_GAS      uint64 = 0
+	RUNTIME_VERIFYMUTISIG_GAS     uint64 = 0
+	RUNTIME_ADDRESSTOBASE58_GAS   uint64 = 0
+	RUNTIME_BASE58TOADDRESS_GAS   uint64 = 0
+	APPCALL_GAS                   uint64 = 0
+	TAILCALL_GAS                  uint64 = 0
+	SHA1_GAS                      uint64 = 0
+	SHA256_GAS                    uint64 = 0
+	HASH160_GAS                   uint64 = 0
+	HASH256_GAS                   uint64 = 0
+	OPCODE_GAS                    uint64 = 0
 
 	PER_UNIT_CODE_LEN    int = 1024
 	METHOD_LENGTH_LIMIT  int = 1024
