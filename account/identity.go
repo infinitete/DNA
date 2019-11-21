@@ -34,7 +34,7 @@ import (
 
 const (
 	SCHEME = "did"
-	METHOD = "dna"
+	METHOD = "idfor"
 	VER    = 0x41
 )
 
@@ -102,7 +102,7 @@ func checksum(data []byte) []byte {
 }
 
 type Identity struct {
-	ID      string       `json:"dnaid"`
+	ID      string       `json:"idfor"`
 	Label   string       `json:"label,omitempty"`
 	Lock    bool         `json:"lock"`
 	Control []Controller `json:"controls,omitempty"`
