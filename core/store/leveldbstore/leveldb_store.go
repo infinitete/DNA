@@ -19,7 +19,7 @@
 package leveldbstore
 
 import (
-	"github.com/dnaproject2/DNA/core/store/common"
+	"git.fe-cred.com/idfor/idfor/core/store/common"
 	"github.com/ethereum/go-ethereum/common/fdlimit"
 	"github.com/syndtr/goleveldb/leveldb"
 	"github.com/syndtr/goleveldb/leveldb/errors"

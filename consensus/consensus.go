@@ -19,11 +19,11 @@
 package consensus
 
 import (
-	"github.com/dnaproject2/DNA/account"
-	"github.com/dnaproject2/DNA/common/log"
-	"github.com/dnaproject2/DNA/consensus/dbft"
-	"github.com/dnaproject2/DNA/consensus/solo"
-	"github.com/dnaproject2/DNA/consensus/vbft"
+	"git.fe-cred.com/idfor/idfor/account"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	"git.fe-cred.com/idfor/idfor/consensus/dbft"
+	"git.fe-cred.com/idfor/idfor/consensus/solo"
+	"git.fe-cred.com/idfor/idfor/consensus/vbft"
 	"github.com/ontio/ontology-eventbus/actor"
 )
 

@@ -22,7 +22,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/dnaproject2/DNA/account"
+	"git.fe-cred.com/idfor/idfor/account"
 )
 
 func constructMsg() *blockProposalMsg {

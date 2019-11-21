@@ -18,8 +18,9 @@
 package wasmvm
 
 import (
-	"github.com/dnaproject2/DNA/vm/wasmvm/exec"
 	"testing"
+
+	"git.fe-cred.com/idfor/idfor/vm/wasmvm/exec"
 )
 
 func TestNewWasmStateReader(t *testing.T) {

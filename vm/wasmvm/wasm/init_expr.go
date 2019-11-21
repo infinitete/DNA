@@ -29,7 +29,7 @@ import (
 	"io"
 	"math"
 
-	"github.com/dnaproject2/DNA/vm/wasmvm/wasm/leb128"
+	"git.fe-cred.com/idfor/idfor/vm/wasmvm/wasm/leb128"
 )
 
 const (

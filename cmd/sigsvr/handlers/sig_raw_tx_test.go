@@ -21,17 +21,18 @@ package handlers
 import (
 	"encoding/hex"
 	"encoding/json"
-	"github.com/dnaproject2/DNA/account"
-	clisvrcom "github.com/dnaproject2/DNA/cmd/sigsvr/common"
-	"github.com/dnaproject2/DNA/cmd/sigsvr/store"
-	"github.com/dnaproject2/DNA/cmd/utils"
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/common/log"
+	"os"
+	"testing"
+
+	"git.fe-cred.com/idfor/idfor/account"
+	clisvrcom "git.fe-cred.com/idfor/idfor/cmd/sigsvr/common"
+	"git.fe-cred.com/idfor/idfor/cmd/sigsvr/store"
+	"git.fe-cred.com/idfor/idfor/cmd/utils"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/log"
 	"github.com/ontio/ontology-crypto/keypair"
 	"github.com/ontio/ontology-crypto/signature"
 	"github.com/stretchr/testify/assert"
-	"os"
-	"testing"
 )
 
 var (

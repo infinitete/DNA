@@ -20,17 +20,18 @@ package stateless
 import (
 	"testing"
 
-	"github.com/dnaproject2/DNA/account"
-	"github.com/dnaproject2/DNA/common/log"
-	"github.com/dnaproject2/DNA/core/signature"
-	ctypes "github.com/dnaproject2/DNA/core/types"
-	"github.com/dnaproject2/DNA/core/utils"
-	"github.com/dnaproject2/DNA/errors"
-	types2 "github.com/dnaproject2/DNA/validator/types"
+	"time"
+
+	"git.fe-cred.com/idfor/idfor/account"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	"git.fe-cred.com/idfor/idfor/core/signature"
+	ctypes "git.fe-cred.com/idfor/idfor/core/types"
+	"git.fe-cred.com/idfor/idfor/core/utils"
+	"git.fe-cred.com/idfor/idfor/errors"
+	types2 "git.fe-cred.com/idfor/idfor/validator/types"
 	"github.com/ontio/ontology-crypto/keypair"
 	"github.com/ontio/ontology-eventbus/actor"
 	"github.com/stretchr/testify/assert"
-	"time"
 )
 
 func signTransaction(signer *account.Account, tx *ctypes.MutableTransaction) error {

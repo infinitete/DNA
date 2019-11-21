@@ -21,8 +21,8 @@ package types
 import (
 	"io"
 
-	"github.com/dnaproject2/DNA/common"
-	p2pCommon "github.com/dnaproject2/DNA/p2pserver/common"
+	"git.fe-cred.com/idfor/idfor/common"
+	p2pCommon "git.fe-cred.com/idfor/idfor/p2pserver/common"
 )
 
 var LastInvHash common.Uint256

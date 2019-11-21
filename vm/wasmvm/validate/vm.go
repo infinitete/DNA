@@ -27,9 +27,9 @@ import (
 	"encoding/binary"
 	"io"
 
-	"github.com/dnaproject2/DNA/vm/wasmvm/wasm"
-	"github.com/dnaproject2/DNA/vm/wasmvm/wasm/leb128"
-	ops "github.com/dnaproject2/DNA/vm/wasmvm/wasm/operators"
+	"git.fe-cred.com/idfor/idfor/vm/wasmvm/wasm"
+	"git.fe-cred.com/idfor/idfor/vm/wasmvm/wasm/leb128"
+	ops "git.fe-cred.com/idfor/idfor/vm/wasmvm/wasm/operators"
 )
 
 // mockVM is a minimal implementation of a virtual machine to

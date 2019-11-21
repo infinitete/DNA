@@ -23,8 +23,8 @@ import (
 	"io"
 	"math/big"
 
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/common/serialization"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/serialization"
 )
 
 func WriteVarUint(w io.Writer, value uint64) error {

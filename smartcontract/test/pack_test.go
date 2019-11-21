@@ -19,11 +19,12 @@
 package test
 
 import (
-	"github.com/dnaproject2/DNA/core/types"
-	"github.com/dnaproject2/DNA/smartcontract"
-	"github.com/dnaproject2/DNA/vm/neovm"
 	"os"
 	"testing"
+
+	"git.fe-cred.com/idfor/idfor/core/types"
+	"git.fe-cred.com/idfor/idfor/smartcontract"
+	"git.fe-cred.com/idfor/idfor/vm/neovm"
 )
 
 func TestPackCrash(t *testing.T) {

@@ -23,8 +23,8 @@ import (
 	"errors"
 	"io"
 
-	"github.com/dnaproject2/DNA/common/log"
-	ontErrors "github.com/dnaproject2/DNA/errors"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	ontErrors "git.fe-cred.com/idfor/idfor/errors"
 	"github.com/ontio/ontology-crypto/keypair"
 	s "github.com/ontio/ontology-crypto/signature"
 	"golang.org/x/crypto/ripemd160"

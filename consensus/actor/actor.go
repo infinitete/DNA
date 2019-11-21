@@ -22,11 +22,11 @@ import (
 	"errors"
 	"time"
 
-	"github.com/dnaproject2/DNA/core/types"
-	ontErrors "github.com/dnaproject2/DNA/errors"
-	netActor "github.com/dnaproject2/DNA/p2pserver/actor/server"
-	ptypes "github.com/dnaproject2/DNA/p2pserver/message/types"
-	txpool "github.com/dnaproject2/DNA/txnpool/common"
+	"git.fe-cred.com/idfor/idfor/core/types"
+	ontErrors "git.fe-cred.com/idfor/idfor/errors"
+	netActor "git.fe-cred.com/idfor/idfor/p2pserver/actor/server"
+	ptypes "git.fe-cred.com/idfor/idfor/p2pserver/message/types"
+	txpool "git.fe-cred.com/idfor/idfor/txnpool/common"
 	"github.com/ontio/ontology-eventbus/actor"
 )
 

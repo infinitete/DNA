@@ -23,7 +23,7 @@ import (
 
 	"math/big"
 
-	"github.com/dnaproject2/DNA/vm/neovm/types"
+	"git.fe-cred.com/idfor/idfor/vm/neovm/types"
 )
 
 func TestOpBigInt(t *testing.T) {

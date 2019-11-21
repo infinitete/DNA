@@ -19,8 +19,9 @@ package handlers
 
 import (
 	"encoding/json"
-	clisvrcom "github.com/dnaproject2/DNA/cmd/sigsvr/common"
-	"github.com/dnaproject2/DNA/common/log"
+
+	clisvrcom "git.fe-cred.com/idfor/idfor/cmd/sigsvr/common"
+	"git.fe-cred.com/idfor/idfor/common/log"
 	"github.com/ontio/ontology-crypto/keypair"
 	s "github.com/ontio/ontology-crypto/signature"
 )

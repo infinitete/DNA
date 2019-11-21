@@ -19,11 +19,12 @@
 package test
 
 import (
-	"github.com/dnaproject2/DNA/smartcontract"
-	"github.com/dnaproject2/DNA/vm/neovm"
-	"github.com/dnaproject2/DNA/vm/neovm/errors"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"git.fe-cred.com/idfor/idfor/smartcontract"
+	"git.fe-cred.com/idfor/idfor/vm/neovm"
+	"git.fe-cred.com/idfor/idfor/vm/neovm/errors"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestAppendOverFlow(t *testing.T) {

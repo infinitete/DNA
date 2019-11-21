@@ -22,8 +22,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/dnaproject2/DNA/common"
-	vconfig "github.com/dnaproject2/DNA/consensus/vbft/config"
+	"git.fe-cred.com/idfor/idfor/common"
+	vconfig "git.fe-cred.com/idfor/idfor/consensus/vbft/config"
 )
 
 func constructPeerPool(connect bool) *PeerPool {

@@ -18,19 +18,20 @@
 package main
 
 import (
-	"github.com/dnaproject2/DNA/cmd"
-	"github.com/dnaproject2/DNA/cmd/abi"
-	cmdsvr "github.com/dnaproject2/DNA/cmd/sigsvr"
-	clisvrcom "github.com/dnaproject2/DNA/cmd/sigsvr/common"
-	"github.com/dnaproject2/DNA/cmd/sigsvr/store"
-	"github.com/dnaproject2/DNA/cmd/utils"
-	"github.com/dnaproject2/DNA/common/config"
-	"github.com/dnaproject2/DNA/common/log"
-	"github.com/urfave/cli"
 	"os"
 	"os/signal"
 	"runtime"
 	"syscall"
+
+	"git.fe-cred.com/idfor/idfor/cmd"
+	"git.fe-cred.com/idfor/idfor/cmd/abi"
+	cmdsvr "git.fe-cred.com/idfor/idfor/cmd/sigsvr"
+	clisvrcom "git.fe-cred.com/idfor/idfor/cmd/sigsvr/common"
+	"git.fe-cred.com/idfor/idfor/cmd/sigsvr/store"
+	"git.fe-cred.com/idfor/idfor/cmd/utils"
+	"git.fe-cred.com/idfor/idfor/common/config"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	"github.com/urfave/cli"
 )
 
 func setupSigSvr() *cli.App {

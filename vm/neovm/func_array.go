@@ -21,8 +21,8 @@ package neovm
 import (
 	"math/big"
 
-	"github.com/dnaproject2/DNA/errors"
-	"github.com/dnaproject2/DNA/vm/neovm/types"
+	"git.fe-cred.com/idfor/idfor/errors"
+	"git.fe-cred.com/idfor/idfor/vm/neovm/types"
 )
 
 func opArraySize(e *ExecutionEngine) (VMState, error) {

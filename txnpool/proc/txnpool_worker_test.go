@@ -24,11 +24,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/core/types"
-	"github.com/dnaproject2/DNA/errors"
-	tc "github.com/dnaproject2/DNA/txnpool/common"
-	vt "github.com/dnaproject2/DNA/validator/types"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/core/types"
+	"git.fe-cred.com/idfor/idfor/errors"
+	tc "git.fe-cred.com/idfor/idfor/txnpool/common"
+	vt "git.fe-cred.com/idfor/idfor/validator/types"
 	"github.com/stretchr/testify/assert"
 )
 

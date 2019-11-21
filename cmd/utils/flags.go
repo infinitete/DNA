@@ -21,8 +21,8 @@ package utils
 import (
 	"strings"
 
-	"github.com/dnaproject2/DNA/common/config"
-	"github.com/dnaproject2/DNA/smartcontract/service/neovm"
+	"git.fe-cred.com/idfor/idfor/common/config"
+	"git.fe-cred.com/idfor/idfor/smartcontract/service/neovm"
 	"github.com/urfave/cli"
 )
 

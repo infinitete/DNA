@@ -26,7 +26,7 @@ import (
 	"errors"
 	"io"
 
-	"github.com/dnaproject2/DNA/vm/wasmvm/wasm/internal/readpos"
+	"git.fe-cred.com/idfor/idfor/vm/wasmvm/wasm/internal/readpos"
 )
 
 var ErrInvalidMagic = errors.New("wasm: Invalid magic number")

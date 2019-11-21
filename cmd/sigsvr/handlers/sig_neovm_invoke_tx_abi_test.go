@@ -19,8 +19,9 @@ package handlers
 
 import (
 	"encoding/json"
-	clisvrcom "github.com/dnaproject2/DNA/cmd/sigsvr/common"
 	"testing"
+
+	clisvrcom "git.fe-cred.com/idfor/idfor/cmd/sigsvr/common"
 )
 
 var testNeovmAbi = `{

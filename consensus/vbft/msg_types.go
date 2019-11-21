@@ -24,9 +24,9 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/common/serialization"
-	vconfig "github.com/dnaproject2/DNA/consensus/vbft/config"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/serialization"
+	vconfig "git.fe-cred.com/idfor/idfor/consensus/vbft/config"
 	"github.com/ontio/ontology-crypto/keypair"
 	"github.com/ontio/ontology-crypto/signature"
 )

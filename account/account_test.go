@@ -18,10 +18,11 @@
 package account
 
 import (
-	"github.com/dnaproject2/DNA/core/types"
-	"github.com/stretchr/testify/assert"
 	"os"
 	"testing"
+
+	"git.fe-cred.com/idfor/idfor/core/types"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestNewAccount(t *testing.T) {

@@ -21,8 +21,8 @@ package states
 import (
 	"io"
 
-	"github.com/dnaproject2/DNA/common/serialization"
-	"github.com/dnaproject2/DNA/errors"
+	"git.fe-cred.com/idfor/idfor/common/serialization"
+	"git.fe-cred.com/idfor/idfor/errors"
 	"github.com/ontio/ontology-crypto/keypair"
 )
 

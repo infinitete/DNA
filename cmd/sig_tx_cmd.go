@@ -20,14 +20,15 @@ package cmd
 import (
 	"encoding/hex"
 	"fmt"
-	cmdcom "github.com/dnaproject2/DNA/cmd/common"
-	"github.com/dnaproject2/DNA/cmd/utils"
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/common/constants"
-	"github.com/dnaproject2/DNA/core/types"
+	"strings"
+
+	cmdcom "git.fe-cred.com/idfor/idfor/cmd/common"
+	"git.fe-cred.com/idfor/idfor/cmd/utils"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/constants"
+	"git.fe-cred.com/idfor/idfor/core/types"
 	"github.com/ontio/ontology-crypto/keypair"
 	"github.com/urfave/cli"
-	"strings"
 )
 
 var MultiSigAddrCommand = cli.Command{

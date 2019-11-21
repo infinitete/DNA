@@ -20,11 +20,12 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/dnaproject2/DNA/cmd/utils"
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/common/config"
-	"github.com/dnaproject2/DNA/common/log"
-	"github.com/dnaproject2/DNA/smartcontract/service/native/governance"
+
+	"git.fe-cred.com/idfor/idfor/cmd/utils"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/config"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	"git.fe-cred.com/idfor/idfor/smartcontract/service/native/governance"
 	"github.com/urfave/cli"
 )
 

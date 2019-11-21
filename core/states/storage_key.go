@@ -22,8 +22,8 @@ import (
 	"bytes"
 	"io"
 
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/common/serialization"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/serialization"
 )
 
 type StorageKey struct {

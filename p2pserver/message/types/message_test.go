@@ -24,8 +24,8 @@ import (
 	"testing"
 	"time"
 
-	common2 "github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/p2pserver/common"
+	common2 "git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/p2pserver/common"
 	"github.com/stretchr/testify/assert"
 )
 

@@ -22,11 +22,11 @@ import (
 	"os"
 	"testing"
 
-	"github.com/dnaproject2/DNA/account"
-	"github.com/dnaproject2/DNA/common/config"
-	"github.com/dnaproject2/DNA/common/log"
-	"github.com/dnaproject2/DNA/core/genesis"
-	"github.com/dnaproject2/DNA/core/ledger"
+	"git.fe-cred.com/idfor/idfor/account"
+	"git.fe-cred.com/idfor/idfor/common/config"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	"git.fe-cred.com/idfor/idfor/core/genesis"
+	"git.fe-cred.com/idfor/idfor/core/ledger"
 	"github.com/ontio/ontology-crypto/keypair"
 )
 

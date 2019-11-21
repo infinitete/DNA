@@ -25,12 +25,12 @@ import (
 	"os"
 	"testing"
 
-	"github.com/dnaproject2/DNA/common/log"
-	"github.com/dnaproject2/DNA/common/serialization"
-	"github.com/dnaproject2/DNA/core/types"
-	. "github.com/dnaproject2/DNA/smartcontract"
-	neovm2 "github.com/dnaproject2/DNA/smartcontract/service/neovm"
-	"github.com/dnaproject2/DNA/vm/neovm"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	"git.fe-cred.com/idfor/idfor/common/serialization"
+	"git.fe-cred.com/idfor/idfor/core/types"
+	. "git.fe-cred.com/idfor/idfor/smartcontract"
+	neovm2 "git.fe-cred.com/idfor/idfor/smartcontract/service/neovm"
+	"git.fe-cred.com/idfor/idfor/vm/neovm"
 	"github.com/stretchr/testify/assert"
 )
 

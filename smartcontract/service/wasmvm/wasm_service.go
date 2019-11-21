@@ -26,19 +26,21 @@ import (
 	//"strconv"
 	//"strings"
 
-	//"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/core/store"
-	"github.com/dnaproject2/DNA/core/types"
-	//"github.com/dnaproject2/DNA/errors"
-	//sccommon "github.com/dnaproject2/DNA/smartcontract/common"
-	"github.com/dnaproject2/DNA/smartcontract/context"
-	"github.com/dnaproject2/DNA/smartcontract/event"
-	//nstates "github.com/dnaproject2/DNA/smartcontract/service/native/ont"
-	//"github.com/dnaproject2/DNA/smartcontract/states"
-	"github.com/dnaproject2/DNA/smartcontract/storage"
-	//"github.com/dnaproject2/DNA/vm/neovm"
-	//"github.com/dnaproject2/DNA/vm/wasmvm/exec"
-	//"github.com/dnaproject2/DNA/vm/wasmvm/util"
+	//"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/core/store"
+	"git.fe-cred.com/idfor/idfor/core/types"
+
+	//"git.fe-cred.com/idfor/idfor/errors"
+	//sccommon "git.fe-cred.com/idfor/idfor/smartcontract/common"
+	"git.fe-cred.com/idfor/idfor/smartcontract/context"
+	"git.fe-cred.com/idfor/idfor/smartcontract/event"
+
+	//nstates "git.fe-cred.com/idfor/idfor/smartcontract/service/native/ont"
+	//"git.fe-cred.com/idfor/idfor/smartcontract/states"
+	"git.fe-cred.com/idfor/idfor/smartcontract/storage"
+	//"git.fe-cred.com/idfor/idfor/vm/neovm"
+	//"git.fe-cred.com/idfor/idfor/vm/wasmvm/exec"
+	//"git.fe-cred.com/idfor/idfor/vm/wasmvm/util"
 )
 
 type WasmVmService struct {

@@ -18,7 +18,7 @@
 
 package types
 
-import "github.com/dnaproject2/DNA/common"
+import "git.fe-cred.com/idfor/idfor/common"
 
 type SmartCodeEvent struct {
 	TxHash common.Uint256

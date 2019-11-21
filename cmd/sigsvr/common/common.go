@@ -21,8 +21,9 @@ package common
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/dnaproject2/DNA/account"
-	"github.com/dnaproject2/DNA/cmd/sigsvr/store"
+
+	"git.fe-cred.com/idfor/idfor/account"
+	"git.fe-cred.com/idfor/idfor/cmd/sigsvr/store"
 )
 
 var DefExecutorStore *store.ExecutorStore

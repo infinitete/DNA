@@ -19,11 +19,12 @@ package sigsvr
 
 import (
 	"fmt"
-	"github.com/dnaproject2/DNA/account"
-	"github.com/dnaproject2/DNA/cmd"
-	"github.com/dnaproject2/DNA/cmd/sigsvr/store"
-	"github.com/dnaproject2/DNA/cmd/utils"
-	"github.com/dnaproject2/DNA/common"
+
+	"git.fe-cred.com/idfor/idfor/account"
+	"git.fe-cred.com/idfor/idfor/cmd"
+	"git.fe-cred.com/idfor/idfor/cmd/sigsvr/store"
+	"git.fe-cred.com/idfor/idfor/cmd/utils"
+	"git.fe-cred.com/idfor/idfor/common"
 	"github.com/urfave/cli"
 )
 

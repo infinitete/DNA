@@ -23,7 +23,7 @@
 package exec
 
 import (
-	ops "github.com/dnaproject2/DNA/vm/wasmvm/wasm/operators"
+	ops "git.fe-cred.com/idfor/idfor/vm/wasmvm/wasm/operators"
 )
 
 func (vm *VM) newFuncTable() {

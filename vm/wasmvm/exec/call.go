@@ -24,7 +24,8 @@ package exec
 
 import (
 	"errors"
-	"github.com/dnaproject2/DNA/common/log"
+
+	"git.fe-cred.com/idfor/idfor/common/log"
 )
 
 func (vm *VM) doCall(compiled compiledFunction, index int64) {

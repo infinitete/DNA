@@ -25,9 +25,9 @@ import (
 
 	"fmt"
 
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/vm/neovm/errors"
-	"github.com/dnaproject2/DNA/vm/neovm/types"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/vm/neovm/errors"
+	"git.fe-cred.com/idfor/idfor/vm/neovm/types"
 )
 
 func validateCount1(e *ExecutionEngine) error {

@@ -20,9 +20,10 @@ package common
 
 import (
 	"errors"
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/core/states"
-	"github.com/dnaproject2/DNA/smartcontract/event"
+
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/core/states"
+	"git.fe-cred.com/idfor/idfor/smartcontract/event"
 )
 
 var ErrNotFound = errors.New("not found")

@@ -1,3 +1,5 @@
+git.fe-cred.com/idfor/idfor v2.0.1-beta+incompatible h1:ybF7b5huU+/ADDspW+9VlF/iksYaS+b93H5wWEXKD5g=
+git.fe-cred.com/idfor/idfor v2.0.1-beta+incompatible/go.mod h1:dmkHT2zdQO5qj6HXWIeTFJ8Wg5bbBLlEqajxfb61PvM=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/Workiva/go-datastructures v1.0.50 h1:slDmfW6KCHcC7U+LP3DDBbm4fqTwZGn1beOFPfGaLvo=
 github.com/Workiva/go-datastructures v1.0.50/go.mod h1:Z+F2Rca0qCsVYDS8z7bAGm8f3UkzuWYS/oBZz5a7VVA=

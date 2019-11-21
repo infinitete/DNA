@@ -21,8 +21,8 @@ package overlaydb
 import (
 	"crypto/sha256"
 
-	comm "github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/core/store/common"
+	comm "git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/core/store/common"
 	"github.com/syndtr/goleveldb/leveldb/util"
 )
 

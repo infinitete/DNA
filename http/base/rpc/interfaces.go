@@ -21,17 +21,18 @@ package rpc
 import (
 	"bytes"
 	"encoding/hex"
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/common/config"
-	"github.com/dnaproject2/DNA/common/log"
-	"github.com/dnaproject2/DNA/core/payload"
-	scom "github.com/dnaproject2/DNA/core/store/common"
-	"github.com/dnaproject2/DNA/core/types"
-	ontErrors "github.com/dnaproject2/DNA/errors"
-	bactor "github.com/dnaproject2/DNA/http/base/actor"
-	bcomn "github.com/dnaproject2/DNA/http/base/common"
-	berr "github.com/dnaproject2/DNA/http/base/error"
-	"github.com/dnaproject2/DNA/smartcontract/service/native/utils"
+
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/config"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	"git.fe-cred.com/idfor/idfor/core/payload"
+	scom "git.fe-cred.com/idfor/idfor/core/store/common"
+	"git.fe-cred.com/idfor/idfor/core/types"
+	ontErrors "git.fe-cred.com/idfor/idfor/errors"
+	bactor "git.fe-cred.com/idfor/idfor/http/base/actor"
+	bcomn "git.fe-cred.com/idfor/idfor/http/base/common"
+	berr "git.fe-cred.com/idfor/idfor/http/base/error"
+	"git.fe-cred.com/idfor/idfor/smartcontract/service/native/utils"
 )
 
 //get best block hash

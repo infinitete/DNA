@@ -19,8 +19,8 @@
 package context
 
 import (
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/smartcontract/event"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/smartcontract/event"
 )
 
 // ContextRef is a interface of smart context

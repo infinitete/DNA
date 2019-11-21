@@ -21,10 +21,10 @@ package wasmvm
 import (
 	"fmt"
 
-	"github.com/dnaproject2/DNA/common/log"
-	"github.com/dnaproject2/DNA/errors"
-	"github.com/dnaproject2/DNA/vm/wasmvm/exec"
-	"github.com/dnaproject2/DNA/vm/wasmvm/util"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	"git.fe-cred.com/idfor/idfor/errors"
+	"git.fe-cred.com/idfor/idfor/vm/wasmvm/exec"
+	"git.fe-cred.com/idfor/idfor/vm/wasmvm/util"
 )
 
 type LogLevel byte

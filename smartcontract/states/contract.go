@@ -21,10 +21,10 @@ package states
 import (
 	"io"
 
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/common/serialization"
-	"github.com/dnaproject2/DNA/errors"
-	"github.com/dnaproject2/DNA/smartcontract/event"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/serialization"
+	"git.fe-cred.com/idfor/idfor/errors"
+	"git.fe-cred.com/idfor/idfor/smartcontract/event"
 )
 
 // Invoke smart contract struct

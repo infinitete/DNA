@@ -21,13 +21,13 @@ package msgpack
 import (
 	"time"
 
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/common/config"
-	"github.com/dnaproject2/DNA/common/log"
-	ct "github.com/dnaproject2/DNA/core/types"
-	msgCommon "github.com/dnaproject2/DNA/p2pserver/common"
-	mt "github.com/dnaproject2/DNA/p2pserver/message/types"
-	p2pnet "github.com/dnaproject2/DNA/p2pserver/net/protocol"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/config"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	ct "git.fe-cred.com/idfor/idfor/core/types"
+	msgCommon "git.fe-cred.com/idfor/idfor/p2pserver/common"
+	mt "git.fe-cred.com/idfor/idfor/p2pserver/message/types"
+	p2pnet "git.fe-cred.com/idfor/idfor/p2pserver/net/protocol"
 )
 
 //Peer address package

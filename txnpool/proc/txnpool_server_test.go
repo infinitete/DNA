@@ -22,12 +22,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/dnaproject2/DNA/core/payload"
-	"github.com/dnaproject2/DNA/core/types"
-	"github.com/dnaproject2/DNA/errors"
-	tc "github.com/dnaproject2/DNA/txnpool/common"
-	"github.com/dnaproject2/DNA/validator/stateless"
-	vt "github.com/dnaproject2/DNA/validator/types"
+	"git.fe-cred.com/idfor/idfor/core/payload"
+	"git.fe-cred.com/idfor/idfor/core/types"
+	"git.fe-cred.com/idfor/idfor/errors"
+	tc "git.fe-cred.com/idfor/idfor/txnpool/common"
+	"git.fe-cred.com/idfor/idfor/validator/stateless"
+	vt "git.fe-cred.com/idfor/idfor/validator/types"
 	"github.com/ontio/ontology-eventbus/actor"
 	"github.com/stretchr/testify/assert"
 )

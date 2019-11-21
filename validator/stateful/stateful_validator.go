@@ -19,14 +19,15 @@
 package stateful
 
 import (
-	"github.com/dnaproject2/DNA/common/log"
-	"github.com/dnaproject2/DNA/core/ledger"
-	"github.com/dnaproject2/DNA/core/types"
-	"github.com/dnaproject2/DNA/errors"
-	"github.com/dnaproject2/DNA/validator/db"
-	vatypes "github.com/dnaproject2/DNA/validator/types"
-	"github.com/ontio/ontology-eventbus/actor"
 	"reflect"
+
+	"git.fe-cred.com/idfor/idfor/common/log"
+	"git.fe-cred.com/idfor/idfor/core/ledger"
+	"git.fe-cred.com/idfor/idfor/core/types"
+	"git.fe-cred.com/idfor/idfor/errors"
+	"git.fe-cred.com/idfor/idfor/validator/db"
+	vatypes "git.fe-cred.com/idfor/idfor/validator/types"
+	"github.com/ontio/ontology-eventbus/actor"
 )
 
 // Validator is an interface for tx validation actor

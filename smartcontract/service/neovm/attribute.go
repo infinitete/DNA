@@ -19,8 +19,8 @@
 package neovm
 
 import (
-	"github.com/dnaproject2/DNA/core/types"
-	vm "github.com/dnaproject2/DNA/vm/neovm"
+	"git.fe-cred.com/idfor/idfor/core/types"
+	vm "git.fe-cred.com/idfor/idfor/vm/neovm"
 )
 
 // AttributeGetUsage put attribute's usage to vm stack

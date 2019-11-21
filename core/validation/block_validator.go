@@ -22,10 +22,10 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/dnaproject2/DNA/core/ledger"
-	"github.com/dnaproject2/DNA/core/signature"
-	"github.com/dnaproject2/DNA/core/types"
-	ontErrors "github.com/dnaproject2/DNA/errors"
+	"git.fe-cred.com/idfor/idfor/core/ledger"
+	"git.fe-cred.com/idfor/idfor/core/signature"
+	"git.fe-cred.com/idfor/idfor/core/types"
+	ontErrors "git.fe-cred.com/idfor/idfor/errors"
 )
 
 // VerifyBlock checks whether the block is valid

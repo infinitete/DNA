@@ -20,7 +20,7 @@
 package restful
 
 import (
-	"github.com/dnaproject2/DNA/http/restful/restful"
+	"git.fe-cred.com/idfor/idfor/http/restful/restful"
 )
 
 //start restful

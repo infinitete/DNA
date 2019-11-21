@@ -19,8 +19,9 @@
 package neovm
 
 import (
-	"github.com/dnaproject2/DNA/vm/neovm/errors"
 	"math/big"
+
+	"git.fe-cred.com/idfor/idfor/vm/neovm/errors"
 )
 
 func opNop(e *ExecutionEngine) (VMState, error) {

@@ -21,7 +21,7 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/dnaproject2/DNA/common"
+	"git.fe-cred.com/idfor/idfor/common"
 )
 
 func TestContract_Serialize_Deserialize(t *testing.T) {

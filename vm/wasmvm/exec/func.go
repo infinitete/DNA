@@ -28,7 +28,7 @@ import (
 
 	"fmt"
 
-	"github.com/dnaproject2/DNA/vm/wasmvm/exec/internal/compile"
+	"git.fe-cred.com/idfor/idfor/vm/wasmvm/exec/internal/compile"
 )
 
 type function interface {

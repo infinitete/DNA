@@ -20,16 +20,16 @@ package smartcontract
 import (
 	"fmt"
 
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/common/log"
-	"github.com/dnaproject2/DNA/core/store"
-	ctypes "github.com/dnaproject2/DNA/core/types"
-	"github.com/dnaproject2/DNA/smartcontract/context"
-	"github.com/dnaproject2/DNA/smartcontract/event"
-	"github.com/dnaproject2/DNA/smartcontract/service/native"
-	"github.com/dnaproject2/DNA/smartcontract/service/neovm"
-	"github.com/dnaproject2/DNA/smartcontract/storage"
-	vm "github.com/dnaproject2/DNA/vm/neovm"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	"git.fe-cred.com/idfor/idfor/core/store"
+	ctypes "git.fe-cred.com/idfor/idfor/core/types"
+	"git.fe-cred.com/idfor/idfor/smartcontract/context"
+	"git.fe-cred.com/idfor/idfor/smartcontract/event"
+	"git.fe-cred.com/idfor/idfor/smartcontract/service/native"
+	"git.fe-cred.com/idfor/idfor/smartcontract/service/neovm"
+	"git.fe-cred.com/idfor/idfor/smartcontract/storage"
+	vm "git.fe-cred.com/idfor/idfor/vm/neovm"
 )
 
 const (

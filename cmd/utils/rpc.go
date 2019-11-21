@@ -21,11 +21,12 @@ package utils
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/dnaproject2/DNA/common/config"
-	rpcerr "github.com/dnaproject2/DNA/http/base/error"
 	"io/ioutil"
 	"net/http"
 	"strings"
+
+	"git.fe-cred.com/idfor/idfor/common/config"
+	rpcerr "git.fe-cred.com/idfor/idfor/http/base/error"
 )
 
 //JsonRpc version

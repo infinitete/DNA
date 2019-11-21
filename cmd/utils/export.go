@@ -22,9 +22,10 @@ import (
 	"bytes"
 	"compress/zlib"
 	"fmt"
-	"github.com/dnaproject2/DNA/common/serialization"
 	"io"
 	"io/ioutil"
+
+	"git.fe-cred.com/idfor/idfor/common/serialization"
 )
 
 const (

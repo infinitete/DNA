@@ -22,14 +22,14 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/common/constants"
-	"github.com/dnaproject2/DNA/common/log"
-	"github.com/dnaproject2/DNA/core/ledger"
-	"github.com/dnaproject2/DNA/core/payload"
-	"github.com/dnaproject2/DNA/core/signature"
-	"github.com/dnaproject2/DNA/core/types"
-	ontErrors "github.com/dnaproject2/DNA/errors"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/constants"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	"git.fe-cred.com/idfor/idfor/core/ledger"
+	"git.fe-cred.com/idfor/idfor/core/payload"
+	"git.fe-cred.com/idfor/idfor/core/signature"
+	"git.fe-cred.com/idfor/idfor/core/types"
+	ontErrors "git.fe-cred.com/idfor/idfor/errors"
 )
 
 // VerifyTransaction verifys received single transaction

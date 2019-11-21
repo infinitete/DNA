@@ -22,7 +22,7 @@ import (
 	"crypto/rand"
 	"testing"
 
-	"github.com/dnaproject2/DNA/common/serialization"
+	"git.fe-cred.com/idfor/idfor/common/serialization"
 	"github.com/stretchr/testify/assert"
 )
 

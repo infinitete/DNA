@@ -23,11 +23,11 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/dnaproject2/DNA/account"
-	"github.com/dnaproject2/DNA/common/serialization"
-	"github.com/dnaproject2/DNA/core/states"
-	"github.com/dnaproject2/DNA/smartcontract/service/native"
-	"github.com/dnaproject2/DNA/smartcontract/service/native/utils"
+	"git.fe-cred.com/idfor/idfor/account"
+	"git.fe-cred.com/idfor/idfor/common/serialization"
+	"git.fe-cred.com/idfor/idfor/core/states"
+	"git.fe-cred.com/idfor/idfor/smartcontract/service/native"
+	"git.fe-cred.com/idfor/idfor/smartcontract/service/native/utils"
 )
 
 func regIdWithController(srvc *native.NativeService) ([]byte, error) {

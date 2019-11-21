@@ -21,11 +21,12 @@ package cmd
 import (
 	"encoding/hex"
 	"fmt"
-	"github.com/dnaproject2/DNA/cmd/utils"
-	"github.com/dnaproject2/DNA/core/types"
-	httpcom "github.com/dnaproject2/DNA/http/base/common"
-	"github.com/urfave/cli"
 	"strconv"
+
+	"git.fe-cred.com/idfor/idfor/cmd/utils"
+	"git.fe-cred.com/idfor/idfor/core/types"
+	httpcom "git.fe-cred.com/idfor/idfor/http/base/common"
+	"github.com/urfave/cli"
 )
 
 var InfoCommand = cli.Command{
@@ -73,7 +74,7 @@ var InfoCommand = cli.Command{
 			},
 		},
 	},
-	Description: `Query information command can query information such as blocks, transactions, and transaction executions. 
+	Description: `Query information command can query information such as blocks, transactions, and transaction executions.
 You can use the ./DNA info block --help command to view help information.`,
 }
 

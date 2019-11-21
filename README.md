@@ -6,7 +6,7 @@ English | [中文](README_CN.md)
 
 Welcome to the official source code repository for DNA!
 
-DNA is dedicated to developing a high-performance blockchain infrastructure, which is customizable to different business requirements. 
+DNA is dedicated to developing a high-performance blockchain infrastructure, which is customizable to different business requirements.
 
 Prerequisites for getting started with development on the DNA networks are:
 
@@ -18,11 +18,11 @@ The DNA core tech team, the community, and the ecosystem can all support you in 
 
 DNA makes getting started easier!
 
-And new features are still rapidly under development. The master branch may be unstable, but stable versions can be found under the [release page](https://github.com/dnaproject2/DNA/releases).
+And new features are still rapidly under development. The master branch may be unstable, but stable versions can be found under the [release page](https://git.fe-cred.com/idfor/idfor/releases).
 
 We openly welcome developers to DNA.
 
-## Features 
+## Features
 
 - Scalable lightweight universal smart contract
 - Scalable WASM contract support
@@ -59,30 +59,30 @@ The requirements to build DNA are:
 
 ### Get from release
 
-- You can download other versions at [release page](https://github.com/dnaproject2/DNA/releases).
+- You can download other versions at [release page](https://git.fe-cred.com/idfor/idfor/releases).
 
 ### Get from source code
 
 Clone the DNA repository into the appropriate $GOPATH/src/github.com/dnaproject2 directory.
 
 ```
-$ git clone https://github.com/dnaproject2/DNA.git
+$ git clone https://git.fe-cred.com/idfor/idfor.git
 ```
 or
 ```
-$ go get github.com/dnaproject2/DNA
+$ go get git.fe-cred.com/idfor/idfor
 ```
 Fetch the dependent third party packages with glide.
 
 ```
-$ cd $GOPATH/src/github.com/dnaproject2/DNA
+$ cd $GOPATH/src/git.fe-cred.com/idfor/idfor
 $ glide install
 ```
 
 If necessary, update dependent third party packages with glide.
 
 ```
-$ cd $GOPATH/src/github.com/dnaproject2/DNA
+$ cd $GOPATH/src/git.fe-cred.com/idfor/idfor
 $ glide update
 ```
 

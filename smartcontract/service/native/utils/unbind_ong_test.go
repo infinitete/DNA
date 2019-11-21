@@ -22,7 +22,7 @@ import (
 	"math/rand"
 	"testing"
 
-	"github.com/dnaproject2/DNA/common/constants"
+	"git.fe-cred.com/idfor/idfor/common/constants"
 	"github.com/stretchr/testify/assert"
 )
 

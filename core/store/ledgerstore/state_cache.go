@@ -19,8 +19,8 @@
 package ledgerstore
 
 import (
-	"github.com/dnaproject2/DNA/core/states"
-	"github.com/hashicorp/golang-lru"
+	"git.fe-cred.com/idfor/idfor/core/states"
+	lru "github.com/hashicorp/golang-lru"
 )
 
 const (

@@ -23,11 +23,11 @@ import (
 	"errors"
 	"time"
 
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/common/log"
-	"github.com/dnaproject2/DNA/core/types"
-	ontErrors "github.com/dnaproject2/DNA/errors"
-	tcomn "github.com/dnaproject2/DNA/txnpool/common"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	"git.fe-cred.com/idfor/idfor/core/types"
+	ontErrors "git.fe-cred.com/idfor/idfor/errors"
+	tcomn "git.fe-cred.com/idfor/idfor/txnpool/common"
 	"github.com/ontio/ontology-eventbus/actor"
 )
 

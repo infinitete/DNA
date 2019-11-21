@@ -23,11 +23,11 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/common/log"
-	"github.com/dnaproject2/DNA/common/serialization"
-	"github.com/dnaproject2/DNA/core/signature"
-	"github.com/dnaproject2/DNA/errors"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	"git.fe-cred.com/idfor/idfor/common/serialization"
+	"git.fe-cred.com/idfor/idfor/core/signature"
+	"git.fe-cred.com/idfor/idfor/errors"
 	"github.com/ontio/ontology-crypto/keypair"
 )
 

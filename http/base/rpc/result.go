@@ -19,7 +19,7 @@
 package rpc
 
 import (
-	Err "github.com/dnaproject2/DNA/http/base/error"
+	Err "git.fe-cred.com/idfor/idfor/http/base/error"
 )
 
 func responseSuccess(result interface{}) map[string]interface{} {

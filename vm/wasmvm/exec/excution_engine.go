@@ -26,13 +26,13 @@ import (
 	"os"
 	"reflect"
 
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/errors"
-	"github.com/dnaproject2/DNA/vm/neovm/interfaces"
-	"github.com/dnaproject2/DNA/vm/wasmvm/memory"
-	"github.com/dnaproject2/DNA/vm/wasmvm/util"
-	"github.com/dnaproject2/DNA/vm/wasmvm/validate"
-	"github.com/dnaproject2/DNA/vm/wasmvm/wasm"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/errors"
+	"git.fe-cred.com/idfor/idfor/vm/neovm/interfaces"
+	"git.fe-cred.com/idfor/idfor/vm/wasmvm/memory"
+	"git.fe-cred.com/idfor/idfor/vm/wasmvm/util"
+	"git.fe-cred.com/idfor/idfor/vm/wasmvm/validate"
+	"git.fe-cred.com/idfor/idfor/vm/wasmvm/wasm"
 )
 
 const (

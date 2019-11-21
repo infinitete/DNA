@@ -29,12 +29,12 @@ import (
 	"sync"
 	"time"
 
-	"github.com/dnaproject2/DNA/common"
-	cfg "github.com/dnaproject2/DNA/common/config"
-	"github.com/dnaproject2/DNA/common/log"
-	Err "github.com/dnaproject2/DNA/http/base/error"
-	"github.com/dnaproject2/DNA/http/base/rest"
-	"github.com/dnaproject2/DNA/http/websocket/session"
+	"git.fe-cred.com/idfor/idfor/common"
+	cfg "git.fe-cred.com/idfor/idfor/common/config"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	Err "git.fe-cred.com/idfor/idfor/http/base/error"
+	"git.fe-cred.com/idfor/idfor/http/base/rest"
+	"git.fe-cred.com/idfor/idfor/http/websocket/session"
 	"github.com/gorilla/websocket"
 )
 

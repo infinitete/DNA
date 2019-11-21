@@ -20,7 +20,7 @@ package types
 import (
 	"testing"
 
-	cm "github.com/dnaproject2/DNA/common"
+	cm "git.fe-cred.com/idfor/idfor/common"
 )
 
 func TestBlkHdrReqSerializationDeserialization(t *testing.T) {

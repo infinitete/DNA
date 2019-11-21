@@ -18,8 +18,9 @@
 package handlers
 
 import (
-	clisvrcom "github.com/dnaproject2/DNA/cmd/sigsvr/common"
 	"testing"
+
+	clisvrcom "git.fe-cred.com/idfor/idfor/cmd/sigsvr/common"
 )
 
 func TestCreateAccount(t *testing.T) {

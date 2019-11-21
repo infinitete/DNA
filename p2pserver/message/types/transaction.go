@@ -19,9 +19,9 @@
 package types
 
 import (
-	comm "github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/core/types"
-	"github.com/dnaproject2/DNA/p2pserver/common"
+	comm "git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/core/types"
+	"git.fe-cred.com/idfor/idfor/p2pserver/common"
 )
 
 // Transaction message

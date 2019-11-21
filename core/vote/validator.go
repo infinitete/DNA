@@ -19,8 +19,8 @@
 package vote
 
 import (
-	"github.com/dnaproject2/DNA/core/genesis"
-	"github.com/dnaproject2/DNA/core/types"
+	"git.fe-cred.com/idfor/idfor/core/genesis"
+	"git.fe-cred.com/idfor/idfor/core/types"
 	"github.com/ontio/ontology-crypto/keypair"
 )
 

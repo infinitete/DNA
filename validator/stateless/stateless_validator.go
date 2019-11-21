@@ -21,9 +21,9 @@ package stateless
 import (
 	"reflect"
 
-	"github.com/dnaproject2/DNA/common/log"
-	"github.com/dnaproject2/DNA/core/validation"
-	vatypes "github.com/dnaproject2/DNA/validator/types"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	"git.fe-cred.com/idfor/idfor/core/validation"
+	vatypes "git.fe-cred.com/idfor/idfor/validator/types"
 	"github.com/ontio/ontology-eventbus/actor"
 )
 

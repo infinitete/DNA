@@ -22,9 +22,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/dnaproject2/DNA/common/log"
-	"github.com/dnaproject2/DNA/core/payload"
-	"github.com/dnaproject2/DNA/core/types"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	"git.fe-cred.com/idfor/idfor/core/payload"
+	"git.fe-cred.com/idfor/idfor/core/types"
 	"github.com/stretchr/testify/assert"
 )
 

@@ -19,8 +19,8 @@
 package types
 
 import (
-	"github.com/dnaproject2/DNA/common"
-	comm "github.com/dnaproject2/DNA/p2pserver/common"
+	"git.fe-cred.com/idfor/idfor/common"
+	comm "git.fe-cred.com/idfor/idfor/p2pserver/common"
 )
 
 type AddrReq struct{}

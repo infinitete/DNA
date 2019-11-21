@@ -19,8 +19,8 @@
 package neovm
 
 import (
-	"github.com/dnaproject2/DNA/errors"
-	vm "github.com/dnaproject2/DNA/vm/neovm"
+	"git.fe-cred.com/idfor/idfor/errors"
+	vm "git.fe-cred.com/idfor/idfor/vm/neovm"
 )
 
 // GetCodeContainer push current transaction to vm stack

@@ -21,13 +21,14 @@ package program
 import (
 	"errors"
 	"fmt"
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/common/constants"
-	"github.com/dnaproject2/DNA/vm/neovm"
-	"github.com/ontio/ontology-crypto/keypair"
 	"io"
 	"math"
 	"math/big"
+
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/constants"
+	"git.fe-cred.com/idfor/idfor/vm/neovm"
+	"github.com/ontio/ontology-crypto/keypair"
 )
 
 type ProgramBuilder struct {

@@ -18,7 +18,7 @@
 
 package utils
 
-import "github.com/dnaproject2/DNA/common/constants"
+import "git.fe-cred.com/idfor/idfor/common/constants"
 
 var (
 	TIME_INTERVAL     = constants.UNBOUND_TIME_INTERVAL

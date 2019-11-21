@@ -23,7 +23,7 @@ import (
 	"io"
 	"os"
 
-	"github.com/dnaproject2/DNA/common"
+	"git.fe-cred.com/idfor/idfor/common"
 )
 
 // HashStore is an interface for persist hash

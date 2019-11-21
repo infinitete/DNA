@@ -20,9 +20,10 @@ package handlers
 
 import (
 	"encoding/json"
-	"github.com/dnaproject2/DNA/account"
-	clisvrcom "github.com/dnaproject2/DNA/cmd/sigsvr/common"
 	"testing"
+
+	"git.fe-cred.com/idfor/idfor/account"
+	clisvrcom "git.fe-cred.com/idfor/idfor/cmd/sigsvr/common"
 )
 
 func TestSigTransferTransaction(t *testing.T) {

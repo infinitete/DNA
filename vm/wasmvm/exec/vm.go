@@ -29,12 +29,12 @@ import (
 	"fmt"
 	"math"
 
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/vm/wasmvm/disasm"
-	"github.com/dnaproject2/DNA/vm/wasmvm/exec/internal/compile"
-	"github.com/dnaproject2/DNA/vm/wasmvm/memory"
-	"github.com/dnaproject2/DNA/vm/wasmvm/wasm"
-	ops "github.com/dnaproject2/DNA/vm/wasmvm/wasm/operators"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/vm/wasmvm/disasm"
+	"git.fe-cred.com/idfor/idfor/vm/wasmvm/exec/internal/compile"
+	"git.fe-cred.com/idfor/idfor/vm/wasmvm/memory"
+	"git.fe-cred.com/idfor/idfor/vm/wasmvm/wasm"
+	ops "git.fe-cred.com/idfor/idfor/vm/wasmvm/wasm/operators"
 )
 
 var (

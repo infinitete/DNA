@@ -19,8 +19,8 @@
 package types
 
 import (
-	comm "github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/p2pserver/common"
+	comm "git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/p2pserver/common"
 )
 
 type Disconnected struct{}

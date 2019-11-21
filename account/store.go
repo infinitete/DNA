@@ -19,7 +19,7 @@
 package account
 
 import (
-	"github.com/dnaproject2/DNA/common"
+	"git.fe-cred.com/idfor/idfor/common"
 )
 
 type ClientStore interface {

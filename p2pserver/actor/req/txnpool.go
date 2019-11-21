@@ -21,12 +21,12 @@ package req
 import (
 	"time"
 
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/common/log"
-	"github.com/dnaproject2/DNA/core/types"
-	"github.com/dnaproject2/DNA/errors"
-	p2pcommon "github.com/dnaproject2/DNA/p2pserver/common"
-	tc "github.com/dnaproject2/DNA/txnpool/common"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	"git.fe-cred.com/idfor/idfor/core/types"
+	"git.fe-cred.com/idfor/idfor/errors"
+	p2pcommon "git.fe-cred.com/idfor/idfor/p2pserver/common"
+	tc "git.fe-cred.com/idfor/idfor/txnpool/common"
 	"github.com/ontio/ontology-eventbus/actor"
 )
 

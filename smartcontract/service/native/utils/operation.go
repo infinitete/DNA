@@ -19,10 +19,10 @@
 package utils
 
 import (
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/errors"
-	"github.com/dnaproject2/DNA/smartcontract/event"
-	"github.com/dnaproject2/DNA/smartcontract/service/native"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/errors"
+	"git.fe-cred.com/idfor/idfor/smartcontract/event"
+	"git.fe-cred.com/idfor/idfor/smartcontract/service/native"
 )
 
 func AddCommonEvent(native *native.NativeService, contract common.Address, name string, params interface{}) {

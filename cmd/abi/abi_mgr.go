@@ -21,9 +21,10 @@ package abi
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/dnaproject2/DNA/common/log"
 	"io/ioutil"
 	"strings"
+
+	"git.fe-cred.com/idfor/idfor/common/log"
 )
 
 var DefAbiMgr = NewAbiMgr()

@@ -18,9 +18,9 @@
 package neovm
 
 import (
-	"github.com/dnaproject2/DNA/core/types"
-	vm "github.com/dnaproject2/DNA/vm/neovm"
-	vmtypes "github.com/dnaproject2/DNA/vm/neovm/types"
+	"git.fe-cred.com/idfor/idfor/core/types"
+	vm "git.fe-cred.com/idfor/idfor/vm/neovm"
+	vmtypes "git.fe-cred.com/idfor/idfor/vm/neovm/types"
 )
 
 // BlockGetTransactionCount put block's transactions count to vm stack

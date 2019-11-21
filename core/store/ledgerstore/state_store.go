@@ -25,17 +25,17 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/common/log"
-	"github.com/dnaproject2/DNA/common/serialization"
-	"github.com/dnaproject2/DNA/core/payload"
-	"github.com/dnaproject2/DNA/core/states"
-	scom "github.com/dnaproject2/DNA/core/store/common"
-	"github.com/dnaproject2/DNA/core/store/leveldbstore"
-	"github.com/dnaproject2/DNA/core/store/overlaydb"
-	"github.com/dnaproject2/DNA/merkle"
-	"github.com/dnaproject2/DNA/smartcontract/service/native/ontid"
-	"github.com/dnaproject2/DNA/smartcontract/service/native/utils"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	"git.fe-cred.com/idfor/idfor/common/serialization"
+	"git.fe-cred.com/idfor/idfor/core/payload"
+	"git.fe-cred.com/idfor/idfor/core/states"
+	scom "git.fe-cred.com/idfor/idfor/core/store/common"
+	"git.fe-cred.com/idfor/idfor/core/store/leveldbstore"
+	"git.fe-cred.com/idfor/idfor/core/store/overlaydb"
+	"git.fe-cred.com/idfor/idfor/merkle"
+	"git.fe-cred.com/idfor/idfor/smartcontract/service/native/ontid"
+	"git.fe-cred.com/idfor/idfor/smartcontract/service/native/utils"
 )
 
 var (

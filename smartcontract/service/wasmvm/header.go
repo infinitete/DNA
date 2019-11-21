@@ -18,9 +18,9 @@
 package wasmvm
 
 import (
-	"github.com/dnaproject2/DNA/core/types"
-	"github.com/dnaproject2/DNA/errors"
-	"github.com/dnaproject2/DNA/vm/wasmvm/exec"
+	"git.fe-cred.com/idfor/idfor/core/types"
+	"git.fe-cred.com/idfor/idfor/errors"
+	"git.fe-cred.com/idfor/idfor/vm/wasmvm/exec"
 )
 
 func (this *WasmVmService) headerGetHash(engine *exec.ExecutionEngine) (bool, error) {

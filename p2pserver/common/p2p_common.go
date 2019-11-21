@@ -23,8 +23,8 @@ import (
 	"strconv"
 	"strings"
 
-	com "github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/core/types"
+	com "git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/core/types"
 )
 
 //peer capability

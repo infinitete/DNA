@@ -21,9 +21,9 @@ package types
 import (
 	"errors"
 
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/common/constants"
-	"github.com/dnaproject2/DNA/core/program"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/constants"
+	"git.fe-cred.com/idfor/idfor/core/program"
 	"github.com/ontio/ontology-crypto/keypair"
 )
 

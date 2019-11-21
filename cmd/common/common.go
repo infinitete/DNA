@@ -20,13 +20,14 @@ package common
 
 import (
 	"fmt"
-	"github.com/dnaproject2/DNA/account"
-	"github.com/dnaproject2/DNA/cmd/utils"
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/common/config"
-	"github.com/dnaproject2/DNA/common/password"
-	"github.com/urfave/cli"
 	"strconv"
+
+	"git.fe-cred.com/idfor/idfor/account"
+	"git.fe-cred.com/idfor/idfor/cmd/utils"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/config"
+	"git.fe-cred.com/idfor/idfor/common/password"
+	"github.com/urfave/cli"
 )
 
 func GetPasswd(ctx *cli.Context) ([]byte, error) {

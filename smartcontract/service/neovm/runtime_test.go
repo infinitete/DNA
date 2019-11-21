@@ -24,9 +24,10 @@ import (
 	"testing"
 
 	"errors"
-	"github.com/dnaproject2/DNA/account"
-	"github.com/dnaproject2/DNA/vm/neovm"
-	"github.com/dnaproject2/DNA/vm/neovm/types"
+
+	"git.fe-cred.com/idfor/idfor/account"
+	"git.fe-cred.com/idfor/idfor/vm/neovm"
+	"git.fe-cred.com/idfor/idfor/vm/neovm/types"
 	"github.com/stretchr/testify/assert"
 )
 

@@ -23,11 +23,11 @@ import (
 	"fmt"
 	"math"
 
-	"github.com/dnaproject2/DNA/common/log"
-	vconfig "github.com/dnaproject2/DNA/consensus/vbft/config"
-	"github.com/dnaproject2/DNA/core/signature"
-	msgpack "github.com/dnaproject2/DNA/p2pserver/message/msg_pack"
-	p2pmsg "github.com/dnaproject2/DNA/p2pserver/message/types"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	vconfig "git.fe-cred.com/idfor/idfor/consensus/vbft/config"
+	"git.fe-cred.com/idfor/idfor/core/signature"
+	msgpack "git.fe-cred.com/idfor/idfor/p2pserver/message/msg_pack"
+	p2pmsg "git.fe-cred.com/idfor/idfor/p2pserver/message/types"
 )
 
 func (self *Server) GetCurrentBlockNo() uint32 {

@@ -20,11 +20,12 @@ package test
 
 import (
 	"fmt"
-	"github.com/dnaproject2/DNA/core/types"
-	"github.com/dnaproject2/DNA/smartcontract"
-	"github.com/dnaproject2/DNA/vm/neovm"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"git.fe-cred.com/idfor/idfor/core/types"
+	"git.fe-cred.com/idfor/idfor/smartcontract"
+	"git.fe-cred.com/idfor/idfor/vm/neovm"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestMap(t *testing.T) {

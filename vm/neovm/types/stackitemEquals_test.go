@@ -19,10 +19,11 @@
 package types
 
 import (
-	"github.com/dnaproject2/DNA/common"
-	"github.com/stretchr/testify/assert"
 	"math/big"
 	"testing"
+
+	"git.fe-cred.com/idfor/idfor/common"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestBoolean_Equals(t *testing.T) {

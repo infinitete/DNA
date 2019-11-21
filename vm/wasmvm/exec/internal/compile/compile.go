@@ -60,8 +60,8 @@ import (
 	"bytes"
 	"encoding/binary"
 
-	"github.com/dnaproject2/DNA/vm/wasmvm/disasm"
-	ops "github.com/dnaproject2/DNA/vm/wasmvm/wasm/operators"
+	"git.fe-cred.com/idfor/idfor/vm/wasmvm/disasm"
+	ops "git.fe-cred.com/idfor/idfor/vm/wasmvm/wasm/operators"
 )
 
 // A small note on the usage of discard instructions:

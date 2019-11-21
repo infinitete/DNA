@@ -23,12 +23,13 @@ import (
 	"encoding/binary"
 	"fmt"
 
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/common/serialization"
-	scom "github.com/dnaproject2/DNA/core/store/common"
-	"github.com/dnaproject2/DNA/core/store/leveldbstore"
-	"github.com/dnaproject2/DNA/core/types"
 	"io"
+
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/serialization"
+	scom "git.fe-cred.com/idfor/idfor/core/store/common"
+	"git.fe-cred.com/idfor/idfor/core/store/leveldbstore"
+	"git.fe-cred.com/idfor/idfor/core/types"
 )
 
 //Block store save the data of block & transaction

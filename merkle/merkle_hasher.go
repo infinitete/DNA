@@ -21,7 +21,7 @@ package merkle
 import (
 	"crypto/sha256"
 
-	"github.com/dnaproject2/DNA/common"
+	"git.fe-cred.com/idfor/idfor/common"
 )
 
 var debugCheck = false

@@ -23,12 +23,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/dnaproject2/DNA/account"
-	comm "github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/common/log"
-	ct "github.com/dnaproject2/DNA/core/types"
-	"github.com/dnaproject2/DNA/p2pserver/common"
-	mt "github.com/dnaproject2/DNA/p2pserver/message/types"
+	"git.fe-cred.com/idfor/idfor/account"
+	comm "git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	ct "git.fe-cred.com/idfor/idfor/core/types"
+	"git.fe-cred.com/idfor/idfor/p2pserver/common"
+	mt "git.fe-cred.com/idfor/idfor/p2pserver/message/types"
 	"github.com/ontio/ontology-crypto/keypair"
 )
 

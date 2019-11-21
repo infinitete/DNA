@@ -24,7 +24,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/dnaproject2/DNA/smartcontract/service/native/utils"
+	"git.fe-cred.com/idfor/idfor/smartcontract/service/native/utils"
 )
 
 var (

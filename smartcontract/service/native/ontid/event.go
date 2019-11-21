@@ -20,8 +20,8 @@ package ontid
 import (
 	"encoding/hex"
 
-	"github.com/dnaproject2/DNA/smartcontract/event"
-	"github.com/dnaproject2/DNA/smartcontract/service/native"
+	"git.fe-cred.com/idfor/idfor/smartcontract/event"
+	"git.fe-cred.com/idfor/idfor/smartcontract/service/native"
 )
 
 func newEvent(srvc *native.NativeService, st interface{}) {

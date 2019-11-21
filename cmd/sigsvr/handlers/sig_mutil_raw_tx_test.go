@@ -20,14 +20,15 @@ package handlers
 import (
 	"encoding/hex"
 	"encoding/json"
-	clisvrcom "github.com/dnaproject2/DNA/cmd/sigsvr/common"
-	"github.com/dnaproject2/DNA/cmd/utils"
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/core/types"
+	"testing"
+
+	clisvrcom "git.fe-cred.com/idfor/idfor/cmd/sigsvr/common"
+	"git.fe-cred.com/idfor/idfor/cmd/utils"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/core/types"
 	"github.com/ontio/ontology-crypto/keypair"
 	"github.com/ontio/ontology-crypto/signature"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestSigMutilRawTransaction(t *testing.T) {

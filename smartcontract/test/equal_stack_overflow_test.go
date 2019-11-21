@@ -22,10 +22,10 @@ import (
 	"os"
 	"testing"
 
-	"github.com/dnaproject2/DNA/common/log"
-	"github.com/dnaproject2/DNA/core/types"
-	. "github.com/dnaproject2/DNA/smartcontract"
-	"github.com/dnaproject2/DNA/vm/neovm"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	"git.fe-cred.com/idfor/idfor/core/types"
+	. "git.fe-cred.com/idfor/idfor/smartcontract"
+	"git.fe-cred.com/idfor/idfor/vm/neovm"
 	"github.com/stretchr/testify/assert"
 )
 

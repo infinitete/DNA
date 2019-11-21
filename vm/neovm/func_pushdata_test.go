@@ -23,7 +23,7 @@ import (
 	"encoding/binary"
 	"testing"
 
-	"github.com/dnaproject2/DNA/vm/neovm/utils"
+	"git.fe-cred.com/idfor/idfor/vm/neovm/utils"
 )
 
 func TestGetPushData(t *testing.T) {

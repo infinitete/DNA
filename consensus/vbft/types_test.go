@@ -22,9 +22,9 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/dnaproject2/DNA/common"
-	vconfig "github.com/dnaproject2/DNA/consensus/vbft/config"
-	"github.com/dnaproject2/DNA/core/types"
+	"git.fe-cred.com/idfor/idfor/common"
+	vconfig "git.fe-cred.com/idfor/idfor/consensus/vbft/config"
+	"git.fe-cred.com/idfor/idfor/core/types"
 )
 
 func TestBlock_getProposer(t *testing.T) {

@@ -4,11 +4,11 @@
 
 [English](README.md) | 中文
 
-欢迎来到DNA的源码库！ 
+欢迎来到DNA的源码库！
 
 DNA致力于创建一个组件化、可自由配置、跨链支持、高性能、横向可扩展的区块链底层基础设施。 让部署及调用分布式应用变得更加非常简单。
 
-但很多新的功能还处于快速的开发过程中，master分支的代码可能是不稳定的，稳定的版本可以在[releases](https://github.com/dnaproject2/DNA/releases)中下载。
+但很多新的功能还处于快速的开发过程中，master分支的代码可能是不稳定的，稳定的版本可以在[releases](https://git.fe-cred.com/idfor/idfor/releases)中下载。
 
 非常欢迎及希望能有更多的开发者加入到DNA中来。
 
@@ -17,7 +17,7 @@ DNA致力于创建一个组件化、可自由配置、跨链支持、高性能�
 * 可扩展的轻量级通用智能合约
 * 可扩展的WASM合约的支持
 * 跨链交互协议（进行中）
-* 多种加密算法支持 
+* 多种加密算法支持
 * 高度优化的交易处理速度
 * P2P连接链路加密(可选择模块)
 * 多种共识算法支持 (VBFT/DBFT/SBFT/PoW/SOLO...)
@@ -47,30 +47,30 @@ DNA致力于创建一个组件化、可自由配置、跨链支持、高性能�
 ## 获取DNA
 
 ### 从release获取
-- 你可以从[下载页面](https://github.com/dnaproject2/DNA/releases)获取.
+- 你可以从[下载页面](https://git.fe-cred.com/idfor/idfor/releases)获取.
 
 ### 从源码获取
 克隆DNA仓库到 **$GOPATH/src/github.com/dnaproject2** 目录
 
 ```shell
-$ git clone https://github.com/dnaproject2/DNA.git
+$ git clone https://git.fe-cred.com/idfor/idfor.git
 ```
 或者
 ```shell
-$ go get github.com/dnaproject2/DNA
+$ go get git.fe-cred.com/idfor/idfor
 ```
 
 用第三方包管理工具glide拉取依赖库
 
 ````shell
-$ cd $GOPATH/src/github.com/dnaproject2/DNA
+$ cd $GOPATH/src/git.fe-cred.com/idfor/idfor
 $ glide install
 ````
 
 如果项目有新的第三方依赖包，使用glide更新依赖库
 
 ````shell
-$ cd $GOPATH/src/github.com/dnaproject2/DNA
+$ cd $GOPATH/src/git.fe-cred.com/idfor/idfor
 $ glide update
 ````
 

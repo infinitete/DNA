@@ -21,8 +21,8 @@ package test
 import (
 	"testing"
 
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/smartcontract"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/smartcontract"
 	"github.com/stretchr/testify/assert"
 )
 

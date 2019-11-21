@@ -23,8 +23,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/common/log"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/log"
 )
 
 // const UINT256_SIZE int = 32
@@ -551,7 +551,7 @@ func (self *MerkleVerifier) VerifyConsistency(old_tree_size,
 	the proof (together with the signatures on the hashes) is proof of inconsistency.
 	*/
 	if new_hash != new_root {
-		return errors.New(fmt.Sprintf(`Bad Merkle proof: second root hash does not match. 
+		return errors.New(fmt.Sprintf(`Bad Merkle proof: second root hash does not match.
 			Expected hash:%x, computed hash: %x`, new_root, new_hash))
 	} else if old_hash != old_root {
 		return errors.New(fmt.Sprintf(`Inconsistency: first root hash does not match."

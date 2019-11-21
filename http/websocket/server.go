@@ -20,17 +20,17 @@
 package websocket
 
 import (
-	"github.com/dnaproject2/DNA/common"
-	cfg "github.com/dnaproject2/DNA/common/config"
-	"github.com/dnaproject2/DNA/common/log"
-	"github.com/dnaproject2/DNA/core/types"
-	"github.com/dnaproject2/DNA/events/message"
-	bactor "github.com/dnaproject2/DNA/http/base/actor"
-	bcomn "github.com/dnaproject2/DNA/http/base/common"
-	Err "github.com/dnaproject2/DNA/http/base/error"
-	"github.com/dnaproject2/DNA/http/base/rest"
-	"github.com/dnaproject2/DNA/http/websocket/websocket"
-	"github.com/dnaproject2/DNA/smartcontract/event"
+	"git.fe-cred.com/idfor/idfor/common"
+	cfg "git.fe-cred.com/idfor/idfor/common/config"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	"git.fe-cred.com/idfor/idfor/core/types"
+	"git.fe-cred.com/idfor/idfor/events/message"
+	bactor "git.fe-cred.com/idfor/idfor/http/base/actor"
+	bcomn "git.fe-cred.com/idfor/idfor/http/base/common"
+	Err "git.fe-cred.com/idfor/idfor/http/base/error"
+	"git.fe-cred.com/idfor/idfor/http/base/rest"
+	"git.fe-cred.com/idfor/idfor/http/websocket/websocket"
+	"git.fe-cred.com/idfor/idfor/smartcontract/event"
 )
 
 var ws *websocket.WsServer

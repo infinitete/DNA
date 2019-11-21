@@ -23,11 +23,11 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/common/serialization"
-	storcomm "github.com/dnaproject2/DNA/core/store/common"
-	leveldb "github.com/dnaproject2/DNA/core/store/leveldbstore"
-	"github.com/dnaproject2/DNA/core/types"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/serialization"
+	storcomm "git.fe-cred.com/idfor/idfor/core/store/common"
+	leveldb "git.fe-cred.com/idfor/idfor/core/store/leveldbstore"
+	"git.fe-cred.com/idfor/idfor/core/types"
 	pool "github.com/valyala/bytebufferpool"
 )
 

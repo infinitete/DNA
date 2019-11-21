@@ -19,8 +19,8 @@
 package wasmvm
 
 import (
-	"github.com/dnaproject2/DNA/errors"
-	"github.com/dnaproject2/DNA/vm/wasmvm/exec"
+	"git.fe-cred.com/idfor/idfor/errors"
+	"git.fe-cred.com/idfor/idfor/vm/wasmvm/exec"
 )
 
 type WasmStateReader struct {

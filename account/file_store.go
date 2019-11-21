@@ -25,7 +25,7 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/dnaproject2/DNA/common"
+	"git.fe-cred.com/idfor/idfor/common"
 	"github.com/ontio/ontology-crypto/keypair"
 )
 

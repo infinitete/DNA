@@ -19,10 +19,10 @@
 package neovm
 
 import (
-	"github.com/dnaproject2/DNA/core/payload"
-	"github.com/dnaproject2/DNA/core/types"
-	"github.com/dnaproject2/DNA/errors"
-	vm "github.com/dnaproject2/DNA/vm/neovm"
+	"git.fe-cred.com/idfor/idfor/core/payload"
+	"git.fe-cred.com/idfor/idfor/core/types"
+	"git.fe-cred.com/idfor/idfor/errors"
+	vm "git.fe-cred.com/idfor/idfor/vm/neovm"
 )
 
 func validatorAttribute(engine *vm.ExecutionEngine) error {

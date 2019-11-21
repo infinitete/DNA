@@ -23,7 +23,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/dnaproject2/DNA/consensus/vbft/config"
+	vconfig "git.fe-cred.com/idfor/idfor/consensus/vbft/config"
 	"github.com/ontio/ontology-crypto/keypair"
 )
 

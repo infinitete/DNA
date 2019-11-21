@@ -21,11 +21,11 @@ import (
 	"encoding/hex"
 	"errors"
 
-	com "github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/core/states"
-	"github.com/dnaproject2/DNA/core/types"
-	"github.com/dnaproject2/DNA/smartcontract/service/native"
-	"github.com/dnaproject2/DNA/smartcontract/service/native/utils"
+	com "git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/core/states"
+	"git.fe-cred.com/idfor/idfor/core/types"
+	"git.fe-cred.com/idfor/idfor/smartcontract/service/native"
+	"git.fe-cred.com/idfor/idfor/smartcontract/service/native/utils"
 	"github.com/ontio/ontology-crypto/keypair"
 )
 

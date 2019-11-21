@@ -21,14 +21,15 @@ package test
 import (
 	"bytes"
 	"fmt"
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/core/types"
-	"github.com/dnaproject2/DNA/merkle"
-	"github.com/dnaproject2/DNA/vm/neovm"
-	"github.com/ontio/ontology-crypto/keypair"
-	"github.com/stretchr/testify/assert"
 	"math/big"
 	"testing"
+
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/core/types"
+	"git.fe-cred.com/idfor/idfor/merkle"
+	"git.fe-cred.com/idfor/idfor/vm/neovm"
+	"github.com/ontio/ontology-crypto/keypair"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestMerkleVerifier(t *testing.T) {

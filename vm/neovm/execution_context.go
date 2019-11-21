@@ -21,7 +21,7 @@ package neovm
 import (
 	"io"
 
-	"github.com/dnaproject2/DNA/vm/neovm/utils"
+	"git.fe-cred.com/idfor/idfor/vm/neovm/utils"
 )
 
 type ExecutionContext struct {

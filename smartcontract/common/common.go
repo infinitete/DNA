@@ -21,9 +21,9 @@ package common
 import (
 	"errors"
 
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/common/log"
-	"github.com/dnaproject2/DNA/vm/neovm/types"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	"git.fe-cred.com/idfor/idfor/vm/neovm/types"
 )
 
 // ConvertReturnTypes return neovm stack element value

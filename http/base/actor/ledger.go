@@ -19,12 +19,12 @@
 package actor
 
 import (
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/core/ledger"
-	"github.com/dnaproject2/DNA/core/payload"
-	"github.com/dnaproject2/DNA/core/types"
-	"github.com/dnaproject2/DNA/smartcontract/event"
-	cstate "github.com/dnaproject2/DNA/smartcontract/states"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/core/ledger"
+	"git.fe-cred.com/idfor/idfor/core/payload"
+	"git.fe-cred.com/idfor/idfor/core/types"
+	"git.fe-cred.com/idfor/idfor/smartcontract/event"
+	cstate "git.fe-cred.com/idfor/idfor/smartcontract/states"
 )
 
 const (

@@ -22,14 +22,14 @@ import (
 	"bytes"
 	"fmt"
 
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/common/config"
-	"github.com/dnaproject2/DNA/common/serialization"
-	cstates "github.com/dnaproject2/DNA/core/states"
-	"github.com/dnaproject2/DNA/errors"
-	"github.com/dnaproject2/DNA/smartcontract/event"
-	"github.com/dnaproject2/DNA/smartcontract/service/native"
-	"github.com/dnaproject2/DNA/smartcontract/service/native/utils"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/config"
+	"git.fe-cred.com/idfor/idfor/common/serialization"
+	cstates "git.fe-cred.com/idfor/idfor/core/states"
+	"git.fe-cred.com/idfor/idfor/errors"
+	"git.fe-cred.com/idfor/idfor/smartcontract/event"
+	"git.fe-cred.com/idfor/idfor/smartcontract/service/native"
+	"git.fe-cred.com/idfor/idfor/smartcontract/service/native/utils"
 )
 
 const (

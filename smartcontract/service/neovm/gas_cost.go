@@ -19,8 +19,8 @@
 package neovm
 
 import (
-	"github.com/dnaproject2/DNA/errors"
-	vm "github.com/dnaproject2/DNA/vm/neovm"
+	"git.fe-cred.com/idfor/idfor/errors"
+	vm "git.fe-cred.com/idfor/idfor/vm/neovm"
 )
 
 func StoreGasCost(engine *vm.ExecutionEngine) (uint64, error) {

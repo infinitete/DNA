@@ -22,7 +22,7 @@ import (
 	"errors"
 	"sync"
 
-	"github.com/dnaproject2/DNA/common"
+	"git.fe-cred.com/idfor/idfor/common"
 )
 
 var errDropFarFutureMsg = errors.New("msg pool dropped msg for far future")

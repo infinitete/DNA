@@ -23,7 +23,7 @@ import (
 	"fmt"
 	"math/big"
 
-	"github.com/dnaproject2/DNA/vm/neovm/interfaces"
+	"git.fe-cred.com/idfor/idfor/vm/neovm/interfaces"
 )
 
 type Interop struct {

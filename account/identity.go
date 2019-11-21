@@ -26,7 +26,7 @@ import (
 	"fmt"
 	"math/big"
 
-	"github.com/dnaproject2/DNA/core/types"
+	"git.fe-cred.com/idfor/idfor/core/types"
 	base58 "github.com/itchyny/base58-go"
 	"github.com/ontio/ontology-crypto/keypair"
 	"golang.org/x/crypto/ripemd160"

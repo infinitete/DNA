@@ -23,7 +23,7 @@
 package operators
 
 import (
-	"github.com/dnaproject2/DNA/vm/wasmvm/wasm"
+	"git.fe-cred.com/idfor/idfor/vm/wasmvm/wasm"
 )
 
 var (

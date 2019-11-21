@@ -20,15 +20,16 @@ package ledger
 
 import (
 	"fmt"
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/common/log"
-	"github.com/dnaproject2/DNA/core/payload"
-	"github.com/dnaproject2/DNA/core/states"
-	"github.com/dnaproject2/DNA/core/store"
-	"github.com/dnaproject2/DNA/core/store/ledgerstore"
-	"github.com/dnaproject2/DNA/core/types"
-	"github.com/dnaproject2/DNA/smartcontract/event"
-	cstate "github.com/dnaproject2/DNA/smartcontract/states"
+
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	"git.fe-cred.com/idfor/idfor/core/payload"
+	"git.fe-cred.com/idfor/idfor/core/states"
+	"git.fe-cred.com/idfor/idfor/core/store"
+	"git.fe-cred.com/idfor/idfor/core/store/ledgerstore"
+	"git.fe-cred.com/idfor/idfor/core/types"
+	"git.fe-cred.com/idfor/idfor/smartcontract/event"
+	cstate "git.fe-cred.com/idfor/idfor/smartcontract/states"
 	"github.com/ontio/ontology-crypto/keypair"
 )
 

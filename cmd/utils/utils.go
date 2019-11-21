@@ -22,12 +22,13 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/dnaproject2/DNA/common/constants"
 	"io/ioutil"
 	"math"
 	"math/big"
 	"os"
 	"strings"
+
+	"git.fe-cred.com/idfor/idfor/common/constants"
 )
 
 const (

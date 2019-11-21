@@ -27,9 +27,9 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/dnaproject2/DNA/common/config"
-	"github.com/dnaproject2/DNA/common/log"
-	"github.com/dnaproject2/DNA/p2pserver/common"
+	"git.fe-cred.com/idfor/idfor/common/config"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	"git.fe-cred.com/idfor/idfor/p2pserver/common"
 )
 
 // createListener creates a net listener on the port

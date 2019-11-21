@@ -21,13 +21,13 @@ package dbft
 import (
 	"fmt"
 
-	"github.com/dnaproject2/DNA/account"
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/common/log"
-	"github.com/dnaproject2/DNA/core/ledger"
-	"github.com/dnaproject2/DNA/core/types"
-	"github.com/dnaproject2/DNA/core/vote"
-	msg "github.com/dnaproject2/DNA/p2pserver/message/types"
+	"git.fe-cred.com/idfor/idfor/account"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	"git.fe-cred.com/idfor/idfor/core/ledger"
+	"git.fe-cred.com/idfor/idfor/core/types"
+	"git.fe-cred.com/idfor/idfor/core/vote"
+	msg "git.fe-cred.com/idfor/idfor/p2pserver/message/types"
 	"github.com/ontio/ontology-crypto/keypair"
 )
 

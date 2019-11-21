@@ -23,7 +23,7 @@ import (
 	"errors"
 	"reflect"
 
-	"github.com/dnaproject2/DNA/vm/wasmvm/util"
+	"git.fe-cred.com/idfor/idfor/vm/wasmvm/util"
 )
 
 type PType int

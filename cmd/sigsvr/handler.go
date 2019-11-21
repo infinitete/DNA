@@ -18,7 +18,7 @@
 
 package sigsvr
 
-import "github.com/dnaproject2/DNA/cmd/sigsvr/handlers"
+import "git.fe-cred.com/idfor/idfor/cmd/sigsvr/handlers"
 
 func init() {
 	DefCliRpcSvr.RegHandler("createaccount", handlers.CreateAccount)

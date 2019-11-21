@@ -22,10 +22,10 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/dnaproject2/DNA/common/log"
-	bactor "github.com/dnaproject2/DNA/http/base/actor"
-	"github.com/dnaproject2/DNA/http/base/common"
-	berr "github.com/dnaproject2/DNA/http/base/error"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	bactor "git.fe-cred.com/idfor/idfor/http/base/actor"
+	"git.fe-cred.com/idfor/idfor/http/base/common"
+	berr "git.fe-cred.com/idfor/idfor/http/base/error"
 )
 
 const (

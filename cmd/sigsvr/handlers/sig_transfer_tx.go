@@ -21,11 +21,12 @@ package handlers
 import (
 	"encoding/hex"
 	"encoding/json"
-	clisvrcom "github.com/dnaproject2/DNA/cmd/sigsvr/common"
-	cliutil "github.com/dnaproject2/DNA/cmd/utils"
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/common/log"
 	"strconv"
+
+	clisvrcom "git.fe-cred.com/idfor/idfor/cmd/sigsvr/common"
+	cliutil "git.fe-cred.com/idfor/idfor/cmd/utils"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/log"
 )
 
 type SigTransferTransactionReq struct {

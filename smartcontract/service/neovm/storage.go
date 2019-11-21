@@ -20,10 +20,11 @@ package neovm
 
 import (
 	"fmt"
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/core/states"
-	"github.com/dnaproject2/DNA/errors"
-	vm "github.com/dnaproject2/DNA/vm/neovm"
+
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/core/states"
+	"git.fe-cred.com/idfor/idfor/errors"
+	vm "git.fe-cred.com/idfor/idfor/vm/neovm"
 )
 
 // StoragePut put smart contract storage item to cache

@@ -20,8 +20,9 @@ package handlers
 import (
 	"encoding/hex"
 	"encoding/json"
-	clisvrcom "github.com/dnaproject2/DNA/cmd/sigsvr/common"
 	"testing"
+
+	clisvrcom "git.fe-cred.com/idfor/idfor/cmd/sigsvr/common"
 )
 
 func TestSigData(t *testing.T) {

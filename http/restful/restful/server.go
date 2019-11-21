@@ -23,12 +23,6 @@ import (
 	"context"
 	"crypto/tls"
 	"encoding/json"
-	cfg "github.com/dnaproject2/DNA/common/config"
-	"github.com/dnaproject2/DNA/common/log"
-	"github.com/dnaproject2/DNA/http/base/common"
-	berr "github.com/dnaproject2/DNA/http/base/error"
-	"github.com/dnaproject2/DNA/http/base/rest"
-	"golang.org/x/net/netutil"
 	"io"
 	"net"
 	"net/http"
@@ -36,6 +30,13 @@ import (
 	"strings"
 	"sync"
 	"time"
+
+	cfg "git.fe-cred.com/idfor/idfor/common/config"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	"git.fe-cred.com/idfor/idfor/http/base/common"
+	berr "git.fe-cred.com/idfor/idfor/http/base/error"
+	"git.fe-cred.com/idfor/idfor/http/base/rest"
+	"golang.org/x/net/netutil"
 )
 
 type handler func(map[string]interface{}) map[string]interface{}

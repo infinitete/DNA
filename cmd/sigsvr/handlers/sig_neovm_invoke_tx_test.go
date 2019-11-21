@@ -20,9 +20,10 @@ package handlers
 
 import (
 	"encoding/json"
-	clisvrcom "github.com/dnaproject2/DNA/cmd/sigsvr/common"
-	"github.com/dnaproject2/DNA/cmd/utils"
 	"testing"
+
+	clisvrcom "git.fe-cred.com/idfor/idfor/cmd/sigsvr/common"
+	"git.fe-cred.com/idfor/idfor/cmd/utils"
 )
 
 func TestSigNeoVMInvokeTx(t *testing.T) {

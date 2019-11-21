@@ -18,9 +18,10 @@
 package exec
 
 import (
-	"github.com/dnaproject2/DNA/errors"
-	"github.com/dnaproject2/DNA/vm/wasmvm/util"
 	"strconv"
+
+	"git.fe-cred.com/idfor/idfor/errors"
+	"git.fe-cred.com/idfor/idfor/vm/wasmvm/util"
 )
 
 func strToInt(engine *ExecutionEngine) (bool, error) {

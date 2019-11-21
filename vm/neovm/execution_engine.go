@@ -19,8 +19,8 @@
 package neovm
 
 import (
-	"github.com/dnaproject2/DNA/common/config"
-	"github.com/dnaproject2/DNA/vm/neovm/errors"
+	"git.fe-cred.com/idfor/idfor/common/config"
+	"git.fe-cred.com/idfor/idfor/vm/neovm/errors"
 )
 
 func NewExecutionEngine(BlockHeight uint32) *ExecutionEngine {

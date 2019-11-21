@@ -23,12 +23,13 @@ import (
 	"encoding/binary"
 	"encoding/json"
 	"fmt"
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/common/log"
-	"github.com/dnaproject2/DNA/common/serialization"
-	scom "github.com/dnaproject2/DNA/core/store/common"
-	"github.com/dnaproject2/DNA/core/store/leveldbstore"
-	"github.com/dnaproject2/DNA/smartcontract/event"
+
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	"git.fe-cred.com/idfor/idfor/common/serialization"
+	scom "git.fe-cred.com/idfor/idfor/core/store/common"
+	"git.fe-cred.com/idfor/idfor/core/store/leveldbstore"
+	"git.fe-cred.com/idfor/idfor/smartcontract/event"
 )
 
 //Saving event notifies gen by smart contract execution

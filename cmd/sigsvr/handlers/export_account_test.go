@@ -19,10 +19,11 @@ package handlers
 
 import (
 	"encoding/json"
-	"github.com/dnaproject2/DNA/account"
-	clisvrcom "github.com/dnaproject2/DNA/cmd/sigsvr/common"
 	"os"
 	"testing"
+
+	"git.fe-cred.com/idfor/idfor/account"
+	clisvrcom "git.fe-cred.com/idfor/idfor/cmd/sigsvr/common"
 )
 
 func TestExportExecutor(t *testing.T) {

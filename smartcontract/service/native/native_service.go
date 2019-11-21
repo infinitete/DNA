@@ -21,14 +21,14 @@ package native
 import (
 	"fmt"
 
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/core/types"
-	"github.com/dnaproject2/DNA/errors"
-	"github.com/dnaproject2/DNA/smartcontract/context"
-	"github.com/dnaproject2/DNA/smartcontract/event"
-	"github.com/dnaproject2/DNA/smartcontract/states"
-	sstates "github.com/dnaproject2/DNA/smartcontract/states"
-	"github.com/dnaproject2/DNA/smartcontract/storage"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/core/types"
+	"git.fe-cred.com/idfor/idfor/errors"
+	"git.fe-cred.com/idfor/idfor/smartcontract/context"
+	"git.fe-cred.com/idfor/idfor/smartcontract/event"
+	"git.fe-cred.com/idfor/idfor/smartcontract/states"
+	sstates "git.fe-cred.com/idfor/idfor/smartcontract/states"
+	"git.fe-cred.com/idfor/idfor/smartcontract/storage"
 )
 
 type (

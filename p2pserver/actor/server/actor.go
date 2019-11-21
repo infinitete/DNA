@@ -21,9 +21,9 @@ package server
 import (
 	"reflect"
 
-	"github.com/dnaproject2/DNA/common/log"
-	"github.com/dnaproject2/DNA/p2pserver"
-	"github.com/dnaproject2/DNA/p2pserver/common"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	"git.fe-cred.com/idfor/idfor/p2pserver"
+	"git.fe-cred.com/idfor/idfor/p2pserver/common"
 	"github.com/ontio/ontology-eventbus/actor"
 )
 

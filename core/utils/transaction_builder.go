@@ -25,11 +25,11 @@ import (
 	"math/big"
 	"reflect"
 
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/core/payload"
-	"github.com/dnaproject2/DNA/core/types"
-	neovm "github.com/dnaproject2/DNA/smartcontract/service/neovm"
-	vm "github.com/dnaproject2/DNA/vm/neovm"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/core/payload"
+	"git.fe-cred.com/idfor/idfor/core/types"
+	neovm "git.fe-cred.com/idfor/idfor/smartcontract/service/neovm"
+	vm "git.fe-cred.com/idfor/idfor/vm/neovm"
 )
 
 // NewDeployTransaction returns a deploy Transaction

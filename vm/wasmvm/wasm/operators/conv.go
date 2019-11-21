@@ -25,7 +25,7 @@ package operators
 import (
 	"regexp"
 
-	"github.com/dnaproject2/DNA/vm/wasmvm/wasm"
+	"git.fe-cred.com/idfor/idfor/vm/wasmvm/wasm"
 )
 
 var reCvrtOp = regexp.MustCompile(`(.+)\.(?:[a-z]|\_)+\/(.+)`)

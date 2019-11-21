@@ -20,8 +20,9 @@ package neovm
 
 import (
 	"fmt"
-	"github.com/dnaproject2/DNA/common"
-	vm "github.com/dnaproject2/DNA/vm/neovm"
+
+	"git.fe-cred.com/idfor/idfor/common"
+	vm "git.fe-cred.com/idfor/idfor/vm/neovm"
 )
 
 // StorageContext store smart contract address

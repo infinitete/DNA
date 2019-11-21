@@ -22,16 +22,16 @@ import (
 	"bytes"
 	"math/big"
 
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/smartcontract/service/native/auth"
-	params "github.com/dnaproject2/DNA/smartcontract/service/native/global_params"
-	"github.com/dnaproject2/DNA/smartcontract/service/native/governance"
-	"github.com/dnaproject2/DNA/smartcontract/service/native/ong"
-	"github.com/dnaproject2/DNA/smartcontract/service/native/ont"
-	"github.com/dnaproject2/DNA/smartcontract/service/native/ontid"
-	"github.com/dnaproject2/DNA/smartcontract/service/native/utils"
-	"github.com/dnaproject2/DNA/smartcontract/service/neovm"
-	vm "github.com/dnaproject2/DNA/vm/neovm"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/smartcontract/service/native/auth"
+	params "git.fe-cred.com/idfor/idfor/smartcontract/service/native/global_params"
+	"git.fe-cred.com/idfor/idfor/smartcontract/service/native/governance"
+	"git.fe-cred.com/idfor/idfor/smartcontract/service/native/ong"
+	"git.fe-cred.com/idfor/idfor/smartcontract/service/native/ont"
+	"git.fe-cred.com/idfor/idfor/smartcontract/service/native/ontid"
+	"git.fe-cred.com/idfor/idfor/smartcontract/service/native/utils"
+	"git.fe-cred.com/idfor/idfor/smartcontract/service/neovm"
+	vm "git.fe-cred.com/idfor/idfor/vm/neovm"
 )
 
 var (

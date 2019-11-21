@@ -18,12 +18,12 @@
 package wasmvm
 
 import (
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/core/signature"
-	"github.com/dnaproject2/DNA/errors"
-	"github.com/dnaproject2/DNA/smartcontract/event"
-	"github.com/dnaproject2/DNA/vm/wasmvm/exec"
-	"github.com/dnaproject2/DNA/vm/wasmvm/util"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/core/signature"
+	"git.fe-cred.com/idfor/idfor/errors"
+	"git.fe-cred.com/idfor/idfor/smartcontract/event"
+	"git.fe-cred.com/idfor/idfor/vm/wasmvm/exec"
+	"git.fe-cred.com/idfor/idfor/vm/wasmvm/util"
 )
 
 func (this *WasmVmService) runtimeGetTime(engine *exec.ExecutionEngine) (bool, error) {

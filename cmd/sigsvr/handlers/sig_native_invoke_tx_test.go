@@ -20,12 +20,13 @@ package handlers
 
 import (
 	"encoding/json"
-	"github.com/dnaproject2/DNA/cmd/abi"
-	clisvrcom "github.com/dnaproject2/DNA/cmd/sigsvr/common"
-	nutils "github.com/dnaproject2/DNA/smartcontract/service/native/utils"
+	"testing"
+
+	"git.fe-cred.com/idfor/idfor/cmd/abi"
+	clisvrcom "git.fe-cred.com/idfor/idfor/cmd/sigsvr/common"
+	nutils "git.fe-cred.com/idfor/idfor/smartcontract/service/native/utils"
 	"github.com/ontio/ontology-crypto/keypair"
 	"github.com/ontio/ontology-crypto/signature"
-	"testing"
 )
 
 func TestSigNativeInvokeTx(t *testing.T) {

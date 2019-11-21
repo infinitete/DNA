@@ -19,7 +19,7 @@
 // Package error privides error code for http
 package error
 
-import ontErrors "github.com/dnaproject2/DNA/errors"
+import ontErrors "git.fe-cred.com/idfor/idfor/errors"
 
 const (
 	SUCCESS            int64 = 0

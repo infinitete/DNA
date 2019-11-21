@@ -18,7 +18,7 @@
 package overlaydb
 
 import (
-	"github.com/dnaproject2/DNA/core/store/common"
+	"git.fe-cred.com/idfor/idfor/core/store/common"
 	"github.com/syndtr/goleveldb/leveldb/comparer"
 )
 

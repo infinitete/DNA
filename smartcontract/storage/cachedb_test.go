@@ -18,12 +18,13 @@
 package storage
 
 import (
-	"github.com/dnaproject2/DNA/core/store/common"
-	"github.com/dnaproject2/DNA/core/store/leveldbstore"
-	"github.com/dnaproject2/DNA/core/store/overlaydb"
-	"github.com/stretchr/testify/assert"
 	"math/rand"
 	"testing"
+
+	"git.fe-cred.com/idfor/idfor/core/store/common"
+	"git.fe-cred.com/idfor/idfor/core/store/leveldbstore"
+	"git.fe-cred.com/idfor/idfor/core/store/overlaydb"
+	"github.com/stretchr/testify/assert"
 )
 
 func genRandKeyVal() (string, string) {

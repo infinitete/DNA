@@ -19,8 +19,8 @@
 package actor
 
 import (
-	"github.com/dnaproject2/DNA/events"
-	"github.com/dnaproject2/DNA/events/message"
+	"git.fe-cred.com/idfor/idfor/events"
+	"git.fe-cred.com/idfor/idfor/events/message"
 	"github.com/ontio/ontology-eventbus/actor"
 )
 

@@ -21,9 +21,10 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
-	"github.com/dnaproject2/DNA/cmd/abi"
 	"strconv"
 	"strings"
+
+	"git.fe-cred.com/idfor/idfor/cmd/abi"
 )
 
 func NewNeovmContractAbi(abiData []byte) (*abi.NeovmContractAbi, error) {

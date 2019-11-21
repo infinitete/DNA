@@ -25,7 +25,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/dnaproject2/DNA/common/log"
+	"git.fe-cred.com/idfor/idfor/common/log"
 )
 
 type TimerEventType int

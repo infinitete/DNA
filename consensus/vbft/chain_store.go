@@ -21,12 +21,12 @@ package vbft
 import (
 	"fmt"
 
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/common/log"
-	"github.com/dnaproject2/DNA/core/ledger"
-	"github.com/dnaproject2/DNA/core/store"
-	"github.com/dnaproject2/DNA/core/store/overlaydb"
-	"github.com/dnaproject2/DNA/events/message"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	"git.fe-cred.com/idfor/idfor/core/ledger"
+	"git.fe-cred.com/idfor/idfor/core/store"
+	"git.fe-cred.com/idfor/idfor/core/store/overlaydb"
+	"git.fe-cred.com/idfor/idfor/events/message"
 	"github.com/ontio/ontology-eventbus/actor"
 )
 

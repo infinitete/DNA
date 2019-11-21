@@ -19,8 +19,8 @@
 package db
 
 import (
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/core/types"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/core/types"
 )
 
 type BestBlock struct {

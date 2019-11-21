@@ -21,12 +21,13 @@ package cmd
 import (
 	"bufio"
 	"fmt"
-	"github.com/dnaproject2/DNA/cmd/utils"
-	"github.com/dnaproject2/DNA/common/serialization"
-	"github.com/gosuri/uiprogress"
-	"github.com/urfave/cli"
 	"os"
 	"time"
+
+	"git.fe-cred.com/idfor/idfor/cmd/utils"
+	"git.fe-cred.com/idfor/idfor/common/serialization"
+	"github.com/gosuri/uiprogress"
+	"github.com/urfave/cli"
 )
 
 var ExportCommand = cli.Command{

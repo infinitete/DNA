@@ -27,8 +27,8 @@ import (
 	"bytes"
 	"io"
 
-	"github.com/dnaproject2/DNA/vm/wasmvm/wasm"
-	ops "github.com/dnaproject2/DNA/vm/wasmvm/wasm/operators"
+	"git.fe-cred.com/idfor/idfor/vm/wasmvm/wasm"
+	ops "git.fe-cred.com/idfor/idfor/vm/wasmvm/wasm/operators"
 )
 
 // vibhavp: TODO: We do not verify whether blocks don't access for the parent block, do that.

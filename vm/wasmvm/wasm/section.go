@@ -29,8 +29,8 @@ import (
 	"io"
 	"io/ioutil"
 
-	"github.com/dnaproject2/DNA/vm/wasmvm/wasm/internal/readpos"
-	"github.com/dnaproject2/DNA/vm/wasmvm/wasm/leb128"
+	"git.fe-cred.com/idfor/idfor/vm/wasmvm/wasm/internal/readpos"
+	"git.fe-cred.com/idfor/idfor/vm/wasmvm/wasm/leb128"
 )
 
 // SectionID is a 1-byte code that encodes the section code of both known and custom sections.

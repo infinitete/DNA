@@ -19,10 +19,11 @@
 package test
 
 import (
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/smartcontract"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/smartcontract"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestBuildParamToNative(t *testing.T) {

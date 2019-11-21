@@ -19,12 +19,13 @@ package wasmvm
 
 import (
 	"bytes"
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/core/states"
-	"github.com/dnaproject2/DNA/errors"
-	"github.com/dnaproject2/DNA/vm/wasmvm/exec"
-	"github.com/dnaproject2/DNA/vm/wasmvm/memory"
-	"github.com/dnaproject2/DNA/vm/wasmvm/util"
+
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/core/states"
+	"git.fe-cred.com/idfor/idfor/errors"
+	"git.fe-cred.com/idfor/idfor/vm/wasmvm/exec"
+	"git.fe-cred.com/idfor/idfor/vm/wasmvm/memory"
+	"git.fe-cred.com/idfor/idfor/vm/wasmvm/util"
 )
 
 //======================store apis here============================================

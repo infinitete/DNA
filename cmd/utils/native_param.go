@@ -22,16 +22,17 @@ import (
 	"bytes"
 	"encoding/hex"
 	"fmt"
-	"github.com/dnaproject2/DNA/cmd/abi"
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/core/types"
-	httpcom "github.com/dnaproject2/DNA/http/base/common"
-	svrneovm "github.com/dnaproject2/DNA/smartcontract/service/neovm"
-	"github.com/dnaproject2/DNA/vm/neovm"
 	"math"
 	"math/big"
 	"strconv"
 	"strings"
+
+	"git.fe-cred.com/idfor/idfor/cmd/abi"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/core/types"
+	httpcom "git.fe-cred.com/idfor/idfor/http/base/common"
+	svrneovm "git.fe-cred.com/idfor/idfor/smartcontract/service/neovm"
+	"git.fe-cred.com/idfor/idfor/vm/neovm"
 )
 
 func NewNativeInvokeTransaction(gasPrice, gasLimit uint64, contractAddr common.Address, version byte,

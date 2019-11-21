@@ -30,10 +30,10 @@ import (
 	"io"
 	"math"
 
-	"github.com/dnaproject2/DNA/vm/wasmvm/internal/stack"
-	"github.com/dnaproject2/DNA/vm/wasmvm/wasm"
-	"github.com/dnaproject2/DNA/vm/wasmvm/wasm/leb128"
-	ops "github.com/dnaproject2/DNA/vm/wasmvm/wasm/operators"
+	"git.fe-cred.com/idfor/idfor/vm/wasmvm/internal/stack"
+	"git.fe-cred.com/idfor/idfor/vm/wasmvm/wasm"
+	"git.fe-cred.com/idfor/idfor/vm/wasmvm/wasm/leb128"
+	ops "git.fe-cred.com/idfor/idfor/vm/wasmvm/wasm/operators"
 )
 
 // Instr describes an instruction, consisting of an operator, with its

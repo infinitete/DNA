@@ -23,11 +23,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/dnaproject2/DNA/account"
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/consensus/vbft/config"
-	"github.com/dnaproject2/DNA/core/signature"
-	"github.com/dnaproject2/DNA/core/types"
+	"git.fe-cred.com/idfor/idfor/account"
+	"git.fe-cred.com/idfor/idfor/common"
+	vconfig "git.fe-cred.com/idfor/idfor/consensus/vbft/config"
+	"git.fe-cred.com/idfor/idfor/core/signature"
+	"git.fe-cred.com/idfor/idfor/core/types"
 )
 
 func constructProposalMsgTest(acc *account.Account) *blockProposalMsg {

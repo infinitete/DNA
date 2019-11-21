@@ -25,11 +25,11 @@ import (
 	"math/big"
 	"sort"
 
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/common/constants"
-	cstates "github.com/dnaproject2/DNA/core/states"
-	"github.com/dnaproject2/DNA/smartcontract/service/native"
-	"github.com/dnaproject2/DNA/smartcontract/service/native/utils"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/constants"
+	cstates "git.fe-cred.com/idfor/idfor/core/states"
+	"git.fe-cred.com/idfor/idfor/smartcontract/service/native"
+	"git.fe-cred.com/idfor/idfor/smartcontract/service/native/utils"
 )
 
 func registerCandidate(native *native.NativeService, flag string) error {

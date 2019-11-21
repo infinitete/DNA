@@ -23,7 +23,7 @@ import (
 	"sort"
 	"testing"
 
-	"github.com/dnaproject2/DNA/core/types"
+	"git.fe-cred.com/idfor/idfor/core/types"
 	"github.com/ontio/ontology-crypto/keypair"
 	"github.com/stretchr/testify/assert"
 )

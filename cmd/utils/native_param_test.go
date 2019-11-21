@@ -21,10 +21,11 @@ package utils
 import (
 	"bytes"
 	"encoding/hex"
-	"github.com/dnaproject2/DNA/cmd/abi"
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/vm/neovm"
 	"testing"
+
+	"git.fe-cred.com/idfor/idfor/cmd/abi"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/vm/neovm"
 )
 
 func TestParseNativeParam(t *testing.T) {

@@ -22,7 +22,7 @@ import (
 	"math/big"
 	"testing"
 
-	"github.com/dnaproject2/DNA/vm/neovm/types"
+	"git.fe-cred.com/idfor/idfor/vm/neovm/types"
 )
 
 func TestOpToDupFromAltStack(t *testing.T) {

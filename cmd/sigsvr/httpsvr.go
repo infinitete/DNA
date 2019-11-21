@@ -21,10 +21,11 @@ package sigsvr
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/dnaproject2/DNA/cmd/sigsvr/common"
-	"github.com/dnaproject2/DNA/common/log"
 	"io/ioutil"
 	"net/http"
+
+	"git.fe-cred.com/idfor/idfor/cmd/sigsvr/common"
+	"git.fe-cred.com/idfor/idfor/common/log"
 )
 
 var DefCliRpcSvr = NewCliRpcServer()

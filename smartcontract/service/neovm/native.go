@@ -25,12 +25,12 @@ import (
 	"math/big"
 	"reflect"
 
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/common/serialization"
-	"github.com/dnaproject2/DNA/smartcontract/service/native"
-	"github.com/dnaproject2/DNA/smartcontract/states"
-	vm "github.com/dnaproject2/DNA/vm/neovm"
-	"github.com/dnaproject2/DNA/vm/neovm/types"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/serialization"
+	"git.fe-cred.com/idfor/idfor/smartcontract/service/native"
+	"git.fe-cred.com/idfor/idfor/smartcontract/states"
+	vm "git.fe-cred.com/idfor/idfor/vm/neovm"
+	"git.fe-cred.com/idfor/idfor/vm/neovm/types"
 )
 
 func NativeInvoke(service *NeoVmService, engine *vm.ExecutionEngine) error {

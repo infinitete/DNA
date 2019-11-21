@@ -21,8 +21,8 @@ package ledgerstore
 import (
 	"fmt"
 
-	"github.com/dnaproject2/DNA/core/payload"
-	scom "github.com/dnaproject2/DNA/core/store/common"
+	"git.fe-cred.com/idfor/idfor/core/payload"
+	scom "git.fe-cred.com/idfor/idfor/core/store/common"
 )
 
 type CacheCodeTable struct {

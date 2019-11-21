@@ -24,18 +24,18 @@ import (
 
 	"github.com/ontio/ontology-eventbus/actor"
 
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/common/config"
-	"github.com/dnaproject2/DNA/common/log"
-	"github.com/dnaproject2/DNA/core/ledger"
-	tx "github.com/dnaproject2/DNA/core/types"
-	"github.com/dnaproject2/DNA/errors"
-	"github.com/dnaproject2/DNA/events/message"
-	hComm "github.com/dnaproject2/DNA/http/base/common"
-	"github.com/dnaproject2/DNA/smartcontract/service/native/utils"
-	"github.com/dnaproject2/DNA/smartcontract/service/neovm"
-	tc "github.com/dnaproject2/DNA/txnpool/common"
-	"github.com/dnaproject2/DNA/validator/types"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/config"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	"git.fe-cred.com/idfor/idfor/core/ledger"
+	tx "git.fe-cred.com/idfor/idfor/core/types"
+	"git.fe-cred.com/idfor/idfor/errors"
+	"git.fe-cred.com/idfor/idfor/events/message"
+	hComm "git.fe-cred.com/idfor/idfor/http/base/common"
+	"git.fe-cred.com/idfor/idfor/smartcontract/service/native/utils"
+	"git.fe-cred.com/idfor/idfor/smartcontract/service/neovm"
+	tc "git.fe-cred.com/idfor/idfor/txnpool/common"
+	"git.fe-cred.com/idfor/idfor/validator/types"
 )
 
 // NewTxActor creates an actor to handle the transaction-based messages from

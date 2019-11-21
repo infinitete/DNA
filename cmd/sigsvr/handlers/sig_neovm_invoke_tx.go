@@ -22,11 +22,12 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
-	clisvrcom "github.com/dnaproject2/DNA/cmd/sigsvr/common"
-	cliutil "github.com/dnaproject2/DNA/cmd/utils"
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/common/log"
-	httpcom "github.com/dnaproject2/DNA/http/base/common"
+
+	clisvrcom "git.fe-cred.com/idfor/idfor/cmd/sigsvr/common"
+	cliutil "git.fe-cred.com/idfor/idfor/cmd/utils"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	httpcom "git.fe-cred.com/idfor/idfor/http/base/common"
 )
 
 type SigNeoVMInvokeTxReq struct {

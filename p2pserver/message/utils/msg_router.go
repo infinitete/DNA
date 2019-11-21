@@ -19,10 +19,10 @@
 package utils
 
 import (
-	"github.com/dnaproject2/DNA/common/log"
-	msgCommon "github.com/dnaproject2/DNA/p2pserver/common"
-	"github.com/dnaproject2/DNA/p2pserver/message/types"
-	"github.com/dnaproject2/DNA/p2pserver/net/protocol"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	msgCommon "git.fe-cred.com/idfor/idfor/p2pserver/common"
+	"git.fe-cred.com/idfor/idfor/p2pserver/message/types"
+	p2p "github.com/dnaproject2/DNA/p2pserver/net/protocol"
 	"github.com/ontio/ontology-eventbus/actor"
 )
 

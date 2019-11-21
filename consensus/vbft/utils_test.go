@@ -24,8 +24,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/dnaproject2/DNA/account"
-	"github.com/dnaproject2/DNA/common"
+	"git.fe-cred.com/idfor/idfor/account"
+	"git.fe-cred.com/idfor/idfor/common"
 )
 
 func HashBlock(blk *Block) (common.Uint256, error) {

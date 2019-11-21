@@ -22,9 +22,9 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/errors"
-	"github.com/dnaproject2/DNA/smartcontract/service/native/utils"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/errors"
+	"git.fe-cred.com/idfor/idfor/smartcontract/service/native/utils"
 )
 
 // Transfers

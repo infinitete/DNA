@@ -22,10 +22,10 @@ import (
 
 	"fmt"
 
-	"github.com/dnaproject2/DNA/common/serialization"
-	cstates "github.com/dnaproject2/DNA/core/states"
-	"github.com/dnaproject2/DNA/errors"
-	"github.com/dnaproject2/DNA/smartcontract/service/native"
+	"git.fe-cred.com/idfor/idfor/common/serialization"
+	cstates "git.fe-cred.com/idfor/idfor/core/states"
+	"git.fe-cred.com/idfor/idfor/errors"
+	"git.fe-cred.com/idfor/idfor/smartcontract/service/native"
 )
 
 type LinkedlistNode struct {

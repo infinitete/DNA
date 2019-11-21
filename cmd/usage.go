@@ -27,7 +27,7 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/dnaproject2/DNA/cmd/utils"
+	"git.fe-cred.com/idfor/idfor/cmd/utils"
 	"github.com/urfave/cli"
 )
 
@@ -54,7 +54,7 @@ COMMANDS:
 {{range .FlagGroups}}{{.Name}} OPTIONS:
   {{range .Flags}}{{.}}
   {{end}}
-{{end}}{{end}}{{if .App.Copyright }}COPYRIGHT: 
+{{end}}{{end}}{{if .App.Copyright }}COPYRIGHT:
   {{.App.Copyright}}
 {{end}}
 `

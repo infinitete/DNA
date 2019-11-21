@@ -28,9 +28,9 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/dnaproject2/DNA/common/serialization"
-	"github.com/dnaproject2/DNA/vm/wasmvm/memory"
-	"github.com/dnaproject2/DNA/vm/wasmvm/util"
+	"git.fe-cred.com/idfor/idfor/common/serialization"
+	"git.fe-cred.com/idfor/idfor/vm/wasmvm/memory"
+	"git.fe-cred.com/idfor/idfor/vm/wasmvm/util"
 )
 
 type Args struct {

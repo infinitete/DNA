@@ -21,7 +21,8 @@ import (
 	"testing"
 
 	"bytes"
-	ser "github.com/dnaproject2/DNA/common/serialization"
+
+	ser "git.fe-cred.com/idfor/idfor/common/serialization"
 	"github.com/stretchr/testify/assert"
 )
 

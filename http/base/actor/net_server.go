@@ -22,9 +22,9 @@ import (
 	"errors"
 	"time"
 
-	"github.com/dnaproject2/DNA/common/log"
-	ac "github.com/dnaproject2/DNA/p2pserver/actor/server"
-	"github.com/dnaproject2/DNA/p2pserver/common"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	ac "git.fe-cred.com/idfor/idfor/p2pserver/actor/server"
+	"git.fe-cred.com/idfor/idfor/p2pserver/common"
 	"github.com/ontio/ontology-eventbus/actor"
 )
 

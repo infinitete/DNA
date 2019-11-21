@@ -21,14 +21,15 @@ package cmd
 import (
 	"encoding/json"
 	"fmt"
-	cmdcom "github.com/dnaproject2/DNA/cmd/common"
-	"github.com/dnaproject2/DNA/cmd/utils"
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/common/config"
-	httpcom "github.com/dnaproject2/DNA/http/base/common"
-	"github.com/urfave/cli"
 	"io/ioutil"
 	"strings"
+
+	cmdcom "git.fe-cred.com/idfor/idfor/cmd/common"
+	"git.fe-cred.com/idfor/idfor/cmd/utils"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/config"
+	httpcom "git.fe-cred.com/idfor/idfor/http/base/common"
+	"github.com/urfave/cli"
 )
 
 var (
@@ -66,19 +67,19 @@ var (
 				Usage:  "Invoke smart contract",
 				ArgsUsage: `NeoVM contract support bytearray(need encode to hex string), string, integer, boolean parameter type.
 
-  Parameter 
+  Parameter
      Contract parameters separate with comma ',' to split params. and must add type prefix to params.
-     For example:string:foo,int:0,bool:true 
-     If parameter is an object array, enclose array with '[]'. 
+     For example:string:foo,int:0,bool:true
+     If parameter is an object array, enclose array with '[]'.
      For example: string:foo,[int:0,bool:true]
 
-  Note that if string contain some special char like :,[,] and so one, please use '/' char to escape. 
+  Note that if string contain some special char like :,[,] and so one, please use '/' char to escape.
   For example: string:did/:ed1e25c9dccae0c694ee892231407afa20b76008
 
   Return type
      When invoke contract with --prepare flag, you need specifies return type by --return flag, to decode the return value.
-     Return type support bytearray(encoded to hex string), string, integer, boolean. 
-     If return type is object array, enclose array with '[]'. 
+     Return type support bytearray(encoded to hex string), string, integer, boolean.
+     If return type is object array, enclose array with '[]'.
      For example: [string,int,bool,string]
 `,
 				Flags: []cli.Flag{

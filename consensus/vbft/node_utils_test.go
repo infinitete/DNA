@@ -24,9 +24,9 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/common/log"
-	vconfig "github.com/dnaproject2/DNA/consensus/vbft/config"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	vconfig "git.fe-cred.com/idfor/idfor/consensus/vbft/config"
 )
 
 func peerPool() *PeerPool {

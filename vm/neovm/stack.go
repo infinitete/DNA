@@ -19,7 +19,7 @@
 package neovm
 
 import (
-	"github.com/dnaproject2/DNA/vm/neovm/types"
+	"git.fe-cred.com/idfor/idfor/vm/neovm/types"
 )
 
 const initStackCap = 16 // to avoid reallocation

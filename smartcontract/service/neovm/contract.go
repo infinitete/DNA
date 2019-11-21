@@ -21,10 +21,10 @@ package neovm
 import (
 	"fmt"
 
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/core/payload"
-	"github.com/dnaproject2/DNA/errors"
-	vm "github.com/dnaproject2/DNA/vm/neovm"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/core/payload"
+	"git.fe-cred.com/idfor/idfor/errors"
+	vm "git.fe-cred.com/idfor/idfor/vm/neovm"
 )
 
 // ContractCreate create a new smart contract on blockchain, and put it to vm stack

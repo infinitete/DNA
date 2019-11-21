@@ -24,9 +24,9 @@ import (
 	"fmt"
 	"io"
 
-	comm "github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/common/config"
-	"github.com/dnaproject2/DNA/p2pserver/common"
+	comm "git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/config"
+	"git.fe-cred.com/idfor/idfor/p2pserver/common"
 )
 
 type Message interface {

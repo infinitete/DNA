@@ -26,9 +26,9 @@ import (
 	"sort"
 	"strconv"
 
-	"github.com/dnaproject2/DNA/common/config"
-	"github.com/dnaproject2/DNA/core/ledger"
-	p2p "github.com/dnaproject2/DNA/p2pserver/net/protocol"
+	"git.fe-cred.com/idfor/idfor/common/config"
+	"git.fe-cred.com/idfor/idfor/core/ledger"
+	p2p "git.fe-cred.com/idfor/idfor/p2pserver/net/protocol"
 )
 
 type Info struct {

@@ -22,7 +22,7 @@ import (
 	"math"
 	"time"
 
-	"github.com/dnaproject2/DNA/common/log"
+	"git.fe-cred.com/idfor/idfor/common/log"
 )
 
 const (

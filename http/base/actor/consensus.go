@@ -19,7 +19,7 @@
 package actor
 
 import (
-	cactor "github.com/dnaproject2/DNA/consensus/actor"
+	cactor "git.fe-cred.com/idfor/idfor/consensus/actor"
 	"github.com/ontio/ontology-eventbus/actor"
 )
 

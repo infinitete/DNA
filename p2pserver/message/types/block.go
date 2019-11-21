@@ -21,9 +21,9 @@ package types
 import (
 	"fmt"
 
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/core/types"
-	comm "github.com/dnaproject2/DNA/p2pserver/common"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/core/types"
+	comm "git.fe-cred.com/idfor/idfor/p2pserver/common"
 )
 
 type Block struct {

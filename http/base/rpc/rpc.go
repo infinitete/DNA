@@ -22,15 +22,16 @@ package rpc
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/dnaproject2/DNA/common/log"
-	"github.com/dnaproject2/DNA/http/base/common"
-	berr "github.com/dnaproject2/DNA/http/base/error"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"os"
 	"strings"
 	"sync"
+
+	"git.fe-cred.com/idfor/idfor/common/log"
+	"git.fe-cred.com/idfor/idfor/http/base/common"
+	berr "git.fe-cred.com/idfor/idfor/http/base/error"
 )
 
 func init() {

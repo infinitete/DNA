@@ -19,10 +19,10 @@
 package storage
 
 import (
-	comm "github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/core/payload"
-	"github.com/dnaproject2/DNA/core/store/common"
-	"github.com/dnaproject2/DNA/core/store/overlaydb"
+	comm "git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/core/payload"
+	"git.fe-cred.com/idfor/idfor/core/store/common"
+	"git.fe-cred.com/idfor/idfor/core/store/overlaydb"
 	"github.com/syndtr/goleveldb/leveldb/util"
 )
 

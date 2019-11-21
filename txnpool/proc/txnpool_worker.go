@@ -22,12 +22,12 @@ import (
 	"sync"
 	"time"
 
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/common/log"
-	tx "github.com/dnaproject2/DNA/core/types"
-	"github.com/dnaproject2/DNA/errors"
-	tc "github.com/dnaproject2/DNA/txnpool/common"
-	"github.com/dnaproject2/DNA/validator/types"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	tx "git.fe-cred.com/idfor/idfor/core/types"
+	"git.fe-cred.com/idfor/idfor/errors"
+	tc "git.fe-cred.com/idfor/idfor/txnpool/common"
+	"git.fe-cred.com/idfor/idfor/validator/types"
 )
 
 // pendingTx contains the transaction, the time of starting verifying,

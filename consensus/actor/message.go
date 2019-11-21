@@ -18,7 +18,7 @@
 
 package actor
 
-import "github.com/dnaproject2/DNA/core/types"
+import "git.fe-cred.com/idfor/idfor/core/types"
 
 type StartConsensus struct{}
 type StopConsensus struct{}

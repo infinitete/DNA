@@ -23,7 +23,7 @@ import (
 	"math/big"
 	"testing"
 
-	vtypes "github.com/dnaproject2/DNA/vm/neovm/types"
+	vtypes "git.fe-cred.com/idfor/idfor/vm/neovm/types"
 )
 
 func TestOpCat(t *testing.T) {

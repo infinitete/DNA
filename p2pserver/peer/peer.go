@@ -26,11 +26,11 @@ import (
 	"sync/atomic"
 	"time"
 
-	comm "github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/common/log"
-	"github.com/dnaproject2/DNA/p2pserver/common"
-	conn "github.com/dnaproject2/DNA/p2pserver/link"
-	"github.com/dnaproject2/DNA/p2pserver/message/types"
+	comm "git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	"git.fe-cred.com/idfor/idfor/p2pserver/common"
+	conn "git.fe-cred.com/idfor/idfor/p2pserver/link"
+	"git.fe-cred.com/idfor/idfor/p2pserver/message/types"
 )
 
 // PeerCom provides the basic information of a peer

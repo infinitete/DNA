@@ -19,10 +19,10 @@
 package event
 
 import (
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/core/types"
-	"github.com/dnaproject2/DNA/events"
-	"github.com/dnaproject2/DNA/events/message"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/core/types"
+	"git.fe-cred.com/idfor/idfor/events"
+	"git.fe-cred.com/idfor/idfor/events/message"
 )
 
 const (

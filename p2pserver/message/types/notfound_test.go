@@ -21,7 +21,7 @@ package types
 import (
 	"testing"
 
-	cm "github.com/dnaproject2/DNA/common"
+	cm "git.fe-cred.com/idfor/idfor/common"
 )
 
 func Uint256ParseFromBytes(f []byte) cm.Uint256 {

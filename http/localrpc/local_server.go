@@ -24,9 +24,10 @@ import (
 	"strconv"
 
 	"fmt"
-	cfg "github.com/dnaproject2/DNA/common/config"
-	"github.com/dnaproject2/DNA/common/log"
-	"github.com/dnaproject2/DNA/http/base/rpc"
+
+	cfg "git.fe-cred.com/idfor/idfor/common/config"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	"git.fe-cred.com/idfor/idfor/http/base/rpc"
 )
 
 const (

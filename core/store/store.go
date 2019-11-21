@@ -19,13 +19,13 @@
 package store
 
 import (
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/core/payload"
-	"github.com/dnaproject2/DNA/core/states"
-	"github.com/dnaproject2/DNA/core/store/overlaydb"
-	"github.com/dnaproject2/DNA/core/types"
-	"github.com/dnaproject2/DNA/smartcontract/event"
-	cstates "github.com/dnaproject2/DNA/smartcontract/states"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/core/payload"
+	"git.fe-cred.com/idfor/idfor/core/states"
+	"git.fe-cred.com/idfor/idfor/core/store/overlaydb"
+	"git.fe-cred.com/idfor/idfor/core/types"
+	"git.fe-cred.com/idfor/idfor/smartcontract/event"
+	cstates "git.fe-cred.com/idfor/idfor/smartcontract/states"
 	"github.com/ontio/ontology-crypto/keypair"
 )
 

@@ -23,10 +23,10 @@ package txnpool
 import (
 	"fmt"
 
-	"github.com/dnaproject2/DNA/events"
-	"github.com/dnaproject2/DNA/events/message"
-	tc "github.com/dnaproject2/DNA/txnpool/common"
-	tp "github.com/dnaproject2/DNA/txnpool/proc"
+	"git.fe-cred.com/idfor/idfor/events"
+	"git.fe-cred.com/idfor/idfor/events/message"
+	tc "git.fe-cred.com/idfor/idfor/txnpool/common"
+	tp "git.fe-cred.com/idfor/idfor/txnpool/proc"
 	"github.com/ontio/ontology-eventbus/actor"
 	"github.com/ontio/ontology-eventbus/mailbox"
 )

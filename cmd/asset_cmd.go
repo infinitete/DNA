@@ -20,14 +20,15 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/dnaproject2/DNA/account"
-	cmdcom "github.com/dnaproject2/DNA/cmd/common"
-	"github.com/dnaproject2/DNA/cmd/utils"
-	"github.com/dnaproject2/DNA/common/config"
-	nutils "github.com/dnaproject2/DNA/smartcontract/service/native/utils"
-	"github.com/urfave/cli"
 	"strconv"
 	"strings"
+
+	"git.fe-cred.com/idfor/idfor/account"
+	cmdcom "git.fe-cred.com/idfor/idfor/cmd/common"
+	"git.fe-cred.com/idfor/idfor/cmd/utils"
+	"git.fe-cred.com/idfor/idfor/common/config"
+	nutils "git.fe-cred.com/idfor/idfor/smartcontract/service/native/utils"
+	"github.com/urfave/cli"
 )
 
 var AssetCommand = cli.Command{

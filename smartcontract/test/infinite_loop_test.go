@@ -19,11 +19,12 @@
 package test
 
 import (
-	"github.com/dnaproject2/DNA/core/types"
-	. "github.com/dnaproject2/DNA/smartcontract"
-	"github.com/stretchr/testify/assert"
 	"os"
 	"testing"
+
+	"git.fe-cred.com/idfor/idfor/core/types"
+	. "git.fe-cred.com/idfor/idfor/smartcontract"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestInfiniteLoopCrash(t *testing.T) {

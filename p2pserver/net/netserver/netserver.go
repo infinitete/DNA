@@ -27,14 +27,14 @@ import (
 	"sync"
 	"time"
 
-	"github.com/dnaproject2/DNA/common/config"
-	"github.com/dnaproject2/DNA/common/log"
-	"github.com/dnaproject2/DNA/core/ledger"
-	"github.com/dnaproject2/DNA/p2pserver/common"
-	msgpack "github.com/dnaproject2/DNA/p2pserver/message/msg_pack"
-	"github.com/dnaproject2/DNA/p2pserver/message/types"
-	p2p "github.com/dnaproject2/DNA/p2pserver/net/protocol"
-	"github.com/dnaproject2/DNA/p2pserver/peer"
+	"git.fe-cred.com/idfor/idfor/common/config"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	"git.fe-cred.com/idfor/idfor/core/ledger"
+	"git.fe-cred.com/idfor/idfor/p2pserver/common"
+	msgpack "git.fe-cred.com/idfor/idfor/p2pserver/message/msg_pack"
+	"git.fe-cred.com/idfor/idfor/p2pserver/message/types"
+	p2p "git.fe-cred.com/idfor/idfor/p2pserver/net/protocol"
+	"git.fe-cred.com/idfor/idfor/p2pserver/peer"
 )
 
 //NewNetServer return the net object in p2p

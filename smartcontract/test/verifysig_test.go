@@ -20,15 +20,16 @@ package test
 
 import (
 	"fmt"
-	"github.com/dnaproject2/DNA/account"
-	"github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/core/signature"
-	"github.com/dnaproject2/DNA/smartcontract"
-	svm "github.com/dnaproject2/DNA/smartcontract/service/neovm"
-	"github.com/dnaproject2/DNA/vm/neovm"
-	vtypes "github.com/dnaproject2/DNA/vm/neovm/types"
-	"github.com/ontio/ontology-crypto/keypair"
 	"testing"
+
+	"git.fe-cred.com/idfor/idfor/account"
+	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/core/signature"
+	"git.fe-cred.com/idfor/idfor/smartcontract"
+	svm "git.fe-cred.com/idfor/idfor/smartcontract/service/neovm"
+	"git.fe-cred.com/idfor/idfor/vm/neovm"
+	vtypes "git.fe-cred.com/idfor/idfor/vm/neovm/types"
+	"github.com/ontio/ontology-crypto/keypair"
 )
 
 func TestVerifySig(t *testing.T) {

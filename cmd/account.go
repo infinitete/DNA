@@ -21,13 +21,14 @@ package cmd
 import (
 	"bufio"
 	"fmt"
-	"github.com/dnaproject2/DNA/cmd/common"
-	"github.com/dnaproject2/DNA/cmd/utils"
-	"github.com/dnaproject2/DNA/common/config"
+	"strings"
+
+	"git.fe-cred.com/idfor/idfor/cmd/common"
+	"git.fe-cred.com/idfor/idfor/cmd/utils"
+	"git.fe-cred.com/idfor/idfor/common/config"
 	"github.com/ontio/ontology-crypto/keypair"
 	s "github.com/ontio/ontology-crypto/signature"
 	"github.com/urfave/cli"
-	"strings"
 )
 
 //map info, to get some information easily

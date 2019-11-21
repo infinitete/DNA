@@ -21,10 +21,10 @@ package utils
 import (
 	"testing"
 
-	"github.com/dnaproject2/DNA/common/log"
-	"github.com/dnaproject2/DNA/p2pserver/message/types"
-	"github.com/dnaproject2/DNA/p2pserver/net/netserver"
-	"github.com/dnaproject2/DNA/p2pserver/net/protocol"
+	"git.fe-cred.com/idfor/idfor/common/log"
+	"git.fe-cred.com/idfor/idfor/p2pserver/message/types"
+	"git.fe-cred.com/idfor/idfor/p2pserver/net/netserver"
+	p2p "github.com/dnaproject2/DNA/p2pserver/net/protocol"
 	"github.com/ontio/ontology-eventbus/actor"
 	"github.com/stretchr/testify/assert"
 )

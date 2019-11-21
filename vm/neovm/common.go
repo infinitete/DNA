@@ -24,8 +24,8 @@ import (
 	"hash"
 	"math/big"
 
-	"github.com/dnaproject2/DNA/vm/neovm/interfaces"
-	"github.com/dnaproject2/DNA/vm/neovm/types"
+	"git.fe-cred.com/idfor/idfor/vm/neovm/interfaces"
+	"git.fe-cred.com/idfor/idfor/vm/neovm/types"
 	"golang.org/x/crypto/ripemd160"
 )
 

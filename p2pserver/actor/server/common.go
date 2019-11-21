@@ -19,8 +19,8 @@
 package server
 
 import (
-	types "github.com/dnaproject2/DNA/p2pserver/common"
-	ptypes "github.com/dnaproject2/DNA/p2pserver/message/types"
+	types "git.fe-cred.com/idfor/idfor/p2pserver/common"
+	ptypes "git.fe-cred.com/idfor/idfor/p2pserver/message/types"
 )
 
 //stop net server

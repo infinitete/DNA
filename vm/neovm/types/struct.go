@@ -23,7 +23,7 @@ import (
 	"math/big"
 	"reflect"
 
-	"github.com/dnaproject2/DNA/vm/neovm/interfaces"
+	"git.fe-cred.com/idfor/idfor/vm/neovm/interfaces"
 )
 
 const (

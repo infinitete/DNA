@@ -22,9 +22,9 @@ import (
 	"fmt"
 	"sync"
 
-	comm "github.com/dnaproject2/DNA/common"
-	"github.com/dnaproject2/DNA/p2pserver/common"
-	"github.com/dnaproject2/DNA/p2pserver/message/types"
+	comm "git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/p2pserver/common"
+	"git.fe-cred.com/idfor/idfor/p2pserver/message/types"
 )
 
 //NbrPeers: The neigbor list

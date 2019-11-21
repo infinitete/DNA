@@ -1,7 +1,7 @@
 GOFMT=gofmt
 GC=go build
 VERSION := $(shell git describe --always --tags --long)
-BUILD_NODE_PAR = -ldflags "-X github.com/dnaproject2/DNA/common/config.Version=$(VERSION)" #-race
+BUILD_NODE_PAR = -ldflags "-X git.fe-cred.com/idfor/idfor/common/config.Version=$(VERSION)" #-race
 
 ARCH=$(shell uname -m)
 DBUILD=docker build
@@ -16,13 +16,13 @@ NATIVE_ABI_SCRIPT=./cmd/abi/native_abi_script
 
 DNA: $(SRC_FILES)
 	$(GC)  $(BUILD_NODE_PAR) -o DNA main.go
- 
-sigsvr: $(SRC_FILES) abi 
+
+sigsvr: $(SRC_FILES) abi
 	$(GC)  $(BUILD_NODE_PAR) -o sigsvr sigsvr.go
 	@if [ ! -d $(TOOLS) ];then mkdir -p $(TOOLS) ;fi
 	@mv sigsvr $(TOOLS)
 
-abi: 
+abi:
 	@if [ ! -d $(ABI) ];then mkdir -p $(ABI) ;fi
 	@cp $(NATIVE_ABI_SCRIPT)/*.json $(ABI)
 
@@ -43,17 +43,17 @@ DNA-darwin:
 
 tools-cross: tools-windows tools-linux tools-darwin
 
-tools-windows: abi 
+tools-windows: abi
 	CGO_ENABLED=0 GOOS=windows GOARCH=amd64 $(GC) $(BUILD_NODE_PAR) -o sigsvr-windows-amd64.exe sigsvr.go
 	@if [ ! -d $(TOOLS) ];then mkdir -p $(TOOLS) ;fi
 	@mv sigsvr-windows-amd64.exe $(TOOLS)
 
-tools-linux: abi 
+tools-linux: abi
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 $(GC) $(BUILD_NODE_PAR) -o sigsvr-linux-amd64 sigsvr.go
 	@if [ ! -d $(TOOLS) ];then mkdir -p $(TOOLS) ;fi
 	@mv sigsvr-linux-amd64 $(TOOLS)
 
-tools-darwin: abi 
+tools-darwin: abi
 	CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 $(GC) $(BUILD_NODE_PAR) -o sigsvr-darwin-amd64 sigsvr.go
 	@if [ ! -d $(TOOLS) ];then mkdir -p $(TOOLS) ;fi
 	@mv sigsvr-darwin-amd64 $(TOOLS)
@@ -82,7 +82,7 @@ docker/build/bin/%: Makefile
 		$(GC)  $(BUILD_NODE_PAR) -o docker/build/bin/DNA main.go
 	@touch $@
 
-docker: Makefile docker/payload docker/Dockerfile 
+docker: Makefile docker/payload docker/Dockerfile
 	@echo "Building DNA docker"
 	@$(DBUILD) -t $(DOCKER_NS)/DNA docker/payload
 	@docker tag $(DOCKER_NS)/DNA $(DOCKER_NS)/DNA:$(DOCKER_TAG)
@@ -91,4 +91,3 @@ docker: Makefile docker/payload docker/Dockerfile
 clean:
 	rm -rf *.8 *.o *.out *.6 *exe coverage
 	rm -rf DNA DNA-* tools docker/payload docker/build
-

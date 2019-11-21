@@ -23,7 +23,7 @@ import (
 	"sync"
 	"time"
 
-	cfg "github.com/dnaproject2/DNA/common/config"
+	cfg "git.fe-cred.com/idfor/idfor/common/config"
 	"github.com/gorilla/websocket"
 	"github.com/pborman/uuid"
 )
