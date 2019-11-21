@@ -29,6 +29,7 @@ import (
 	"git.fe-cred.com/idfor/idfor/core/ledger"
 	"git.fe-cred.com/idfor/idfor/core/types"
 	p2pComm "git.fe-cred.com/idfor/idfor/p2pserver/common"
+	msgpack "git.fe-cred.com/idfor/idfor/p2pserver/message/msg_pack"
 	"git.fe-cred.com/idfor/idfor/p2pserver/peer"
 )
 

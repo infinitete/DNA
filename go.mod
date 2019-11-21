@@ -3,7 +3,8 @@ module git.fe-cred.com/idfor/idfor
 go 1.12
 
 require (
-	github.com/dnaproject2/DNA v2.0.1-beta+incompatible
+	// git.fe-cred.com/idfor/idfor v2.0.1-beta+incompatible
+	// git.fe-cred.com/idfor/idfor v2.0.1-beta+incompatible
 	github.com/ethereum/go-ethereum v1.8.23
 	github.com/gorilla/websocket v1.2.0
 	github.com/gosuri/uiprogress v0.0.1

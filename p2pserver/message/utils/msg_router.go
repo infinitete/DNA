@@ -22,7 +22,7 @@ import (
 	"git.fe-cred.com/idfor/idfor/common/log"
 	msgCommon "git.fe-cred.com/idfor/idfor/p2pserver/common"
 	"git.fe-cred.com/idfor/idfor/p2pserver/message/types"
-	p2p "github.com/dnaproject2/DNA/p2pserver/net/protocol"
+	p2p "git.fe-cred.com/idfor/idfor/p2pserver/net/protocol"
 	"github.com/ontio/ontology-eventbus/actor"
 )
 

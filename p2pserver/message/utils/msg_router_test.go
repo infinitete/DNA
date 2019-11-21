@@ -24,7 +24,7 @@ import (
 	"git.fe-cred.com/idfor/idfor/common/log"
 	"git.fe-cred.com/idfor/idfor/p2pserver/message/types"
 	"git.fe-cred.com/idfor/idfor/p2pserver/net/netserver"
-	p2p "github.com/dnaproject2/DNA/p2pserver/net/protocol"
+	p2p "git.fe-cred.com/idfor/idfor/p2pserver/net/protocol"
 	"github.com/ontio/ontology-eventbus/actor"
 	"github.com/stretchr/testify/assert"
 )

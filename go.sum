@@ -5,8 +5,8 @@ github.com/Workiva/go-datastructures v1.0.50 h1:slDmfW6KCHcC7U+LP3DDBbm4fqTwZGn1
 github.com/Workiva/go-datastructures v1.0.50/go.mod h1:Z+F2Rca0qCsVYDS8z7bAGm8f3UkzuWYS/oBZz5a7VVA=
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/dnaproject2/DNA v2.0.1-beta+incompatible h1:ybF7b5huU+/ADDspW+9VlF/iksYaS+b93H5wWEXKD5g=
-github.com/dnaproject2/DNA v2.0.1-beta+incompatible/go.mod h1:dmkHT2zdQO5qj6HXWIeTFJ8Wg5bbBLlEqajxfb61PvM=
+git.fe-cred.com/idfor/idfor v2.0.1-beta+incompatible h1:ybF7b5huU+/ADDspW+9VlF/iksYaS+b93H5wWEXKD5g=
+git.fe-cred.com/idfor/idfor v2.0.1-beta+incompatible/go.mod h1:dmkHT2zdQO5qj6HXWIeTFJ8Wg5bbBLlEqajxfb61PvM=
 github.com/emirpasic/gods v1.12.0 h1:QAUIPSaCu4G+POclxeqb3F+WPpdKqFGlw36+yOzGlrg=
 github.com/emirpasic/gods v1.12.0/go.mod h1:YfzfFFoVP/catgzJb4IKIqXjX78Ha8FMSDh3ymbK86o=
 github.com/ethereum/go-ethereum v1.8.23 h1:xVKYpRpe3cbkaWN8gsRgStsyTvz3s82PcQsbEofjhEQ=

@@ -39,8 +39,8 @@ import (
 	msgCommon "git.fe-cred.com/idfor/idfor/p2pserver/common"
 	"git.fe-cred.com/idfor/idfor/p2pserver/message/types"
 	"git.fe-cred.com/idfor/idfor/p2pserver/net/netserver"
+	p2p "git.fe-cred.com/idfor/idfor/p2pserver/net/protocol"
 	"git.fe-cred.com/idfor/idfor/p2pserver/peer"
-	p2p "github.com/dnaproject2/DNA/p2pserver/net/protocol"
 	"github.com/ontio/ontology-crypto/keypair"
 	"github.com/stretchr/testify/assert"
 )

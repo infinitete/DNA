@@ -1,0 +1,157 @@
+hash: f22c9f784bbbaaff56cf7236c0976377d3109f63cc81c4e7c48effdb3d9d59cf
+updated: 2019-11-21T13:00:20.674619188+08:00
+imports:
+- name: github.com/dnaproject2/DNA
+  version: 6e1a7c9c336d6dc6833a8aa302a4abc4538a653e
+  subpackages:
+  - common
+  - common/config
+  - common/constants
+  - common/log
+  - common/serialization
+  - core/payload
+  - core/program
+  - core/signature
+  - core/types
+  - errors
+  - p2pserver/common
+  - p2pserver/link
+  - p2pserver/message/types
+  - p2pserver/net/protocol
+  - p2pserver/peer
+  - vm/neovm
+  - vm/neovm/errors
+  - vm/neovm/interfaces
+  - vm/neovm/types
+  - vm/neovm/utils
+- name: github.com/emirpasic/gods
+  version: 4e23915b9a82f35f320a68a395a7a5045c826932
+  subpackages:
+  - containers
+  - lists
+  - lists/singlylinkedlist
+  - stacks
+  - stacks/linkedliststack
+  - utils
+- name: github.com/ethereum/go-ethereum
+  version: c942700427557e3ff6de3aaf6b916e2f056c1ec2
+  subpackages:
+  - common/fdlimit
+- name: github.com/gogo/protobuf
+  version: 5628607bb4c51c3157aacc3a50f0ab707582b805
+  subpackages:
+  - gogoproto
+  - proto
+  - protoc-gen-gogo/descriptor
+- name: github.com/golang/snappy
+  version: ff6b7dc882cf4cfba7ee0b9f7dcc1ac096c554aa
+- name: github.com/gorilla/websocket
+  version: ea4d1f681babbce9545c9c5f3d5194a789c89f5b
+- name: github.com/gosuri/uilive
+  version: ac356e6e42cd31fcef8e6aec13ae9ed6fe87713e
+- name: github.com/gosuri/uiprogress
+  version: 4442fea128d2bc91caf276b08518bdf4582561c8
+  subpackages:
+  - util/strutil
+- name: github.com/hashicorp/golang-lru
+  version: 7f827b33c0f158ec5dfbba01bb0b14a4541fd81d
+  subpackages:
+  - simplelru
+- name: github.com/howeyc/gopass
+  version: 7cb4b85ec19c7c220ab71433a230f7eb200d639d
+- name: github.com/itchyny/base58-go
+  version: c120e66ec3dd74e96a48d0e1a9bc2e5ceec14bf4
+- name: github.com/mattn/go-isatty
+  version: 2a2f0ea997f99becfd8423e4f337d171753fe685
+- name: github.com/ontio/ontology
+  version: 9c26f6340f3bb1b682f1ce019a82b667ebeaba76
+  subpackages:
+  - common/log
+- name: github.com/ontio/ontology-crypto
+  version: fb9cefa7a3cce3572f2a3a83e37d7381a8dd86b9
+  subpackages:
+  - ec
+  - keypair
+  - signature
+  - sm2
+  - sm3
+  - vrf
+- name: github.com/ontio/ontology-eventbus
+  version: e0541083fef8f5377eb9ad3141da762d529ce37a
+  subpackages:
+  - actor
+  - eventhub
+  - eventstream
+  - internal/queue/goring
+  - internal/queue/mpsc
+  - log
+  - mailbox
+- name: github.com/orcaman/concurrent-map
+  version: 8c72a8bb44f6cfcff2abae8ebcbaaaf883331363
+- name: github.com/pborman/uuid
+  version: e790cca94e6cc75c7064b1332e63811d4aae1a53
+- name: github.com/syndtr/goleveldb
+  version: 758128399b1df3a87e92df6c26c1d2063da8fabe
+  subpackages:
+  - leveldb
+  - leveldb/cache
+  - leveldb/comparer
+  - leveldb/errors
+  - leveldb/filter
+  - leveldb/iterator
+  - leveldb/journal
+  - leveldb/memdb
+  - leveldb/opt
+  - leveldb/storage
+  - leveldb/table
+  - leveldb/util
+- name: github.com/urfave/cli
+  version: cfb38830724cc34fedffe9a2a29fb54fa9169cd1
+- name: github.com/valyala/bytebufferpool
+  version: cdfbe9377474227bb42120c1e22fd4433e7f69bf
+- name: github.com/Workiva/go-datastructures
+  version: f07cbe3f82ca2fd6e5ab94afce65fe43319f675f
+  subpackages:
+  - queue
+- name: golang.org/x/crypto
+  version: 57b3e21c3d5606066a87e63cfe07ec6b9f0db000
+  repo: https://github.com/golang/crypto.git
+  subpackages:
+  - ed25519
+  - ed25519/internal/edwards25519
+  - pbkdf2
+  - ripemd160
+  - scrypt
+  - sha3
+  - ssh/terminal
+- name: golang.org/x/net
+  version: fc4aabc6c91483155dade6fbb627cc953a723260
+  repo: https://github.com/golang/net.git
+  subpackages:
+  - netutil
+- name: golang.org/x/sys
+  version: bd437916bb0eb726b873ee8e9b2dcf212d32e2fd
+  repo: https://github.com/golang/sys.git
+  subpackages:
+  - cpu
+  - unix
+  - windows
+- name: golang.org/x/text
+  version: 4b67af870c6ffd08258ef1202f371aebccaf7b68
+  repo: https://github.com/golang/text.git
+testImports:
+- name: github.com/davecgh/go-spew
+  version: d8f796af33cc11cb798c1aaeb27a4ebc5099927d
+  subpackages:
+  - spew
+- name: github.com/pmezard/go-difflib
+  version: 5d4384ee4fb2527b0a1256a821ebfc92f91efefc
+  subpackages:
+  - difflib
+- name: github.com/stretchr/testify
+  version: 221dbe5ed46703ee255b1da0dec05086f5035f62
+  subpackages:
+  - assert
+  - mock
+- name: gopkg.in/yaml.v2
+  version: 1f64d6156d11335c3f22d9330b0ad14fc1e789ce
