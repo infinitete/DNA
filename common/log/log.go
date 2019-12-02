@@ -73,7 +73,7 @@ const (
 	CALL_DEPTH           = 2
 	DEFAULT_MAX_LOG_SIZE = 20
 	BYTE_TO_MB           = 1024 * 1024
-	PATH                 = "./Log/"
+	PATH                 = "/var/log/idfor/"
 )
 
 func GetGID() uint64 {
