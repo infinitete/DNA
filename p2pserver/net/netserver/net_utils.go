@@ -90,6 +90,13 @@ func TLSDial(nodeAddr string) (net.Conn, error) {
 	conf := &tls.Config{
 		RootCAs:      clientCertPool,
 		Certificates: []tls.Certificate{cert},
+
+		// InsecureSkipVerify控制客户端是否认证服务端的证书链和主机名。
+		// 如果InsecureSkipVerify为真，TLS连接会接受服务端提供的任何证书和该证书中的任何主机名。
+		// 此时，TLS连接容易遭受中间人攻击，这种设置只应用于测试。
+		//
+		// 重要提示：IDFOR 通过IP通讯，此处可以忽略验证
+		InsecureSkipVerify: true,
 	}
 
 	var dialer net.Dialer
