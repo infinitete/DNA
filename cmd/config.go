@@ -147,6 +147,8 @@ func setP2PNodeConfig(ctx *cli.Context, cfg *config.P2PNodeConfig) {
 	cfg.MaxConnOutBound = ctx.Uint(utils.GetFlagName(utils.MaxConnOutBoundFlag))
 	cfg.MaxConnInBoundForSingleIP = ctx.Uint(utils.GetFlagName(utils.MaxConnInBoundForSingleIPFlag))
 	cfg.CertPath = ctx.String(utils.GetFlagName(utils.CertPathFlag))
+	cfg.KeyPath = ctx.String(utils.GetFlagName(utils.KeyPathFlag))
+	cfg.CAPath = ctx.String(utils.GetFlagName(utils.CaPathFlag))
 
 	rsvfile := ctx.String(utils.GetFlagName(utils.ReservedPeersFileFlag))
 	if cfg.ReservedPeersOnly {

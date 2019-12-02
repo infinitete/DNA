@@ -147,7 +147,17 @@ var (
 	}
 	CertPathFlag = cli.StringFlag{
 		Name:  "cert-path",
-		Usage: "cert path for node",
+		Usage: "node ca path for node",
+		Value: config.DEFAULT_CERT_PATH,
+	}
+	KeyPathFlag = cli.StringFlag{
+		Name:  "key-path",
+		Usage: "node key path for node",
+		Value: config.DEFAULT_KEY_PATH,
+	}
+	CaPathFlag = cli.StringFlag{
+		Name:  "ca-path",
+		Usage: "root ca path for node",
 		Value: config.DEFAULT_CERT_PATH,
 	}
 	// RPC settings

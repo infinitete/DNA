@@ -158,6 +158,8 @@ var AppHelpFlagGroups = []flagGroup{
 			utils.MaxConnOutBoundFlag,
 			utils.MaxConnInBoundForSingleIPFlag,
 			utils.CertPathFlag,
+			utils.KeyPathFlag,
+			utils.CaPathFlag,
 		},
 	},
 	{

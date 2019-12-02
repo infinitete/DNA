@@ -71,6 +71,8 @@ const (
 	DEFAULT_GAS_LIMIT                       = 20000
 	DEFAULT_GAS_PRICE                       = 500
 	DEFAULT_CERT_PATH                       = "./cert.pem"
+	DEFAULT_KEY_PATH                        = "./key.pem"
+	DEFAULT_CA_PATH                         = "./ca.pem"
 
 	DEFAULT_DATA_DIR      = "./Chain"
 	DEFAULT_RESERVED_FILE = "./peers.rsv"
@@ -578,10 +580,10 @@ func NewDNAConfig() *DNAConfig {
 			NetworkName:               GetNetworkName(NETWORK_ID_MAIN_NET),
 			NetworkMagic:              GetNetworkMagic(NETWORK_ID_MAIN_NET),
 			NodePort:                  DEFAULT_NODE_PORT,
-			IsTLS:                     false,
+			IsTLS:                     true,
 			CertPath:                  DEFAULT_CERT_PATH,
-			KeyPath:                   "",
-			CAPath:                    "",
+			KeyPath:                   DEFAULT_KEY_PATH,
+			CAPath:                    DEFAULT_CA_PATH,
 			HttpInfoPort:              DEFAULT_HTTP_INFO_PORT,
 			MaxHdrSyncReqs:            DEFAULT_MAX_SYNC_HEADER,
 			MaxConnInBound:            DEFAULT_MAX_CONN_IN_BOUND,
