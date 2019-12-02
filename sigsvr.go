@@ -23,7 +23,7 @@ import (
 	"runtime"
 	"syscall"
 
-	"git.fe-cred.com/idfor/idfor/cmd"
+	// "git.fe-cred.com/idfor/idfor/cmd"
 	"git.fe-cred.com/idfor/idfor/cmd/abi"
 	cmdsvr "git.fe-cred.com/idfor/idfor/cmd/sigsvr"
 	clisvrcom "git.fe-cred.com/idfor/idfor/cmd/sigsvr/common"
