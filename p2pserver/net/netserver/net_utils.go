@@ -97,7 +97,7 @@ func TLSDial(nodeAddr string) (net.Conn, error) {
 		//
 		// 重要提示：IDFOR 通过IP通讯，此处可以忽略验证。
 		// 如果InsecureSkipVerify为false，则需要每个节点要有名称，并且通讯是基于节点名称(域名)而不是直接通过IP。
-		// InsecureSkipVerify: true,
+		InsecureSkipVerify: true,
 	}
 
 	var dialer net.Dialer
