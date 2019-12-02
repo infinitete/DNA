@@ -109,9 +109,9 @@ func startSigSvr(ctx *cli.Context) {
 	<-exit
 }
 
-func main() {
-	if err := setupSigSvr().Run(os.Args); err != nil {
-		cmd.PrintErrorMsg(err.Error())
-		os.Exit(1)
-	}
-}
+// func main() {
+// 	if err := setupSigSvr().Run(os.Args); err != nil {
+// 		cmd.PrintErrorMsg(err.Error())
+// 		os.Exit(1)
+// 	}
+// }
