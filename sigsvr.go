@@ -23,7 +23,7 @@ import (
 	"runtime"
 	"syscall"
 
-	"git.fe-cred.com/idfor/idfor/cmd"
+	// "git.fe-cred.com/idfor/idfor/cmd"
 	"git.fe-cred.com/idfor/idfor/cmd/abi"
 	cmdsvr "git.fe-cred.com/idfor/idfor/cmd/sigsvr"
 	clisvrcom "git.fe-cred.com/idfor/idfor/cmd/sigsvr/common"
@@ -109,9 +109,9 @@ func startSigSvr(ctx *cli.Context) {
 	<-exit
 }
 
-func main() {
-	if err := setupSigSvr().Run(os.Args); err != nil {
-		cmd.PrintErrorMsg(err.Error())
-		os.Exit(1)
-	}
-}
+// func main() {
+// 	if err := setupSigSvr().Run(os.Args); err != nil {
+// 		cmd.PrintErrorMsg(err.Error())
+// 		os.Exit(1)
+// 	}
+// }
