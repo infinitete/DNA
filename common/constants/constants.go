@@ -75,7 +75,7 @@ const TX_MAX_SIG_SIZE = 16
 
 // network magic number
 const (
-	NETWORK_MAGIC_MAINNET = 0x133c6ac // 20180412
+	NETWORK_MAGIC_MAINNET = 0x133c6ac // 20170412
 	NETWORK_MAGIC_POLARIS = 0x2d8829df
 )
 

@@ -261,6 +261,7 @@ func assignToRole(native *native.NativeService, param *OntIDsToRoleParam) (bool,
 				continue
 			}
 		}
+
 		err = putOntIDToken(native, param.ContractAddr, p, tokens)
 		if err != nil {
 			return false, err
@@ -570,6 +571,7 @@ func verifyToken(native *native.NativeService, contractAddr common.Address, call
 	if err != nil {
 		return false, fmt.Errorf("verifySig failed: %v", err)
 	}
+
 	if !ret {
 		log.Debugf("verifySig return false: caller=%s, keyNo=%d", string(caller), keyNo)
 		return false, nil

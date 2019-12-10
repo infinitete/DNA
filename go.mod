@@ -3,6 +3,7 @@ module git.fe-cred.com/idfor/idfor
 go 1.12
 
 require (
+	github.com/FactomProject/basen v0.0.0-20150613233007-fe3947df716e // indirect
 	github.com/aristanetworks/goarista v0.0.0-20191106175434-873d404c7f40 // indirect
 	// git.fe-cred.com/idfor/idfor v2.0.1-beta+incompatible
 	// git.fe-cred.com/idfor/idfor v2.0.1-beta+incompatible
@@ -13,13 +14,16 @@ require (
 	github.com/howeyc/gopass v0.0.0-20170109162249-bf9dde6d0d2c
 	github.com/itchyny/base58-go v0.0.5
 	github.com/mattn/go-colorable v0.1.4 // indirect
+	github.com/ontio/go-bip32 v0.0.0-20190520025953-d3cea6894a2b // indirect
 	github.com/ontio/ontology v1.7.1 // indirect
 	github.com/ontio/ontology-crypto v1.0.5
 	github.com/ontio/ontology-eventbus v0.9.1
+	github.com/ontio/ontology-go-sdk v1.0.9 // indirect
 	github.com/opentracing/opentracing-go v1.1.0 // indirect
 	github.com/pborman/uuid v1.2.0
 	github.com/stretchr/testify v1.3.0
 	github.com/syndtr/goleveldb v1.0.0
+	github.com/tyler-smith/go-bip39 v1.0.2 // indirect
 	github.com/urfave/cli v1.21.0
 	github.com/valyala/bytebufferpool v1.0.0
 	golang.org/x/crypto v0.0.0-20190701094942-4def268fd1a4

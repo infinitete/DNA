@@ -580,7 +580,7 @@ func NewDNAConfig() *DNAConfig {
 			NetworkName:               GetNetworkName(NETWORK_ID_MAIN_NET),
 			NetworkMagic:              GetNetworkMagic(NETWORK_ID_MAIN_NET),
 			NodePort:                  DEFAULT_NODE_PORT,
-			IsTLS:                     false, // 开启TLS会导致共识失败，原因不明
+			IsTLS:                     true,
 			CertPath:                  DEFAULT_CERT_PATH,
 			KeyPath:                   DEFAULT_KEY_PATH,
 			CAPath:                    DEFAULT_CA_PATH,
