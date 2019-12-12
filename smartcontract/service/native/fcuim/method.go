@@ -50,6 +50,7 @@ func registerFcuimScheme(srvc *native.NativeService) ([]byte, error) {
 
 	srvc.CacheDB.Put(fcuim_methods, flat_schemes)
 	srvc.CacheDB.Put(scheme, states.GenRawStorageItem([]byte{flag_exist}))
+	srvc.CacheDB.Commit()
 	registerFcuimSchemeEvent(srvc, arg0)
 
 	return utils.BYTE_TRUE, nil
