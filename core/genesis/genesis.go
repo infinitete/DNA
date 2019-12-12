@@ -28,6 +28,7 @@ import (
 	"git.fe-cred.com/idfor/idfor/common"
 	"git.fe-cred.com/idfor/idfor/common/config"
 	"git.fe-cred.com/idfor/idfor/common/constants"
+	"git.fe-cred.com/idfor/idfor/common/log"
 	vconfig "git.fe-cred.com/idfor/idfor/consensus/vbft/config"
 	"git.fe-cred.com/idfor/idfor/core/types"
 	"git.fe-cred.com/idfor/idfor/core/utils"
@@ -98,6 +99,7 @@ func BuildGenesisBlock(defaultBookkeeper []keypair.PublicKey, genesisConfig *con
 	oid := deployOntIDContract()
 	auth := deployAuthContract()
 	govConfigTx := newGovConfigTx()
+	idforFcuimTx := newIdforFcuimInit()
 
 	genesisBlock := &types.Block{
 		Header: genesisHeader,
@@ -108,6 +110,7 @@ func BuildGenesisBlock(defaultBookkeeper []keypair.PublicKey, genesisConfig *con
 			oid,
 			auth,
 			govConfigTx,
+			idforFcuimTx,
 			newGoverningInit(),
 			newUtilityInit(),
 			newParamInit(),
@@ -271,5 +274,25 @@ func newGoverConfigInit(config []byte) *types.Transaction {
 	if err != nil {
 		panic("construct genesis governing token transaction error ")
 	}
+	return tx
+}
+
+func newIdforFcuimInit() *types.Transaction {
+	mutable := utils.NewDeployTransaction(nutils.IdforFcuimContractAddress[:],
+		"Idfor Fcuim",
+		"0.0.1",
+		"田仁山",
+		"tianrenshan@fe-cred.com",
+		"身份链全链唯一身份映射协议",
+		true)
+
+	tx, err := mutable.IntoImmutable()
+	if err != nil {
+		panic("construct genesis idfor fcuim transaction error ")
+	}
+
+	hash := tx.Hash()
+	log.Infof("Fcuim construct ok: %#v", hash.ToHexString())
+
 	return tx
 }

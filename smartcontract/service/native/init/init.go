@@ -23,7 +23,9 @@ import (
 	"math/big"
 
 	"git.fe-cred.com/idfor/idfor/common"
+	"git.fe-cred.com/idfor/idfor/common/log"
 	"git.fe-cred.com/idfor/idfor/smartcontract/service/native/auth"
+	"git.fe-cred.com/idfor/idfor/smartcontract/service/native/fcuim"
 	params "git.fe-cred.com/idfor/idfor/smartcontract/service/native/global_params"
 	"git.fe-cred.com/idfor/idfor/smartcontract/service/native/governance"
 	"git.fe-cred.com/idfor/idfor/smartcontract/service/native/ong"
@@ -45,6 +47,8 @@ func init() {
 	ontid.Init()
 	auth.Init()
 	governance.InitGovernance()
+	log.Info("Init Fcuim")
+	fcuim.InitFcuim()
 }
 
 func InitBytes(addr common.Address, method string) []byte {

@@ -1,0 +1,15 @@
+{
+  "hash": "0800000000000000000000000000000000000000",
+  "functions": [{
+    "name": "registerFcimScheme",
+    "parameters": [{
+      "name": "schema",
+      "type": "ByteArray"
+    }],
+    "returntype": "Bool"
+  }, {
+    "name": "getFcimSchemes",
+    "parameters": [],
+    "returntype": "ByteArray"
+  }]
+}

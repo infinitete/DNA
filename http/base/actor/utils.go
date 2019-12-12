@@ -37,6 +37,8 @@ func updateNativeSCAddr(hash common.Address) common.Address {
 		hash = common.AddressFromVmCode(utils.AuthContractAddress[:])
 	} else if hash == utils.GovernanceContractAddress {
 		hash = common.AddressFromVmCode(utils.GovernanceContractAddress[:])
+	} else if hash == utils.IdforFcuimContractAddress {
+		hash = common.AddressFromVmCode(utils.IdforFcuimContractAddress[:])
 	}
 	return hash
 }
