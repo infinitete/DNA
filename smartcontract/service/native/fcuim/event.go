@@ -1,7 +1,6 @@
 package fcuim
 
 import (
-	"bytes"
 	"strings"
 
 	"git.fe-cred.com/idfor/idfor/smartcontract/event"
@@ -21,6 +20,6 @@ func registerFcuimSchemeEvent(srvc *native.NativeService, scheme []byte) {
 }
 
 func getFcuimSchemesEvent(srvc *native.NativeService, schemes []byte) {
-	scms := strings.Split(string(bytes.Replace(schemes, []byte(":"), []byte(","), -1)), ",")
+	scms := strings.Split(string(schemes), ":")
 	newEvent(srvc, []interface{}{"GetFcuimSchemes", true, scms})
 }
